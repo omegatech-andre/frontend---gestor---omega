@@ -2,6 +2,7 @@
 import { Title, Text, Anchor, Group, Button, Modal, Image, Stack, BackgroundImage } from '@mantine/core';
 import { useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
+import SignUp from '@/components/pages/auth/signup';
 
 export default function AuthPage() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -16,9 +17,9 @@ export default function AuthPage() {
     <BackgroundImage src='picture_0.webp'>
       <Stack w='100vw' h='100vh' align="center" justify="center" gap="sm">
         <Image src='logo_0.webp' w={200} />
-        <Stack ta='center' align='center' gap={0}>
+        <Stack ta='center' align='center' gap={0} px='md'>
           <Title order={1}>Sistema de gestão <Text span c="#c90000" inherit>Ômega Screen Ind</Text></Title>
-          <Title order={4}>Gerêncie facilmente informações de produtos e fornecedores.</Title>
+          <Title order={5}>Gerêncie facilmente informações de produtos e fornecedores.</Title>
         </Stack>
         <Group>
           <Button onClick={() => handleOpen('login')}>
@@ -42,7 +43,7 @@ export default function AuthPage() {
           )}
           {modalContent === 'signup' && (
             <>
-              <>modal de singup</>
+              <SignUp />
               <Text c="dimmed" size="sm" ta="center" mt={20}>
                 Já tem uma conta?{' '}
                 <Anchor size="sm" c='#c90000' component="button" onClick={() => handleOpen('login')}>
