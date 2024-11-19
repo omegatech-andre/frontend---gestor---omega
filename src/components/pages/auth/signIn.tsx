@@ -15,36 +15,29 @@ interface UsePostRes {
   access_token: string;
 }
 
-export default function SignUp() {
+export default function Signin() {
   const { register, handleSubmit, watch } = useForm({
     mode: 'onChange',
     resolver: yupResolver(schemaAuth),
   });
 
   const watchData = watch();
-  const { isPosting, response, error, sendRequest } = usePost<UsePostReq, UsePostRes>(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/register`, watchData);
+  const { isPosting, response, error, sendRequest } = usePost<UsePostReq, UsePostRes>(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`, watchData);
 
   // TODO - no response.data eu recebo o { access_token: string }
 
   useEffect(() => {
     if (error) {
-      if (error.response?.status === 409) {
-        NotificationShow({
-          title: 'Erro',
-          message: 'Já existe um usuario com essas credênciais.',
-        });
-        return;
-      }
       NotificationShow({
         title: 'Erro',
-        message: 'Ocorreu um erro ao registrar.',
+        message: 'Ocorreu um erro ao tentar fazer o login.',
       });
     }
 
     if (response) {
       NotificationShow({
         title: 'Sucesso',
-        message: 'Usuário registrado com sucesso!',
+        message: 'Usuário logado com sucesso!',
       });
     }
   }, [error, response]);
@@ -58,11 +51,10 @@ export default function SignUp() {
       <PasswordInput
         {...register('USER_PASSWORD')}
         label="Senha"
-        minLength={6}
       />
       <Group justify="flex-end" mt="md">
         <Button fullWidth type="submit" disabled={isPosting} loading={isPosting}>
-          Cadastrar
+          Entrar
         </Button>
       </Group>
     </form>

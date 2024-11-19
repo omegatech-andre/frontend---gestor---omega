@@ -10,8 +10,8 @@ export default function usePost<T, R>(url: string, data: T, options: AxiosReques
     setResponse(null);
     setError(null);
     setIsPosting(true);
+    
     try {
-      console.log(data)
       const res = await axios.post<R>(url, data, options);
       setResponse(res);
     } catch (err) {

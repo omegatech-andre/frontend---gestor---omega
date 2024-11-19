@@ -3,6 +3,7 @@ import { Title, Text, Anchor, Group, Button, Modal, Image, Stack, BackgroundImag
 import { useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import SignUp from '@/components/pages/auth/signup';
+import Signin from '@/components/pages/auth/signIn';
 
 export default function AuthPage() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -32,7 +33,7 @@ export default function AuthPage() {
         <Modal opened={opened} onClose={close} withCloseButton={false} overlayProps={{ backgroundOpacity: 0.55, blur: 3 }}>
           {modalContent === 'login' && (
             <>
-              <>modal de signin</>
+              <Signin />
               <Text c="dimmed" size="sm" ta="center" mt={20}>
                 Ainda nao tem uma conta?{' '}
                 <Anchor size="sm" c='#c90000' component="button" onClick={() => handleOpen('signup')}>
