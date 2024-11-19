@@ -1,24 +1,25 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-import { useEffect, useRef, useState } from "react";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { useState } from 'react';
 
-export default function usePost<T, R>(url: string, data: T, posted: boolean, options: AxiosRequestConfig = {}) {
-  const hasPostedRef = useRef(false);
-  const [isPosting, setIsPosting] = useState<boolean>(false);
+export default function usePost<T, R>(url: string, data: T, options: AxiosRequestConfig = {}) {
+  const [isPosting, setIsPosting] = useState(false);
   const [response, setResponse] = useState<AxiosResponse<R> | null>(null);
   const [error, setError] = useState<AxiosError | null>(null);
 
-  useEffect(() => {
-    if (posted && !hasPostedRef.current) {
-      hasPostedRef.current = true;
-      setIsPosting(true);
-      setError(null);
-
-      axios.post<R>(url, data, options)
-        .then((res: AxiosResponse<R>) => setResponse(res))
-        .catch((err: AxiosError) => setError(err))
-        .finally(() => setIsPosting(false));
+  const sendRequest = async () => {
+    setResponse(null);
+    setError(null);
+    setIsPosting(true);
+    try {
+      console.log(data)
+      const res = await axios.post<R>(url, data, options);
+      setResponse(res);
+    } catch (err) {
+      setError(err as AxiosError);
+    } finally {
+      setIsPosting(false);
     }
-  }, [url, data, posted, options]);
+  };
 
-  return { isPosting, response, error };
+  return { isPosting, response, error, sendRequest };
 }
