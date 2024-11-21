@@ -33,7 +33,6 @@ export default function SignUp() {
         message: error.response?.status === 409 ? 'Usuário já existe.' : 'Tente novamente mais tarde.',
       });
     }
-
     if (response) {
       NotificationShow({
         title: 'Sucesso',
@@ -43,7 +42,8 @@ export default function SignUp() {
         USER_NAME: watchData.USER_NAME,
         USER_PASSWORD: watchData.USER_PASSWORD,
         redirect: false,
-      }).then((res) => res?.ok && redirect('/produtos'));
+      })
+        .then((res) => res?.ok && redirect('/produtos'));
     }
   }, [response, error, watchData]);
 
@@ -52,10 +52,12 @@ export default function SignUp() {
       <TextInput
         {...register('USER_NAME')}
         label="Username"
+        aria-label="Nome de usuário"
       />
       <PasswordInput
         {...register('USER_PASSWORD')}
         label="Senha"
+        aria-label="Senha"
         minLength={6}
       />
       <Group justify="flex-end" mt="md">

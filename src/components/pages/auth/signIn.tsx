@@ -14,41 +14,34 @@ interface UsePostReq {
 
 export default function Signin() {
   const [isLoading, setIsLoading] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit } = useForm({
     mode: 'onChange',
     resolver: yupResolver(schemaAuth),
   });
 
   const submitForm: SubmitHandler<UsePostReq> = async (formData) => {
     setIsLoading(true);
-    const login = await signIn('credentials', {
+    signIn('credentials', {
       USER_NAME: formData.USER_NAME,
       USER_PASSWORD: formData.USER_PASSWORD,
       redirect: false,
-    });
-    setIsLoading(false);
-
-    if (login?.ok) {
-      NotificationShow({
-        title: 'Sucesso',
-        message: 'Usuário logado com sucesso!',
+    })
+      .then((res) => {
+        setIsLoading(false);
+        if (res?.error) {
+          NotificationShow({
+            title: res.status === 401 ? 'Erro de Login' : 'Erro',
+            message: res.status === 401 ? 'Usuário ou senha incorretos.' : 'Ocorreu um erro ao tentar fazer o login. Tente novamente mais tarde.',
+          });
+        }
+        if (res?.ok) {
+          NotificationShow({
+            title: 'Sucesso',
+            message: 'Usuário logado com sucesso!',
+          });
+          redirect('/produtos');
+        }
       });
-      redirect('/produtos');
-    }
-
-    if (login?.error) {
-      if (login.status === 401) {
-        NotificationShow({
-          title: 'Erro de Login',
-          message: 'Usuário ou senha incorretos.',
-        });
-      } else {
-        NotificationShow({
-          title: 'Erro',
-          message: 'Ocorreu um erro ao tentar fazer o login. Tente novamente mais tarde.',
-        });
-      }
-    }
   };
 
   return (
@@ -56,18 +49,14 @@ export default function Signin() {
       <TextInput
         {...register('USER_NAME')}
         label="Username"
-        error={errors.USER_NAME?.message}
         aria-label="Nome de usuário"
         autoComplete="username"
-        required
       />
       <PasswordInput
         {...register('USER_PASSWORD')}
         label="Senha"
-        error={errors.USER_PASSWORD?.message}
         aria-label="Senha"
         autoComplete="current-password"
-        required
       />
       <Group justify="flex-end" mt="md">
         <Button fullWidth type="submit" disabled={isLoading} loading={isLoading}>
