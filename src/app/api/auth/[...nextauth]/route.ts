@@ -59,6 +59,7 @@ const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
+      //  TODO - o get de usuario deve descer pra cá. pra que a cada sessao criada ou recriada um novo get seja feito.
       session.user = token.user as any;
       return session;
     },

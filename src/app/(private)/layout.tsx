@@ -7,6 +7,7 @@ import { signOut, useSession } from 'next-auth/react';
 import { IconBuildingStore, IconLogout, IconPackage, IconSettings } from '@tabler/icons-react';
 import Loading from '../loading';
 import { redirect } from 'next/navigation';
+import ProviderAvatar from '@/components/_ui/avatar/providerAvatar';
 
 export default function PagesLayout({
   children,
@@ -16,6 +17,8 @@ export default function PagesLayout({
   const { data: session, status } = useSession();
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
+
+  console.log(session)
 
   if (status === 'loading') return <Loading />;
 
@@ -28,7 +31,7 @@ export default function PagesLayout({
 
   return (
     <>
-      {session?.user.USER_AUTHORIZED ? (
+      {!session?.user.USER_AUTHORIZED ? (
         <>
           acesso negado
         </>
@@ -57,7 +60,7 @@ export default function PagesLayout({
                         Olá, {session?.user.USER_NAME}
                       </Text>
                       <UnstyledButton>
-                        {/* Exemplo de avatar ou algo adicional */}
+                        <ProviderAvatar name={session.user.USER_NAME || ''} size='2.3rem' />
                       </UnstyledButton>
                     </Group>
                   </Menu.Target>

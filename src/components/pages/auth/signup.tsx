@@ -1,4 +1,4 @@
-import NotificationShow from "@/components/_ui/notification/notificationShow";
+import ProviderNotification from "@/components/_ui/notification/providerNotification";
 import usePost from "@/hooks/usePost";
 import { schemaAuth } from "@/schemas/auth/schemaAuth";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -28,13 +28,13 @@ export default function SignUp() {
 
   useEffect(() => {
     if (error) {
-      NotificationShow({
+      ProviderNotification({
         title: error.response?.status === 409 ? 'Erro' : 'Erro ao registrar',
         message: error.response?.status === 409 ? 'Usuário já existe.' : 'Tente novamente mais tarde.',
       });
     }
     if (response) {
-      NotificationShow({
+      ProviderNotification({
         title: 'Sucesso',
         message: 'Usuário registrado com sucesso!',
       });

@@ -1,4 +1,4 @@
-import NotificationShow from "@/components/_ui/notification/notificationShow";
+import ProviderNotification from "@/components/_ui/notification/providerNotification";
 import { schemaAuth } from "@/schemas/auth/schemaAuth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Group, PasswordInput, TextInput } from "@mantine/core";
@@ -29,13 +29,13 @@ export default function SignIn() {
       .then((res) => {
         setIsLoading(false);
         if (res?.error) {
-          NotificationShow({
+          ProviderNotification({
             title: res.status === 401 ? 'Erro de Login' : 'Erro',
             message: res.status === 401 ? 'Usuário ou senha incorretos.' : 'Ocorreu um erro ao tentar fazer o login. Tente novamente mais tarde.',
           });
         }
         if (res?.ok) {
-          NotificationShow({
+          ProviderNotification({
             title: 'Sucesso',
             message: 'Usuário logado com sucesso!',
           });
