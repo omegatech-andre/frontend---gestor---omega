@@ -3,6 +3,8 @@ import usePost from "@/hooks/usePost";
 import { schemaAuth } from "@/schemas/auth/schemaAuth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Group, PasswordInput, TextInput } from "@mantine/core";
+import { signIn } from "next-auth/react";
+import { redirect } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
@@ -24,20 +26,11 @@ export default function SignUp() {
   const watchData = watch();
   const { isPosting, response, error, sendRequest } = usePost<UsePostReq, UsePostRes>(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/register`, watchData);
 
-  // TODO - no response.data eu recebo o { access_token: string }
-
   useEffect(() => {
     if (error) {
-      if (error.response?.status === 409) {
-        NotificationShow({
-          title: 'Erro',
-          message: 'Já existe um usuario com essas credênciais.',
-        });
-        return;
-      }
       NotificationShow({
-        title: 'Erro',
-        message: 'Ocorreu um erro ao registrar.',
+        title: error.response?.status === 409 ? 'Erro' : 'Erro ao registrar',
+        message: error.response?.status === 409 ? 'Usuário já existe.' : 'Tente novamente mais tarde.',
       });
     }
 
@@ -46,8 +39,13 @@ export default function SignUp() {
         title: 'Sucesso',
         message: 'Usuário registrado com sucesso!',
       });
+      signIn('credentials', {
+        USER_NAME: watchData.USER_NAME,
+        USER_PASSWORD: watchData.USER_PASSWORD,
+        redirect: false,
+      }).then((res) => res?.ok && redirect('/produtos'));
     }
-  }, [error, response]);
+  }, [response, error, watchData]);
 
   return (
     <form onSubmit={handleSubmit(sendRequest)}>
