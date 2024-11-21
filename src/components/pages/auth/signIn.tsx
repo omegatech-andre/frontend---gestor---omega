@@ -1,10 +1,9 @@
-import NotificationShow from "@/components/_ui/notification/notificationShow";
-import usePost from "@/hooks/usePost";
 import { schemaAuth } from "@/schemas/auth/schemaAuth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Group, PasswordInput, TextInput } from "@mantine/core";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { signIn } from "next-auth/react";
+import { redirect } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 interface UsePostReq {
   USER_NAME: string;
@@ -21,29 +20,34 @@ export default function Signin() {
     resolver: yupResolver(schemaAuth),
   });
 
-  const watchData = watch();
-  const { isPosting, response, error, sendRequest } = usePost<UsePostReq, UsePostRes>(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`, watchData);
+  const submitForm: SubmitHandler<UsePostReq> = async (formData) => {
+    const login = await signIn('credentials', {
+      USER_NAME: formData.USER_NAME,
+      USER_PASSWORD: formData.USER_PASSWORD,
+      redirect: false,
+    });
 
-  // TODO - no response.data eu recebo o { access_token: string }
+    if (login?.ok) redirect('/produtos')
+  };
 
-  useEffect(() => {
-    if (error) {
-      NotificationShow({
-        title: 'Erro',
-        message: 'Ocorreu um erro ao tentar fazer o login.',
-      });
-    }
+  // useEffect(() => {
+  //   if (error) {
+  //     NotificationShow({
+  //       title: 'Erro',
+  //       message: 'Ocorreu um erro ao tentar fazer o login.',
+  //     });
+  //   }
 
-    if (response) {
-      NotificationShow({
-        title: 'Sucesso',
-        message: 'Usuário logado com sucesso!',
-      });
-    }
-  }, [error, response]);
+  //   if (response) {
+  //     NotificationShow({
+  //       title: 'Sucesso',
+  //       message: 'Usuário logado com sucesso!',
+  //     });
+  //   }
+  // }, [error, response]);
 
   return (
-    <form onSubmit={handleSubmit(sendRequest)}>
+    <form onSubmit={handleSubmit(submitForm)}>
       <TextInput
         {...register('USER_NAME')}
         label="Username"
@@ -53,9 +57,12 @@ export default function Signin() {
         label="Senha"
       />
       <Group justify="flex-end" mt="md">
-        <Button fullWidth type="submit" disabled={isPosting} loading={isPosting}>
+        <Button fullWidth type="submit">
           Entrar
         </Button>
+        {/* <Button fullWidth type="submit" disabled={isPosting} loading={isPosting}>
+          Entrar
+        </Button> */}
       </Group>
     </form>
   );

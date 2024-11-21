@@ -5,6 +5,7 @@ import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import type { Metadata } from "next";
 import '../styles/globals.css'
 import { Notifications } from '@mantine/notifications';
+import AuthProvider from '@/providers/authProvider';
 
 export const metadata: Metadata = {
   title: "Omega Screen | Gestor",
@@ -24,7 +25,9 @@ export default function RootLayout({
       <body>
         <MantineProvider theme={theme} defaultColorScheme='auto'>
           <Notifications />
-          {children}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </MantineProvider>
       </body>
     </html>
