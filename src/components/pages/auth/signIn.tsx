@@ -12,7 +12,7 @@ interface UsePostReq {
   USER_PASSWORD: string;
 }
 
-export default function Signin() {
+export default function SignIn() {
   const [isLoading, setIsLoading] = useState(false);
   const { register, handleSubmit } = useForm({
     mode: 'onChange',
