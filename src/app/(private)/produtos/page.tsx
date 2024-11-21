@@ -12,7 +12,7 @@ export default function Page() {
   }
 
   return (
-    <Center w='100vw' h='70vh' bg='teal'>
+    <Center h='70vh' bg='teal'>
       <Text>minha pagina privada</Text>
       <Button onClick={logout}>Sair</Button>
     </Center>
