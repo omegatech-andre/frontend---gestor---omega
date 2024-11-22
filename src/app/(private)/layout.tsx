@@ -8,6 +8,7 @@ import { IconBuildingStore, IconLogout, IconPackage, IconSettings } from '@table
 import Loading from '../loading';
 import { redirect } from 'next/navigation';
 import ProviderAvatar from '@/components/_ui/avatar/providerAvatar';
+import AccessDenied from '@/components/pages/accessDenied/accessDenied';
 
 export default function PagesLayout({
   children,
@@ -30,9 +31,7 @@ export default function PagesLayout({
   return (
     <>
       {!session?.user.USER_AUTHORIZED ? (
-        <>
-          acesso negado
-        </>
+        <AccessDenied />
       ) : (
         <AppShell
           header={{ height: 60 }}
