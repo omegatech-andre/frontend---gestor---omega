@@ -25,9 +25,9 @@ export default function ModalEditPassword({ user }: Props) {
 
   const watchData = watch();
   const { isUpdating, response, error, sendRequest } = usePatch<UsePatchReq, UserDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/users/update/${user?.id}`, watchData, {
-    // headers: {
-    //   Authorization: `Bearer ${user?.access_token}`
-    // }
+    headers: {
+      Authorization: `Bearer ${user?.access_token}`
+    }
   });
 
   useEffect(() => {
