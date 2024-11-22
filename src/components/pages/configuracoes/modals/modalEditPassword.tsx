@@ -1,6 +1,7 @@
 import ProviderNotification from "@/components/_ui/notification/providerNotification";
 import usePatch from "@/hooks/usePatch";
 import { schemaUser } from "@/schemas/configuracoes/schemaUser";
+import { UserDetails } from "@/types/userDetails";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Group, PasswordInput, Stack, Text } from "@mantine/core";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
@@ -16,13 +17,6 @@ interface UsePatchReq {
   USER_PASSWORD?: string
 }
 
-interface UsePatchRes {
-  id: string;
-  USER_NAME: string;
-  USER_AUTHORIZED: boolean;
-  USER_ROLE: 'ADMIN' | 'USER';
-}
-
 export default function ModalEditPassword({ user }: Props) {
   const { register, handleSubmit, watch } = useForm({
     mode: 'onBlur',
@@ -30,7 +24,7 @@ export default function ModalEditPassword({ user }: Props) {
   });
 
   const watchData = watch();
-  const { isUpdating, response, error, sendRequest } = usePatch<UsePatchReq, UsePatchRes>(`${process.env.NEXT_PUBLIC_BASE_URL}/users/update/${user?.id}`, watchData, {
+  const { isUpdating, response, error, sendRequest } = usePatch<UsePatchReq, UserDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/users/update/${user?.id}`, watchData, {
     // headers: {
     //   Authorization: `Bearer ${user?.access_token}`
     // }
