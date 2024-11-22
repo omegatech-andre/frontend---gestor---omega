@@ -18,8 +18,6 @@ export default function PagesLayout({
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
 
-  console.log(session)
-
   if (status === 'loading') return <Loading />;
 
   if (!session) redirect('/');

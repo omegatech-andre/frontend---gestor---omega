@@ -43,8 +43,6 @@ const authOptions: NextAuthOptions = {
           USER_PASSWORD: credentials.USER_PASSWORD,
         } as PostReqProps);
 
-        (await cookies()).set('access_token', access_token);
-
         const payload: PayloadProps = JSON.parse(Buffer.from(access_token.split('.')[1], 'base64').toString());
 
         const { data: user } = await axios.get<GetResProps>(`${API_BASE_URL}/users/${payload.sub}`)
@@ -55,12 +53,11 @@ const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.user = user;
+      if (user) return { ...token, user };
       return token;
     },
     async session({ session, token }) {
-      //  TODO - o get de usuario deve descer pra cá. pra que a cada sessao criada ou recriada um novo get seja feito.
-      session.user = token.user as any;
+      if (token.user) return { ...session, user: token.user };
       return session;
     },
   },
