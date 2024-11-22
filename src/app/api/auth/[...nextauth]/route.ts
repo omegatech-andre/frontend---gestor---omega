@@ -36,19 +36,24 @@ const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials) throw new Error('Credencias não fornecidas.');
+        try {
+          const { data: { access_token } } = await axios.post<PostResProps>(`${API_BASE_URL}/auth/login`, {
+            USER_NAME: credentials.USER_NAME,
+            USER_PASSWORD: credentials.USER_PASSWORD,
+          } as PostReqProps);
 
-        const { data: { access_token } } = await axios.post<PostResProps>(`${API_BASE_URL}/auth/login`, {
-          USER_NAME: credentials.USER_NAME,
-          USER_PASSWORD: credentials.USER_PASSWORD,
-        } as PostReqProps);
+          const payload: PayloadProps = JSON.parse(Buffer.from(access_token.split('.')[1], 'base64').toString());
 
-        const payload: PayloadProps = JSON.parse(Buffer.from(access_token.split('.')[1], 'base64').toString());
+          if (!payload.sub) throw new Error('Token inválido: ID do usuário não encontrado.');
 
-        const { data: user } = await axios.get<GetResProps>(`${API_BASE_URL}/users/${payload.sub}`)
+          const { data: user } = await axios.get<GetResProps>(`${API_BASE_URL}/users/${payload.sub}`)
 
-        return { ...user, access_token };
+          return { ...user, access_token };
+        } catch (error) {
+          throw new Error('Falha ao autenticar. Verifique suas credenciais.');
+        }
       },
-    })
+    }),
   ],
   callbacks: {
     async jwt({ token, user }) {
