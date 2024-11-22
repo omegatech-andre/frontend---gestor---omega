@@ -1,8 +1,7 @@
 import { API_BASE_URL } from '@/utils/apiBaseUrl';
 import axios from 'axios';
-import NextAuth, { NextAuthOptions } from 'next-auth';
+import NextAuth, { NextAuthOptions, Session } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { cookies } from 'next/headers';
 
 interface PostReqProps {
   USER_NAME: string;
@@ -57,7 +56,11 @@ const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      if (token.user) return { ...session, user: token.user };
+      const user = token.user as Session['user'];
+      if (user) {
+        const { data: updateUser } = await axios.get<GetResProps>(`${API_BASE_URL}/users/${user.id}`);
+        return { ...session, user: { ...updateUser, access_token: user.access_token } };
+      };
       return session;
     },
   },
