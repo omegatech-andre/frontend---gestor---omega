@@ -4,6 +4,7 @@ import { ActionIcon, BackgroundImage, Modal, Paper, Stack, Text, Tooltip } from 
 import { useDisclosure } from "@mantine/hooks";
 import { IconKey } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
+import ModalEditPassword from "./modals/modalEditPassword";
 
 export default function PageConfiguracoes() {
   const { data: session } = useSession();
@@ -38,7 +39,7 @@ export default function PageConfiguracoes() {
             blur: 3
           }}
         >
-          {/* <ModalEditPassword user={userData} /> */}
+          <ModalEditPassword user={session?.user} />
         </Modal>
       </Stack>
     </>
