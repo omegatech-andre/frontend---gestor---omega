@@ -6,8 +6,6 @@ import { redirect } from "next/navigation";
 export default function Page() {
   const { data: session } = useSession();
 
-  console.log(session)
-
   const logout = async () => {
     await signOut({ redirect: false });
     redirect('/')
