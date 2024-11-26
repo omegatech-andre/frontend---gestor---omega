@@ -6,7 +6,7 @@ import { Button, Group, PasswordInput, TextInput } from "@mantine/core";
 import { signIn } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 interface UsePostReq {
   USER_NAME: string;
@@ -18,7 +18,7 @@ interface UsePostRes {
 }
 
 export default function SignUp() {
-  const { register, handleSubmit, watch } = useForm({
+  const { control, handleSubmit, watch } = useForm({
     mode: 'onChange',
     resolver: yupResolver(schemaAuth),
   });
@@ -49,16 +49,29 @@ export default function SignUp() {
 
   return (
     <form onSubmit={handleSubmit(sendRequest)}>
-      <TextInput
-        {...register('USER_NAME')}
-        label="Username"
-        aria-label="Nome de usuário"
+      <Controller
+        name='USER_NAME'
+        control={control}
+        render={({ field }) => (
+          <TextInput
+            {...field}
+            label='Nome'
+            value={field.value || ''}
+            onChange={(value) => field.onChange(value || '')}
+          />
+        )}
       />
-      <PasswordInput
-        {...register('USER_PASSWORD')}
-        label="Senha"
-        aria-label="Senha"
-        minLength={6}
+      <Controller
+        name='USER_PASSWORD'
+        control={control}
+        render={({ field }) => (
+          <PasswordInput
+            {...field}
+            label='Senha'
+            value={field.value || ''}
+            onChange={(value) => field.onChange(value || '')}
+          />
+        )}
       />
       <Group justify="flex-end" mt="md">
         <Button fullWidth type="submit" disabled={isPosting} loading={isPosting}>

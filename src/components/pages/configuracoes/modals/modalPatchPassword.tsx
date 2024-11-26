@@ -7,7 +7,7 @@ import { Button, Group, PasswordInput, Stack, Text } from "@mantine/core";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
 import { Session } from "next-auth";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 interface Props {
   user: Session['user'] | undefined;
@@ -18,7 +18,7 @@ interface UsePatchReq {
 }
 
 export default function ModalPatchPassword({ user }: Props) {
-  const { register, handleSubmit, watch } = useForm({
+  const { control, handleSubmit, watch } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(schemaUser)
   });
@@ -58,11 +58,18 @@ export default function ModalPatchPassword({ user }: Props) {
   return (
     <>
       <form onSubmit={handleSubmit(sendRequest)}>
-        <PasswordInput
-          {...register('USER_PASSWORD')}
-          autoComplete="new-password"
-          label="Nova senha"
-          required
+        <Controller
+          name='USER_PASSWORD'
+          control={control}
+          render={({ field }) => (
+            <PasswordInput
+              {...field}
+              label='Nova senha'
+              required
+              value={field.value || ''}
+              onChange={(value) => field.onChange(value || '')}
+            />
+          )}
         />
         <Group justify="flex-end" mt="md">
           <Button

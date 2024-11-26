@@ -5,7 +5,7 @@ import { Button, Group, PasswordInput, TextInput } from "@mantine/core";
 import { signIn } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 interface UsePostReq {
   USER_NAME: string;
@@ -14,12 +14,13 @@ interface UsePostReq {
 
 export default function SignIn() {
   const [isLoading, setIsLoading] = useState(false);
-  const { register, handleSubmit } = useForm({
+  const { control, handleSubmit } = useForm({
     mode: 'onChange',
     resolver: yupResolver(schemaAuth),
   });
 
   const submitForm: SubmitHandler<UsePostReq> = async (formData) => {
+    console.log(formData)
     setIsLoading(true);
     signIn('credentials', {
       USER_NAME: formData.USER_NAME,
@@ -46,17 +47,29 @@ export default function SignIn() {
 
   return (
     <form onSubmit={handleSubmit(submitForm)}>
-      <TextInput
-        {...register('USER_NAME')}
-        label="Username"
-        aria-label="Nome de usuário"
-        autoComplete="username"
+      <Controller
+        name='USER_NAME'
+        control={control}
+        render={({ field }) => (
+          <TextInput
+            {...field}
+            label='Nome'
+            value={field.value || ''}
+            onChange={(value) => field.onChange(value || '')}
+          />
+        )}
       />
-      <PasswordInput
-        {...register('USER_PASSWORD')}
-        label="Senha"
-        aria-label="Senha"
-        autoComplete="current-password"
+      <Controller
+        name='USER_PASSWORD'
+        control={control}
+        render={({ field }) => (
+          <PasswordInput
+            {...field}
+            label='Senha'
+            value={field.value || ''}
+            onChange={(value) => field.onChange(value || '')}
+          />
+        )}
       />
       <Group justify="flex-end" mt="md">
         <Button fullWidth type="submit" disabled={isLoading} loading={isLoading}>
