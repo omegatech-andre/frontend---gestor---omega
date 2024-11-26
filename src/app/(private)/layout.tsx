@@ -9,6 +9,7 @@ import Loading from '../loading';
 import { redirect } from 'next/navigation';
 import ProviderAvatar from '@/components/_ui/avatar/providerAvatar';
 import AccessDenied from '@/components/pages/accessDenied/accessDenied';
+import FloatButton from '@/components/_ui/floatButton/floatButton';
 
 export default function PagesLayout({
   children,
@@ -132,6 +133,7 @@ export default function PagesLayout({
           </AppShell.Navbar>
           <AppShell.Main w="100vw" h="max-content">
             {children}
+            <FloatButton />
           </AppShell.Main>
         </AppShell>
       )}
