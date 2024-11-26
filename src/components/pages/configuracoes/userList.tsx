@@ -6,9 +6,9 @@ import { useDisclosure } from "@mantine/hooks";
 import { IconDots, IconRefresh, IconSettings, IconUserShield } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import ModalEditPermission from "./modals/modalEditPermission";
-import ModalEditAdmin from "./modals/modalEditAdmin";
 import FormatDate from "@/utils/formatDate";
+import ModalPatchPermission from "./modals/modalPatchPermission";
+import ModalPatchAdmin from "./modals/modalPatchAdmin";
 
 export default function UsersList() {
   const { data: session } = useSession();
@@ -152,8 +152,8 @@ export default function UsersList() {
             blur: 3
           }}
         >
-          {modalContent === 'permission' && <ModalEditPermission user={selectedUser} />}
-          {modalContent === 'admin' && <ModalEditAdmin user={selectedUser} />}
+          {modalContent === 'permission' && <ModalPatchPermission user={selectedUser} />}
+          {modalContent === 'admin' && <ModalPatchAdmin user={selectedUser} />}
         </Modal>
       )}
     </>

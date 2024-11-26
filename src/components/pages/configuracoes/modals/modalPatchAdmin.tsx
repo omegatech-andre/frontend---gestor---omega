@@ -18,7 +18,7 @@ interface UsePatchReq {
   USER_AUTHORIZED?: boolean;
 }
 
-export default function ModalEditAdmin({ user }: Props) {
+export default function ModalPatchAdmin({ user }: Props) {
   const { data: session } = useSession();
   const { handleSubmit } = useForm({
     mode: 'onChange',

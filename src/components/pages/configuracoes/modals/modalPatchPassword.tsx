@@ -17,7 +17,7 @@ interface UsePatchReq {
   USER_PASSWORD?: string;
 }
 
-export default function ModalEditPassword({ user }: Props) {
+export default function ModalPatchPassword({ user }: Props) {
   const { register, handleSubmit, watch } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(schemaUser)
