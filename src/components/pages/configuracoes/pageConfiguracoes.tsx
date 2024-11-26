@@ -5,6 +5,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { IconKey } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 import ModalEditPassword from "./modals/modalEditPassword";
+import UsersList from "./userList";
 
 export default function PageConfiguracoes() {
   const { data: session } = useSession();
@@ -28,7 +29,7 @@ export default function PageConfiguracoes() {
           </Tooltip>
         </BackgroundImage>
         <Paper w={isDesktop ? '80%' : '100%'} h='100%'>
-          {/* <UsersList /> */}
+          <UsersList />
         </Paper>
         <Modal
           opened={opened}
