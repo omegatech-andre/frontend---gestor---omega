@@ -1,7 +1,6 @@
 import useGet from "@/hooks/useGet";
 import ProviderTheme from "@/styles/providerTheme";
 import { UserDetails } from "@/types/userDetails";
-import FormatDate from "@/utils/formatDate";
 import { ActionIcon, Badge, Button, Center, Flex, Group, Menu, Modal, Paper, Stack, Table, Text, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconDots, IconRefresh, IconSettings, IconUserShield } from "@tabler/icons-react";
@@ -9,6 +8,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import ModalEditPermission from "./modals/modalEditPermission";
 import ModalEditAdmin from "./modals/modalEditAdmin";
+import FormatDate from "@/utils/formatDate";
 
 export default function UsersList() {
   const { data: session } = useSession();
