@@ -102,43 +102,45 @@ export default function UsersList() {
   ));
 
   return (
-    <Stack mb={isDesktop ? '0' : '80'}>
-      <Stack>
-        <Text>
-          numero de usuarios: {response.data.length}
-        </Text>
-        <Group w='100%' justify="space-between" >
-          <TextInput
-            w='auto'
-            type="search"
-            placeholder="Buscar pelo nome"
-            style={{ flexGrow: 1 }}
-            value={searchName}
-            onChange={handleSearchChange}
-          />
-          <Button onClick={() => window.location.reload()}>
-            <IconRefresh size={20} />
-            <Center visibleFrom="md" ml={5}>Recarregar</Center>
-          </Button>
-        </Group>
-      </Stack>
-      <Stack align='center' justify='center'>
-        <Paper w='100%' withBorder radius='md' style={{ overflow: 'hidden' }}>
-          <Table.ScrollContainer minWidth={300} h='auto' mah='40vh' type='native' >
-            <Table verticalSpacing="xs" striped highlightOnHover withRowBorders={false}>
-              <Table.Thead pos='sticky' style={{ backdropFilter: `blur(100px)` }}>
-                <Table.Tr>
-                  <Table.Th>Name</Table.Th>
-                  <Table.Th visibleFrom="md">Função</Table.Th>
-                  <Table.Th visibleFrom="md">Criação</Table.Th>
-                  <Table.Th>Permissão</Table.Th>
-                  <Table.Th ta='end' />
-                </Table.Tr>
-              </Table.Thead>
-              <Table.Tbody>{rows}</Table.Tbody>
-            </Table>
-          </Table.ScrollContainer>
-        </Paper>
+    <>
+      <Stack mb={isDesktop ? '0' : '80'}>
+        <Stack>
+          <Text>
+            numero de usuarios: {response.data.length}
+          </Text>
+          <Group w='100%' justify="space-between" >
+            <TextInput
+              w='auto'
+              type="search"
+              placeholder="Buscar pelo nome"
+              style={{ flexGrow: 1 }}
+              value={searchName}
+              onChange={handleSearchChange}
+            />
+            <Button onClick={() => window.location.reload()}>
+              <IconRefresh size={20} />
+              <Center visibleFrom="md" ml={5}>Recarregar</Center>
+            </Button>
+          </Group>
+        </Stack>
+        <Stack align='center' justify='center'>
+          <Paper w='100%' withBorder radius='md' style={{ overflow: 'hidden' }}>
+            <Table.ScrollContainer minWidth={300} h='auto' mah='40vh' type='native' >
+              <Table verticalSpacing="xs" striped highlightOnHover withRowBorders={false}>
+                <Table.Thead pos='sticky' style={{ backdropFilter: `blur(100px)` }}>
+                  <Table.Tr>
+                    <Table.Th>Name</Table.Th>
+                    <Table.Th visibleFrom="md">Função</Table.Th>
+                    <Table.Th visibleFrom="md">Criação</Table.Th>
+                    <Table.Th>Permissão</Table.Th>
+                    <Table.Th ta='end' />
+                  </Table.Tr>
+                </Table.Thead>
+                <Table.Tbody>{rows}</Table.Tbody>
+              </Table>
+            </Table.ScrollContainer>
+          </Paper>
+        </Stack>
       </Stack>
       {selectedUser !== null && modalContent !== null && (
         <Modal
@@ -154,6 +156,6 @@ export default function UsersList() {
           {modalContent === 'admin' && <ModalEditAdmin user={selectedUser} />}
         </Modal>
       )}
-    </Stack>
+    </>
   );
 }

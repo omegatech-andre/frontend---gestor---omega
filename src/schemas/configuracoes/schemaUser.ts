@@ -14,6 +14,7 @@ export const schemaUser = yup.object().shape({
     .boolean()
     .optional(),
   USER_ROLE: yup
-    .boolean()
+    .string()
+    .oneOf(['ADMIN', 'USER'])
     .optional(),
 });

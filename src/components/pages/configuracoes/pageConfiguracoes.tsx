@@ -31,18 +31,18 @@ export default function PageConfiguracoes() {
         <Paper w={isDesktop ? '80%' : '100%'} h='100%'>
           <UsersList />
         </Paper>
-        <Modal
-          opened={opened}
-          onClose={close}
-          withCloseButton={false}
-          overlayProps={{
-            backgroundOpacity: 0.55,
-            blur: 3
-          }}
-        >
-          <ModalEditPassword user={session?.user} />
-        </Modal>
       </Stack>
+      <Modal
+        opened={opened}
+        onClose={close}
+        withCloseButton={false}
+        overlayProps={{
+          backgroundOpacity: 0.55,
+          blur: 3
+        }}
+      >
+        <ModalEditPassword user={session?.user} />
+      </Modal>
     </>
   );
 }
