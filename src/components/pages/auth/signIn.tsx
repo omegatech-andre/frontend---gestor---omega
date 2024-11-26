@@ -20,7 +20,6 @@ export default function SignIn() {
   });
 
   const submitForm: SubmitHandler<UsePostReq> = async (formData) => {
-    console.log(formData)
     setIsLoading(true);
     signIn('credentials', {
       USER_NAME: formData.USER_NAME,
