@@ -8,6 +8,7 @@ import { IconDots, IconRefresh, IconSettings, IconUserShield } from "@tabler/ico
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import ModalEditPermission from "./modals/modalEditPermission";
+import ModalEditAdmin from "./modals/modalEditAdmin";
 
 export default function UsersList() {
   const { data: session } = useSession();
@@ -150,8 +151,7 @@ export default function UsersList() {
           }}
         >
           {modalContent === 'permission' && <ModalEditPermission user={selectedUser} />}
-          {/* {modalContent === 'admin' && <ModalEditAdmin userDetail={selectedUser} />} */}
-          {modalContent === 'admin' && <>conteudo do motal de editar admin</>}
+          {modalContent === 'admin' && <ModalEditAdmin user={selectedUser} />}
         </Modal>
       )}
     </Stack>

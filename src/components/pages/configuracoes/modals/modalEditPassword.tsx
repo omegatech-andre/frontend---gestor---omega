@@ -64,8 +64,12 @@ export default function ModalEditPassword({ user }: Props) {
           required
         />
         <Group justify="flex-end" mt="md">
-          <Button fullWidth type="submit" disabled={isUpdating} loading={isUpdating}>
-            Salvar
+          <Button
+            fullWidth
+            type="submit"
+            loading={isUpdating}
+          >
+            Salvar nova senha
           </Button>
         </Group>
       </form>
