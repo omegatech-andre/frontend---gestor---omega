@@ -41,6 +41,7 @@ export default function ModalPatchPassword({ user }: Props) {
       ProviderNotification({
         title: 'Sucesso',
         message: 'Senha atualizada com sucesso!',
+        reload: true,
       });
     }
   }, [response, error]);

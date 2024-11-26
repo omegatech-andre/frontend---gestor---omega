@@ -42,7 +42,7 @@ export default function ModalPatchAdmin({ user }: Props) {
       ProviderNotification({
         title: 'Sucesso',
         message: 'Função atualizada com sucesso!',
-        reload: true
+        reload: true,
       });
     }
   }, [response, error]);

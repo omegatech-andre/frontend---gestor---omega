@@ -41,7 +41,7 @@ export default function ModalPatchPermission({ user }: Props) {
       ProviderNotification({
         title: 'Sucesso',
         message: 'Permissão atualizada com sucesso!',
-        reload: true
+        reload: true,
       });
     }
   }, [response, error]);

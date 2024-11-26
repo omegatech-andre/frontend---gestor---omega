@@ -3,6 +3,7 @@ import { ActionIcon, Affix, Menu, Modal, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconBox, IconBuildingStore, IconCubePlus, IconPackage, IconPlus, IconUser } from "@tabler/icons-react";
 import { useState } from "react";
+import ModalPostUser from "./modals/modalPostUser";
 
 export default function FloatButton() {
   const { isDesktop } = ProviderTheme();
@@ -44,7 +45,7 @@ export default function FloatButton() {
           backgroundOpacity: 0.55,
           blur: 3
         }}>
-        {modalContent === 'user' && <>mdoal de create user</>}
+        {modalContent === 'user' && <ModalPostUser />}
         {/*
         {modalContent === 'line' && <ModalPostLine />}
         {modalContent === 'category' && <ModalPostCategory />}
