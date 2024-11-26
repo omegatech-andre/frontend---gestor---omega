@@ -7,6 +7,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { IconDots, IconRefresh, IconSettings, IconUserShield } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import ModalEditPermission from "./modals/modalEditPermission";
 
 export default function UsersList() {
   const { data: session } = useSession();
@@ -148,8 +149,7 @@ export default function UsersList() {
             blur: 3
           }}
         >
-          {/* {modalContent === 'permission' && <ModalEditPermission userDetail={selectedUser} />} */}
-          {modalContent === 'permission' && <>conteudo do motal de editar permissao</>}
+          {modalContent === 'permission' && <ModalEditPermission user={selectedUser} />}
           {/* {modalContent === 'admin' && <ModalEditAdmin userDetail={selectedUser} />} */}
           {modalContent === 'admin' && <>conteudo do motal de editar admin</>}
         </Modal>

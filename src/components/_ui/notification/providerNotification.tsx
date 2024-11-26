@@ -4,9 +4,10 @@ import { IconCheck, IconX } from "@tabler/icons-react";
 interface Props {
   title: string | undefined;
   message: string;
+  reload?: boolean;
 }
 
-export default function ProviderNotification({ title, message }: Props) {
+export default function ProviderNotification({ title, message, reload }: Props) {
   const notificationColor = title === 'Sucesso' ? 'green' : 'red';
   const notificationIcon = title === 'Sucesso' ? <IconCheck /> : <IconX />;
 
@@ -16,6 +17,9 @@ export default function ProviderNotification({ title, message }: Props) {
     position: 'top-right',
     autoClose: 3000,
     color: notificationColor,
-    icon: notificationIcon
+    icon: notificationIcon,
+    onClose() {
+      if (reload) window.location.reload();
+    }
   });
 }

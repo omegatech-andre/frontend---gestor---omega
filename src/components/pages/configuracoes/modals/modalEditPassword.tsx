@@ -14,7 +14,7 @@ interface Props {
 }
 
 interface UsePatchReq {
-  USER_PASSWORD?: string
+  USER_PASSWORD?: string;
 }
 
 export default function ModalEditPassword({ user }: Props) {
