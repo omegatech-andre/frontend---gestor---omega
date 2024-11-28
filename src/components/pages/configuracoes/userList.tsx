@@ -1,6 +1,5 @@
 import useGet from "@/hooks/useGet";
 import ProviderTheme from "@/styles/providerTheme";
-import { UserDetails } from "@/types/userDetails";
 import { ActionIcon, Badge, Button, Center, Flex, Group, Menu, Modal, Paper, Stack, Table, Text, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconDots, IconRefresh, IconSettings, IconUserShield } from "@tabler/icons-react";
@@ -9,16 +8,17 @@ import { useEffect, useState } from "react";
 import FormatDate from "@/utils/formatDate";
 import ModalPatchPermission from "./modals/modalPatchPermission";
 import ModalPatchAdmin from "./modals/modalPatchAdmin";
+import { UserGetDetails } from "@/types/userDetails";
 
 export default function UsersList() {
   const { data: session } = useSession();
   const { isDesktop } = ProviderTheme();
   const [opened, { open, close }] = useDisclosure(false);
-  const [selectedUser, setSelectedUser] = useState<UserDetails | null>(null);
+  const [selectedUser, setSelectedUser] = useState<UserGetDetails | null>(null);
   const [modalContent, setModalContent] = useState<'permission' | 'admin' | null>(null);
   const [searchName, setsearchName] = useState<string>("");
 
-  const { response, sendRequest } = useGet<UserDetails[]>(`${process.env.NEXT_PUBLIC_BASE_URL}/users`, {
+  const { response, sendRequest } = useGet<UserGetDetails[]>(`${process.env.NEXT_PUBLIC_BASE_URL}/users`, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`
     }
@@ -30,7 +30,7 @@ export default function UsersList() {
 
   if (!response) return;
 
-  const handleOpen = (user: UserDetails, content: 'permission' | 'admin') => {
+  const handleOpen = (user: UserGetDetails, content: 'permission' | 'admin') => {
     setSelectedUser(user);
     setModalContent(content);
     open();
@@ -40,12 +40,12 @@ export default function UsersList() {
     setsearchName(event.target.value);
   };
 
-  const filteredUser = response.data.filter((data: UserDetails) => {
+  const filteredUser = response.data.filter((data: UserGetDetails) => {
     const matchesSearchTerm = data.USER_NAME.toLowerCase().includes(searchName.toLowerCase());
     return matchesSearchTerm;
   });
 
-  const rows = filteredUser?.map((row: UserDetails) => (
+  const rows = filteredUser?.map((row: UserGetDetails) => (
     <Table.Tr key={row.id}>
       <Table.Td>
         <Flex gap='xs' direction='column'>

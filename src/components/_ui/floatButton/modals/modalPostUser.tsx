@@ -2,17 +2,13 @@ import ProviderNotification from "@/components/_ui/notification/providerNotifica
 import usePost from "@/hooks/usePost";
 import { schemaUser } from "@/schemas/configuracoes/schemaUser";
 import ProviderTheme from "@/styles/providerTheme";
-import { UserDetails } from "@/types/userDetails";
+import { UserGetDetails, UserPostDetails } from "@/types/userDetails";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Group, PasswordInput, SimpleGrid, Stack, Switch, Text, TextInput } from "@mantine/core";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-
-interface UsePatchReq {
-  USER_PASSWORD?: string;
-}
 
 export default function ModalPostUser() {
   const { data: session } = useSession();
@@ -27,7 +23,7 @@ export default function ModalPostUser() {
   });
 
   const watchData = watch();
-  const { isPosting, response, error, sendRequest } = usePost<UsePatchReq, UserDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/users/create`, watchData, {
+  const { isPosting, response, error, sendRequest } = usePost<UserPostDetails, UserGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/users/create`, watchData, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`
     }

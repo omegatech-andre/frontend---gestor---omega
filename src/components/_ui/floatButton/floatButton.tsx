@@ -4,6 +4,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { IconBox, IconBuildingStore, IconCubePlus, IconPackage, IconPlus, IconUser } from "@tabler/icons-react";
 import { useState } from "react";
 import ModalPostUser from "./modals/modalPostUser";
+import ModalPostReseller from "./modals/modalPostReseller";
 
 export default function FloatButton() {
   const { isDesktop } = ProviderTheme();
@@ -45,13 +46,13 @@ export default function FloatButton() {
           backgroundOpacity: 0.55,
           blur: 3
         }}>
-        {modalContent === 'user' && <ModalPostUser />}
         {/*
         {modalContent === 'line' && <ModalPostLine />}
         {modalContent === 'category' && <ModalPostCategory />}
         {modalContent === 'product' && <ModalPostProduct />}
-        {modalContent === 'reseller' && <ModalPostReseller />}
         */}
+        {modalContent === 'reseller' && <ModalPostReseller />}
+        {modalContent === 'user' && <ModalPostUser />}
       </Modal>
     </>
   );

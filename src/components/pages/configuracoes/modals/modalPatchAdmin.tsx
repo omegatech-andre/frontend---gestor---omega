@@ -4,18 +4,13 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { IconCircleCheckFilled, IconLockOpen } from "@tabler/icons-react";
 import { schemaUser } from "../../../../schemas/configuracoes/schemaUser";
-import { UserDetails } from "../../../../types/userDetails";
 import { useSession } from "next-auth/react";
 import usePatch from "@/hooks/usePatch";
 import ProviderNotification from "@/components/_ui/notification/providerNotification";
+import { UserGetDetails, UserPostDetails } from "@/types/userDetails";
 
 interface Props {
-  user: UserDetails;
-}
-
-interface UsePatchReq {
-  USER_ROLE?: string;
-  USER_AUTHORIZED?: boolean;
+  user: UserGetDetails;
 }
 
 export default function ModalPatchAdmin({ user }: Props) {
@@ -25,7 +20,7 @@ export default function ModalPatchAdmin({ user }: Props) {
     resolver: yupResolver(schemaUser)
   });
 
-  const { isUpdating, response, error, sendRequest } = usePatch<UsePatchReq, UserDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/users/update/${user.USER_NAME}`, { USER_ROLE: 'ADMIN', USER_AUTHORIZED: true }, {
+  const { isUpdating, response, error, sendRequest } = usePatch<UserPostDetails, UserGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/users/update/${user.USER_NAME}`, { USER_ROLE: 'ADMIN', USER_AUTHORIZED: true }, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`
     }

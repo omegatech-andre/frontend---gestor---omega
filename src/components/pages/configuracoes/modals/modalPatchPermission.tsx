@@ -6,15 +6,11 @@ import { IconCircleCheckFilled, IconLock, IconLockOpen } from "@tabler/icons-rea
 import { schemaUser } from "../../../../schemas/configuracoes/schemaUser";
 import usePatch from "@/hooks/usePatch";
 import ProviderNotification from "@/components/_ui/notification/providerNotification";
-import { UserDetails } from "@/types/userDetails";
 import { useSession } from "next-auth/react";
+import { UserGetDetails, UserPostDetails } from "@/types/userDetails";
 
 interface Props {
-  user: UserDetails;
-}
-
-interface UsePatchReq {
-  USER_AUTHORIZED?: boolean;
+  user: UserGetDetails;
 }
 
 export default function ModalPatchPermission({ user }: Props) {
@@ -24,7 +20,7 @@ export default function ModalPatchPermission({ user }: Props) {
     resolver: yupResolver(schemaUser)
   });
 
-  const { isUpdating, response, error, sendRequest } = usePatch<UsePatchReq, UserDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/users/update/${user.USER_NAME}`, { USER_AUTHORIZED: !user.USER_AUTHORIZED }, {
+  const { isUpdating, response, error, sendRequest } = usePatch<UserPostDetails, UserGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/users/update/${user.USER_NAME}`, { USER_AUTHORIZED: !user.USER_AUTHORIZED }, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`
     }
