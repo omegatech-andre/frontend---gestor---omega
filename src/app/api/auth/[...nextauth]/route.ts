@@ -44,9 +44,9 @@ const authOptions: NextAuthOptions = {
 
           const payload: PayloadProps = JSON.parse(Buffer.from(access_token.split('.')[1], 'base64').toString());
 
-          if (!payload.sub) throw new Error('Token inválido: ID do usuário não encontrado.');
+          if (!payload.name) throw new Error('Token inválido: ID do usuário não encontrado.');
 
-          const { data: user } = await axios.get<GetResProps>(`${API_BASE_URL}/users/${payload.sub}`, {
+          const { data: user } = await axios.get<GetResProps>(`${API_BASE_URL}/users/${payload.name}`, {
             headers: {
               Authorization: `Bearer ${access_token}`
             }
@@ -67,7 +67,7 @@ const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       const user = token.user as Session['user'];
       if (user) {
-        const { data: updateUser } = await axios.get<GetResProps>(`${API_BASE_URL}/users/${user.id}`, {
+        const { data: updateUser } = await axios.get<GetResProps>(`${API_BASE_URL}/users/${user.USER_NAME}`, {
           headers: {
             Authorization: `Bearer ${user.access_token}`
           }

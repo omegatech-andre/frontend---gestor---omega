@@ -24,7 +24,7 @@ export default function ModalPatchPassword({ user }: Props) {
   });
 
   const watchData = watch();
-  const { isUpdating, response, error, sendRequest } = usePatch<UsePatchReq, UserDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/users/update/${user?.id}`, watchData, {
+  const { isUpdating, response, error, sendRequest } = usePatch<UsePatchReq, UserDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/users/update/${user?.USER_NAME}`, watchData, {
     headers: {
       Authorization: `Bearer ${user?.access_token}`
     }

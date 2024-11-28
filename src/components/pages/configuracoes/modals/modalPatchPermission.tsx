@@ -24,7 +24,7 @@ export default function ModalPatchPermission({ user }: Props) {
     resolver: yupResolver(schemaUser)
   });
 
-  const { isUpdating, response, error, sendRequest } = usePatch<UsePatchReq, UserDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/users/update/${user.id}`, { USER_AUTHORIZED: !user.USER_AUTHORIZED }, {
+  const { isUpdating, response, error, sendRequest } = usePatch<UsePatchReq, UserDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/users/update/${user.USER_NAME}`, { USER_AUTHORIZED: !user.USER_AUTHORIZED }, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`
     }

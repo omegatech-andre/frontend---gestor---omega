@@ -25,7 +25,7 @@ export default function ModalPatchAdmin({ user }: Props) {
     resolver: yupResolver(schemaUser)
   });
 
-  const { isUpdating, response, error, sendRequest } = usePatch<UsePatchReq, UserDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/users/update/${user.id}`, { USER_ROLE: 'ADMIN', USER_AUTHORIZED: true }, {
+  const { isUpdating, response, error, sendRequest } = usePatch<UsePatchReq, UserDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/users/update/${user.USER_NAME}`, { USER_ROLE: 'ADMIN', USER_AUTHORIZED: true }, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`
     }
