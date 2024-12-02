@@ -3,28 +3,46 @@ import { schemaReseller } from "@/schemas/revendedores/schemaReseller";
 import ProviderTheme from "@/styles/providerTheme";
 import { ResellerGetDetails, ResellerPostDetails } from "@/types/resellerDetails";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Paper, Select, SimpleGrid, Stack, Text, TextInput } from "@mantine/core";
+import { Button, Select, SimpleGrid, Stack, Text, TextInput } from "@mantine/core";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+import ProviderNotification from "../../notification/providerNotification";
 
 export default function ModalPostReseller() {
   const { data: session } = useSession();
-  const { register, handleSubmit, watch } = useForm({
-    mode: "onChange",
-    resolver: yupResolver(schemaReseller)
-  });
   const { isDesktop } = ProviderTheme();
-  const [inputValue, setInputValue] = useState<string>("");
+  const { control, handleSubmit, watch } = useForm({
+    mode: "onChange",
+    resolver: yupResolver(schemaReseller),
+    defaultValues: {
+      RESELLER_STATE: "AC",
+    },
+  });
 
   const watchData = watch();
-  const { isPosting, response, error, sendRequest } = usePost<ResellerPostDetails, ResellerGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/reseller/create`, watchData, {
+  const { isPosting, response, error, sendRequest } = usePost<ResellerPostDetails, ResellerGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/resellers/create`, { ...watchData, RESELLER_STATUS: 'PENDING' }, {
     headers: {
-      Authorization: `Bearer ${session?.user.access_token}`,
-      'Content-Type': 'multipart/form-data'
+      Authorization: `Bearer ${session?.user.access_token}`
     }
   });
+
+  useEffect(() => {
+    if (error) {
+      ProviderNotification({
+        title: error.response?.status === 409 ? 'Erro de confilto' : 'Erro ao criar revendedor',
+        message: error.response?.status === 409 ? 'Você está cadastrando um revendedor que já existe.' : 'Tente novamente mais tarde.',
+      });
+    }
+    if (response) {
+      ProviderNotification({
+        title: 'Sucesso',
+        message: 'Revendedor criado com sucesso!',
+        reload: true,
+      });
+    }
+  }, [response, error]);
 
   if (response) {
     return (
@@ -42,93 +60,186 @@ export default function ModalPostReseller() {
         <Text size="xl" ta='center'>Adicionar novo revendedor</Text>
         <Text size="sm" c='dimmed' ta='center'>Preencha os campos abaixo</Text>
       </Stack>
-      <form onSubmit={handleSubmit(() => console.log(watchData))}>
+      <form onSubmit={handleSubmit(sendRequest)}>
         <Stack gap={30}>
           <SimpleGrid cols={{ base: 1, sm: 3 }}>
-            <TextInput
-              {...register('RESELLER_SOCIAL_NAME')}
-              label='Razão Social'
+            <Controller
+              name='RESELLER_SOCIAL_NAME'
+              control={control}
+              render={({ field }) => (
+                <TextInput
+                  {...field}
+                  label='Razão Social'
+                  value={field.value || ''}
+                  onChange={(value) => field.onChange(value || '')}
+                />
+              )}
             />
-            <TextInput
-              {...register('RESELLER_CNPJ')}
-              label='CNPJ'
+            <Controller
+              name='RESELLER_CNPJ'
+              control={control}
+              render={({ field }) => (
+                <TextInput
+                  {...field}
+                  label='CNPJ'
+                  value={field.value || ''}
+                  onChange={(value) => field.onChange(value || '')}
+                />
+              )}
             />
-            <TextInput
-              {...register('RESELLER_FANTASY_NAME')}
-              label='Nome Fantasia'
-              required
+            <Controller
+              name='RESELLER_FANTASY_NAME'
+              control={control}
+              render={({ field }) => (
+                <TextInput
+                  {...field}
+                  label='Nome Fantasia'
+                  required
+                  value={field.value || ''}
+                  onChange={(value) => field.onChange(value || '')}
+                />
+              )}
             />
-            <TextInput
-              {...register('RESELLER_EMAIL')}
-              label='Email'
+            <Controller
+              name='RESELLER_EMAIL'
+              control={control}
+              render={({ field }) => (
+                <TextInput
+                  {...field}
+                  label='Email'
+                  value={field.value || ''}
+                  onChange={(value) => field.onChange(value || '')}
+                />
+              )}
             />
-            <TextInput
-              {...register('RESELLER_PHONE1')}
-              label='Telefone Principal'
-              required
+            <Controller
+              name='RESELLER_PHONE1'
+              control={control}
+              render={({ field }) => (
+                <TextInput
+                  {...field}
+                  label='Telefone Principal'
+                  required
+                  value={field.value || ''}
+                  onChange={(value) => field.onChange(value || '')}
+                />
+              )}
             />
-            <TextInput
-              {...register('RESELLER_PHONE2')}
-              label='Telefone adicional'
+            <Controller
+              name='RESELLER_PHONE2'
+              control={control}
+              render={({ field }) => (
+                <TextInput
+                  {...field}
+                  label='Telefone adicional'
+                  value={field.value || ''}
+                  onChange={(value) => field.onChange(value || '')}
+                />
+              )}
             />
-            <TextInput
-              {...register('RESELLER_ZIP_CODE')}
-              label='CEP'
+            <Controller
+              name='RESELLER_ZIP_CODE'
+              control={control}
+              render={({ field }) => (
+                <TextInput
+                  {...field}
+                  label='CEP'
+                  value={field.value || ''}
+                  onChange={(value) => field.onChange(value || '')}
+                />
+              )}
             />
-            <Select
-              label='Estado'
-              required
-              data={[
-                { value: "AC", label: "Acre" },
-                { value: "AL", label: "Alagoas" },
-                { value: "AP", label: "Amapá" },
-                { value: "AM", label: "Amazonas" },
-                { value: "BA", label: "Bahia" },
-                { value: "CE", label: "Ceará" },
-                { value: "DF", label: "Distrito Federal" },
-                { value: "ES", label: "Espírito Santo" },
-                { value: "GO", label: "Goiás" },
-                { value: "MA", label: "Maranhão" },
-                { value: "MT", label: "Mato Grosso" },
-                { value: "MS", label: "Mato Grosso do Sul" },
-                { value: "MG", label: "Minas Gerais" },
-                { value: "PA", label: "Pará" },
-                { value: "PB", label: "Paraíba" },
-                { value: "PR", label: "Paraná" },
-                { value: "PE", label: "Pernambuco" },
-                { value: "PI", label: "Piauí" },
-                { value: "RJ", label: "Rio de Janeiro" },
-                { value: "RN", label: "Rio Grande do Norte" },
-                { value: "RS", label: "Rio Grande do Sul" },
-                { value: "RO", label: "Rondônia" },
-                { value: "RR", label: "Roraima" },
-                { value: "SC", label: "Santa Catarina" },
-                { value: "SP", label: "São Paulo" },
-                { value: "SE", label: "Sergipe" },
-                { value: "TO", label: "Tocantins" },
-              ]}
-              value={inputValue}
-              onChange={(value) => setInputValue(value || "")}
+            <Controller
+              name='RESELLER_STATE'
+              control={control}
+              render={({ field }) => <Select
+                {...field}
+                label='Estado'
+                required
+                data={[
+                  { value: "AC", label: "Acre" },
+                  { value: "AL", label: "Alagoas" },
+                  { value: "AP", label: "Amapá" },
+                  { value: "AM", label: "Amazonas" },
+                  { value: "BA", label: "Bahia" },
+                  { value: "CE", label: "Ceará" },
+                  { value: "DF", label: "Distrito Federal" },
+                  { value: "ES", label: "Espírito Santo" },
+                  { value: "GO", label: "Goiás" },
+                  { value: "MA", label: "Maranhão" },
+                  { value: "MT", label: "Mato Grosso" },
+                  { value: "MS", label: "Mato Grosso do Sul" },
+                  { value: "MG", label: "Minas Gerais" },
+                  { value: "PA", label: "Pará" },
+                  { value: "PB", label: "Paraíba" },
+                  { value: "PR", label: "Paraná" },
+                  { value: "PE", label: "Pernambuco" },
+                  { value: "PI", label: "Piauí" },
+                  { value: "RJ", label: "Rio de Janeiro" },
+                  { value: "RN", label: "Rio Grande do Norte" },
+                  { value: "RS", label: "Rio Grande do Sul" },
+                  { value: "RO", label: "Rondônia" },
+                  { value: "RR", label: "Roraima" },
+                  { value: "SC", label: "Santa Catarina" },
+                  { value: "SP", label: "São Paulo" },
+                  { value: "SE", label: "Sergipe" },
+                  { value: "TO", label: "Tocantins" },
+                ]}
+                value={field.value || ""}
+                onChange={(value) => field.onChange(value || "")} />}
+
             />
-            <TextInput
-              {...register('RESELLER_CITY')}
-              label='Cidade'
-              required
+            <Controller
+              name='RESELLER_CITY'
+              control={control}
+              render={({ field }) => (
+                <TextInput
+                  {...field}
+                  label='Cidade'
+                  required
+                  value={field.value || ''}
+                  onChange={(value) => field.onChange(value || '')}
+                />
+              )}
             />
-            <TextInput
-              {...register('RESELLER_DISTRICT')}
-              label='Bairro'
-              required
+            <Controller
+              name='RESELLER_DISTRICT'
+              control={control}
+              render={({ field }) => (
+                <TextInput
+                  {...field}
+                  label='Bairro'
+                  required
+                  value={field.value || ''}
+                  onChange={(value) => field.onChange(value || '')}
+                />
+              )}
             />
-            <TextInput
-              {...register('RESELLER_STREET')}
-              label='Rua'
-              required
+            <Controller
+              name='RESELLER_STREET'
+              control={control}
+              render={({ field }) => (
+                <TextInput
+                  {...field}
+                  label='Rua'
+                  required
+                  value={field.value || ''}
+                  onChange={(value) => field.onChange(value || '')}
+                />
+              )}
             />
-            <TextInput
-              {...register('RESELLER_NUMBER')}
-              label='Número'
-              required
+            <Controller
+              name='RESELLER_NUMBER'
+              control={control}
+              render={({ field }) => (
+                <TextInput
+                  {...field}
+                  label='Número'
+                  required
+                  value={field.value || ''}
+                  onChange={(value) => field.onChange(value || '')}
+                />
+              )}
             />
           </SimpleGrid>
           <Button
@@ -136,7 +247,7 @@ export default function ModalPostReseller() {
             fullWidth
             loading={isPosting}
           >
-            Salvar
+            Criar revendedor
           </Button>
         </Stack>
       </form>
