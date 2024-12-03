@@ -3,6 +3,7 @@ import { ResellerGetDetails } from "../../../types/resellerDetails";
 import { IconBuildingStore, IconHandClick, IconMapPin } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import ProviderTheme from "@/styles/providerTheme";
+import ResellersList from "./resellerList";
 
 type StateCounts = Record<string, number>;
 
@@ -154,7 +155,7 @@ export default function PageRevendedores({
           </Card>
         </Paper>
         <Paper w={isDesktop ? '80%' : '100%'} h='100%'>
-          {/* <ResellersList data={reseller} /> */}
+          <ResellersList data={reseller} />
         </Paper>
       </Stack>
     </>
