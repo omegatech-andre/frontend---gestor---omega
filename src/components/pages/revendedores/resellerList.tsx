@@ -126,7 +126,7 @@ export default function ResellersList({ data }: Props) {
                 ))}
               </Menu.Dropdown>
             </Menu>
-            <Button onClick={() => console.log('nada')}>
+            <Button onClick={() => window.location.reload()}>
               <IconRefresh size={20} />
               <Center visibleFrom="md">Recarregar</Center>
             </Button>
