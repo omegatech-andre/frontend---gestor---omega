@@ -5,6 +5,8 @@ import { ResellerGetDetails } from "@/types/resellerDetails";
 import ProviderTheme from "@/styles/providerTheme";
 import { useState } from "react";
 import MenuNavigation from "@/components/_ui/menuNavigation/menuNavigation";
+import ModalPatchStatus from "./modals/modalPatchStatus";
+import ModalPatchLogo from "./modals/modalPatchLogo";
 
 interface Props {
   reseller: ResellerGetDetails;
@@ -66,10 +68,8 @@ export default function PageRevendedor({ reseller }: Props) {
           blur: 3
         }}
       >
-        {modalContent === 'picture' && <>modal de picture</>}
-        {modalContent === 'status' && <>modal de status</>}
-        {/* {modalContent === 'picture' && <ModalEditResellerLogo reseller={reseller} />} */}
-        {/* {modalContent === 'status' && <ModalEditResellerStatus reseller={reseller} />} */}
+        {modalContent === 'picture' && <ModalPatchLogo reseller={reseller} />}
+        {modalContent === 'status' && <ModalPatchStatus reseller={reseller} />}
       </Modal>
     </>
   );
