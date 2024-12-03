@@ -5,6 +5,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { ResellerGetDetails } from '@/types/resellerDetails';
 import ProviderTheme from '@/styles/providerTheme';
 import { FormatePhone } from '@/utils/formatPhone';
+import ModalPatchStatus from '../revendedor/modals/modalPatchStatus';
 
 interface Props {
   data: ResellerGetDetails[]
@@ -165,7 +166,7 @@ export default function ResellersList({ data }: Props) {
           blur: 3
         }}
       >
-        {/* <ModalEditResellerStatus reseller={selectedReseller} /> */}
+        <ModalPatchStatus reseller={selectedReseller} />
       </Modal>
     </>
   );
