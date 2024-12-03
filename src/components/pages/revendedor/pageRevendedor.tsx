@@ -4,6 +4,7 @@ import { useDisclosure } from "@mantine/hooks"
 import { ResellerGetDetails } from "@/types/resellerDetails";
 import ProviderTheme from "@/styles/providerTheme";
 import { useState } from "react";
+import MenuNavigation from "@/components/_ui/menuNavigation/menuNavigation";
 
 interface Props {
   reseller: ResellerGetDetails;
@@ -22,7 +23,7 @@ export default function PageRevendedor({ reseller }: Props) {
   return (
     <>
       <Stack h='100%' align="center" >
-        {/* <MenuNavigation /> */}
+        <MenuNavigation />
         <BackgroundImage src="/tumblr_0.webp" ta='center' p='20' radius={10} style={{
           backgroundPosition: 'right'
         }}>
