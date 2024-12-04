@@ -10,11 +10,18 @@ interface Props {
 
 export default function page({ params }: Props) {
   const resolvedParams = use(params);
-  const { response, sendRequest } = useGet<ResellerGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/resellers/${resolvedParams.fantasyName}`);
+
+  const { isGetting, response, error, sendRequest } = useGet<ResellerGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/resellers/${resolvedParams.fantasyName}`);
 
   useEffect(() => {
     sendRequest();
   }, [])
+
+  useEffect(() => {
+    if (!isGetting && error) {
+      window.location.replace('/revendedores')
+    }
+  }, [isGetting, error]);
 
   if (!response) return;
 
