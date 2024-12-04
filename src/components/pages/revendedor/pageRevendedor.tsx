@@ -7,6 +7,7 @@ import { useState } from "react";
 import MenuNavigation from "@/components/_ui/menuNavigation/menuNavigation";
 import ModalPatchStatus from "./modals/modalPatchStatus";
 import ModalPatchLogo from "./modals/modalPatchLogo";
+import ResellerDetail from "./resellerDetails";
 
 interface Props {
   reseller: ResellerGetDetails;
@@ -56,7 +57,7 @@ export default function PageRevendedor({ reseller }: Props) {
           </Group>
         </BackgroundImage>
         <Paper w={isDesktop ? '80%' : '100%'} h='100%' >
-          {/* <ResellerDetail reseller={reseller} /> */}
+          <ResellerDetail reseller={reseller} />
         </Paper>
       </Stack>
       <Modal

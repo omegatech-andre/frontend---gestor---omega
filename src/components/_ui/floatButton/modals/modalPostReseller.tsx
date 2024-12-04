@@ -186,8 +186,8 @@ export default function ModalPostReseller() {
                   { value: "TO", label: "Tocantins" },
                 ]}
                 value={field.value || ""}
-                onChange={(value) => field.onChange(value || "")} />}
-
+                onChange={(value) => field.onChange(value || "")}
+              />}
             />
             <Controller
               name='RESELLER_CITY'

@@ -77,6 +77,7 @@ export default function ModalPatchStatus({ reseller }: Props) {
           render={({ field }) => <Select
             {...field}
             label='Status'
+            allowDeselect={false}
             data={[
               { value: 'APPROVED', label: 'Aprovado', disabled: reseller?.RESELLER_STATUS === 'APPROVED' },
               { value: 'DISABLED', label: 'Desaprovado', disabled: reseller?.RESELLER_STATUS === 'DISABLED' },
