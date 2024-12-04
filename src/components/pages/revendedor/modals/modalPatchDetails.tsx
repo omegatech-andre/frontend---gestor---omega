@@ -27,7 +27,7 @@ export default function ModalPatchDetails({ reseller, inputLabel, inputValue, in
   });
 
   const watchData = watch();
-  const { isUpdating, response, error, sendRequest } = usePatch(`${process.env.NEXT_PUBLIC_BASE_URL}/resellers/update/${reseller.RESELLER_FANTASY_NAME}`, watchData, {
+  const { isUpdating, response, error, sendRequest } = usePatch<ResellerPostDetails, ResellerGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/resellers/update/${reseller.RESELLER_FANTASY_NAME}`, watchData, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`,
     },

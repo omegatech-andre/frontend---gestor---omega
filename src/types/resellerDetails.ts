@@ -1,3 +1,5 @@
+import { FileWithPath } from "@mantine/dropzone"
+
 export interface ResellerGetDetails {
   _id: string
   RESELLER_CNPJ: string
@@ -31,5 +33,7 @@ export interface ResellerPostDetails {
   RESELLER_PHONE1?: string
   RESELLER_PHONE2?: string
   RESELLER_STATUS?: 'PENDING' | 'APPROVED' | 'DISABLED'
-  RESELLER_URL_LOGO?: string
+}
+export interface ResellerPostLogo {
+  RESELLER_URL_LOGO?: FileWithPath
 }

@@ -1,6 +1,6 @@
 import { Button, Paper, Stack, Text } from "@mantine/core";
 import { IconCircleCheckFilled, IconCloudUpload } from "@tabler/icons-react";
-import { ResellerGetDetails } from "@/types/resellerDetails";
+import { ResellerGetDetails, ResellerPostLogo } from "@/types/resellerDetails";
 import { useEffect, useState } from "react";
 import usePatch from "@/hooks/usePatch";
 import { useSession } from "next-auth/react";
@@ -16,7 +16,7 @@ export default function ModalPatchLogo({ reseller }: Props) {
   const { data: session } = useSession();
   const [files, setFiles] = useState<FileWithPath[]>([]);
 
-  const { isUpdating, response, error, sendRequest } = usePatch(`${process.env.NEXT_PUBLIC_BASE_URL}/resellers/upload-logo/${reseller.RESELLER_FANTASY_NAME}`, { RESELLER_URL_LOGO: files[0] }, {
+  const { isUpdating, response, error, sendRequest } = usePatch<ResellerPostLogo, ResellerGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/resellers/upload-logo/${reseller.RESELLER_FANTASY_NAME}`, { RESELLER_URL_LOGO: files[0] }, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`,
       'Content-Type': 'multipart/form-data'

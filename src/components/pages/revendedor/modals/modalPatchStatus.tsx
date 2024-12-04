@@ -3,7 +3,7 @@ import { IconCircleCheckFilled } from "@tabler/icons-react"
 import { Controller, useForm } from "react-hook-form";
 import { schemaReseller } from "../../../../schemas/revendedores/schemaReseller";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ResellerGetDetails } from "@/types/resellerDetails";
+import { ResellerGetDetails, ResellerPostDetails } from "@/types/resellerDetails";
 import usePatch from "@/hooks/usePatch";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
@@ -24,7 +24,7 @@ export default function ModalPatchStatus({ reseller }: Props) {
   });
 
   const watchData = watch();
-  const { isUpdating, response, error, sendRequest } = usePatch(`${process.env.NEXT_PUBLIC_BASE_URL}/resellers/update/${reseller?.RESELLER_FANTASY_NAME}`, watchData, {
+  const { isUpdating, response, error, sendRequest } = usePatch<ResellerPostDetails, ResellerGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/resellers/update/${reseller?.RESELLER_FANTASY_NAME}`, watchData, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`,
     }
