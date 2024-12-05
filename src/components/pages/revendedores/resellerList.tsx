@@ -49,7 +49,14 @@ export default function ResellersList({ data }: Props) {
         <Flex gap="sm" align='center'>
           <Avatar size={35} src={`${process.env.NEXT_PUBLIC_BASE_URL}${row.RESELLER_URL_LOGO}`} />
           <Flex gap='xs' direction='column'>
-            <Text fz="sm" inline pl='3px'>{row.RESELLER_FANTASY_NAME}</Text>
+            <Text fz="sm" inline pl='3px'>
+              {
+                row.RESELLER_FANTASY_NAME
+                  .split(" ")
+                  .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                  .join(" ")
+              }
+            </Text>
             <Group hiddenFrom="md" fz="xs">
               {
                 row.RESELLER_STATUS === 'APPROVED'

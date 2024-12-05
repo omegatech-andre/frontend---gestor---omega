@@ -33,7 +33,14 @@ export default function PageRevendedor({ reseller }: Props) {
           <Paper m='auto' w='max-content' radius={100} p={5} withBorder>
             <Avatar size={120} src={`${process.env.NEXT_PUBLIC_BASE_URL}${reseller.RESELLER_URL_LOGO}`} />
           </Paper>
-          <Text my={5} size='lg'>{reseller.RESELLER_FANTASY_NAME.toUpperCase()}</Text>
+          <Text my={5} size='lg'>
+            {
+              reseller.RESELLER_FANTASY_NAME
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ')
+            }
+          </Text>
           <Group mb={10} justify="center">
             {
               reseller.RESELLER_STATUS === 'APPROVED'

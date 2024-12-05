@@ -16,10 +16,10 @@ export default function page() {
   const totalResellers = response.data.length;
   const activeResellers = response.data.filter(reseller => reseller.RESELLER_STATUS === 'APPROVED').length;
   const pendingResellers = response.data.filter(reseller => reseller.RESELLER_STATUS === 'PENDING').length;
-  const inactiveResellers = totalResellers - (activeResellers + pendingResellers);
+  const inactiveResellers = response.data.filter(reseller => reseller.RESELLER_STATUS === 'DISABLED').length;
   const totalStates = new Set(response.data.map(reseller => reseller.RESELLER_STATE)).size;
   const activeStates = new Set(response.data.filter(reseller => reseller.RESELLER_STATUS === 'APPROVED').map(reseller => reseller.RESELLER_STATE)).size;
-  const inactiveStates = totalStates - activeStates;
+  const inactiveStates = new Set(response.data.filter(reseller => reseller.RESELLER_STATUS === 'DISABLED').map(reseller => reseller.RESELLER_STATE)).size;
   const stateCounts = response.data.filter(reseller => reseller.RESELLER_STATUS === 'APPROVED').reduce((acc, reseller) => {
     acc[reseller.RESELLER_STATE] = (acc[reseller.RESELLER_STATE] || 0) + 1;
     return acc;
