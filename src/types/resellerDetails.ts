@@ -34,6 +34,7 @@ export interface ResellerPostDetails {
   RESELLER_PHONE2?: string
   RESELLER_STATUS?: 'PENDING' | 'APPROVED' | 'DISABLED'
 }
+
 export interface ResellerPostLogo {
   RESELLER_URL_LOGO?: FileWithPath
 }
