@@ -1,23 +1,28 @@
 'use client'
-import { Button, Center, Stack, Text } from "@mantine/core";
-import { signOut, useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import PageProdutos from "@/components/pages/produtos/pageProdutos";
+import useGet from "@/hooks/useGet";
+import { LineGetDetails } from "@/types/lineDetails";
+import { useEffect } from "react";
 
 export default function Page() {
-  const { data: session } = useSession();
+  const { response: lines, sendRequest } = useGet<LineGetDetails[]>(`${process.env.NEXT_PUBLIC_BASE_URL}/lines`);
+  // const { data: categoriesData } = useGet<CategoryDetails[]>(`${process.env.NEXT_PUBLIC_BASE_URL}/category`);
+  // const { data: productsData } = useGet<productDetails[]>(`${process.env.NEXT_PUBLIC_BASE_URL}/product`);
+  const categoriesData = 'category'; // TODO
+  const productsData = 'produtos'; // TODO
 
-  const logout = async () => {
-    await signOut({ redirect: false });
-    redirect('/')
-  }
+  useEffect(() => {
+    sendRequest();
+  }, [])
 
-  return (
-    <Center h='70vh' bg='teal'>
-      <Stack>
-        <Text>Olá {session?.user.USER_NAME}</Text>
-        <Text>esta é minha pagina privada</Text>
-        <Button onClick={logout}>Sair</Button>
-      </Stack>
-    </Center>
-  );
+  if (!lines) return;
+
+  // Mapeando as categorias para substituir FK_LINE_ID pelo nome da linha
+  // const categoriesWithLineNames = categoriesData.map(category => ({
+  //   ...category,
+  //   FK_LINE_ID: lines.find(line => line._id === category.FK_LINE_ID)?.LINE_NAME || category.FK_LINE_ID
+  // }));
+
+  // Renderizando o componente com os dados modificados
+  return <PageProdutos lines={lines.data} categories={categoriesData} products={productsData} />
 }
