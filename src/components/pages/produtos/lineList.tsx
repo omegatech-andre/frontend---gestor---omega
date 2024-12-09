@@ -128,7 +128,7 @@ export default function LineList({ lines }: Props) {
             </Paper>
           )}
         </Stack>
-        <Text ta='center' size="xs" c='dimmed' mt={10}>OBS: Uma linha desativada fica oculta no site oficial, por consequência os produtos dessa linha tambem não serão mostrados.</Text>
+        <Text size="xs" c='dimmed' mt={10}>OBS: Uma linha desativada fica oculta no site oficial, por consequência os produtos dessa linha tambem não serão mostrados.</Text>
       </Stack>
       <Modal
         opened={opened}

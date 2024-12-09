@@ -79,8 +79,8 @@ export default function ModalPatchStatus({ reseller }: Props) {
             label='Status'
             allowDeselect={false}
             data={[
-              { value: 'APPROVED', label: 'Aprovado', disabled: reseller?.RESELLER_STATUS === 'APPROVED' },
-              { value: 'DISABLED', label: 'Desaprovado', disabled: reseller?.RESELLER_STATUS === 'DISABLED' },
+              { value: 'APPROVED', label: 'Ativado', disabled: reseller?.RESELLER_STATUS === 'APPROVED' },
+              { value: 'DISABLED', label: 'Desativado', disabled: reseller?.RESELLER_STATUS === 'DISABLED' },
             ]}
           />}
         />
@@ -92,7 +92,7 @@ export default function ModalPatchStatus({ reseller }: Props) {
         >
           Salvar
         </Button>
-        <Text ta='center' size="xs" c='dimmed' mt={10}>OBS: Revendedores desativados ou pendentes não são mostrados na lista de revendedores no site oficial</Text>
+        <Text ta='center' size="xs" c='dimmed' mt={10}>OBS: Revendedores Desativados ou pendentes não são mostrados na lista de revendedores no site oficial</Text>
       </form >
     </>
   );

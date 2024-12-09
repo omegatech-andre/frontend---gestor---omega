@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 export default function Page() {
   const { response: lines, sendRequest } = useGet<LineGetDetails[]>(`${process.env.NEXT_PUBLIC_BASE_URL}/lines`);
-  // const { data: categoriesData } = useGet<CategoryDetails[]>(`${process.env.NEXT_PUBLIC_BASE_URL}/category`);
+  // const { data: categoriesData } = useGet<CategoryDetails[]>(`${process.env.NEXT_PUBLIC_BASE_URL}/category`); TODO
   // const { data: productsData } = useGet<productDetails[]>(`${process.env.NEXT_PUBLIC_BASE_URL}/product`);
   const categoriesData = 'category'; // TODO
   const productsData = 'produtos'; // TODO

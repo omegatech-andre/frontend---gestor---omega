@@ -79,8 +79,8 @@ export default function ModalPatchStatus({ line }: Props) {
             label='Status'
             allowDeselect={false}
             data={[
-              { value: 'APPROVED', label: 'Aprovado', disabled: line?.LINE_STATUS === 'APPROVED' },
-              { value: 'DISABLED', label: 'Desaprovado', disabled: line?.LINE_STATUS === 'DISABLED' },
+              { value: 'APPROVED', label: 'Ativado', disabled: line?.LINE_STATUS === 'APPROVED' },
+              { value: 'DISABLED', label: 'Desativado', disabled: line?.LINE_STATUS === 'DISABLED' },
             ]}
           />}
         />

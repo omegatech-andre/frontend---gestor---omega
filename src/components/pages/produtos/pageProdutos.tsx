@@ -6,7 +6,7 @@ import LineList from "./lineList";
 
 interface Props {
   lines: LineGetDetails[];
-  // categories: CategoryDetails[];
+  // categories: CategoryDetails[]; TODO
   // products: productDetails[];
   categories: string; // TODO
   products: string; // TODO
