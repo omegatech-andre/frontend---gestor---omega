@@ -1,5 +1,5 @@
 import { ActionIcon, Badge, Card, Flex, Group, Image, Modal, Paper, Stack, Text, Tooltip } from "@mantine/core"
-import { IconPhoto, IconSettings, IconTrash } from "@tabler/icons-react"
+import { IconPhoto, IconSettings } from "@tabler/icons-react"
 import { useDisclosure } from "@mantine/hooks"
 import { useState } from "react"
 import { LineGetDetails } from "@/types/lineDetails"
@@ -7,6 +7,7 @@ import ProviderTheme from "@/styles/providerTheme"
 import MenuNavigation from "@/components/_ui/menuNavigation/menuNavigation"
 import ModalPatchStatus from "./modals/modalPatchStatus"
 import LineDetail from "./lineDetails"
+import ModalPatchImage from "./modals/modalPatchImage"
 
 interface Props {
   line: LineGetDetails;
@@ -28,7 +29,7 @@ export default function PageLinha({ line }: Props) {
         <MenuNavigation />
         <Card w='100%' shadow="sm" padding="sm" radius="md" withBorder>
           <Card.Section>
-            <Image src={`${process.env.NEXT_PUBLIC_BASE_URL}${line.LINE_URL_IMAGE}`} height={200} />
+            <Image src={line.LINE_URL_IMAGE ? `${process.env.NEXT_PUBLIC_BASE_URL}${line.LINE_URL_IMAGE}` : '/tumblr_0.webp'} height={200} />
           </Card.Section>
           <Flex direction={isSmallDevice ? 'row' : 'column'} mt='sm' gap='xs'>
             <Text fz='h1' inline>LINHA {line.LINE_NAME.toUpperCase()}</Text>
@@ -73,7 +74,7 @@ export default function PageLinha({ line }: Props) {
           blur: 3
         }}
       >
-        {/* {modalContent === 'picture' && <ModalEditLineWallpaper line={line} />} */}
+        {modalContent === 'picture' && <ModalPatchImage line={line} />}
         {modalContent === 'status' && <ModalPatchStatus line={line} />}
         {/* {modalContent === 'delete' && <ModalDeleteLine line={line} />} */}
       </Modal>

@@ -4,15 +4,16 @@ import { IconDownload, IconPhotoUp, IconRefresh, IconTrash, IconX } from "@table
 import { useRef } from "react";
 
 interface Props {
-  name: string
-  w: string
-  h: string
-  files: FileWithPath[]
-  setFiles: (files: FileWithPath[]) => void
+  name: string;
+  w: string;
+  h: string;
+  size: string;
+  files: FileWithPath[];
+  setFiles: (files: FileWithPath[]) => void;
 }
 
-export default function CustomDropZone({ name, w, h, files, setFiles }: Props) {
-  const openRef = useRef<() => void>(() => {});
+export default function CustomDropZone({ name, w, h, size, files, setFiles }: Props) {
+  const openRef = useRef<() => void>(() => { });
 
   const handleRemove = () => {
     setFiles([]);
@@ -36,7 +37,7 @@ export default function CustomDropZone({ name, w, h, files, setFiles }: Props) {
                 variant="transparent"
                 c='red'
                 leftSection={<IconTrash size={20} />}
-                >
+              >
                 Remover {name}
               </Button>
               <Button
@@ -75,11 +76,11 @@ export default function CustomDropZone({ name, w, h, files, setFiles }: Props) {
           </Group>
           <Text ta="center" fw={700} fz="lg">
             <Dropzone.Accept>Soltar</Dropzone.Accept>
-            <Dropzone.Reject>O arquivo não um PNG ou é maior que 5Mb</Dropzone.Reject>
+            <Dropzone.Reject>O arquivo não um WEBP ou é maior que {size}</Dropzone.Reject>
             <Dropzone.Idle>Carregar {name}</Dropzone.Idle>
           </Text>
           <Text ta="center" fz="sm" mt="xs" c="dimmed">
-            Clique ou arraste e solte o arquivo aqui para fazer o carregamento. Só é permitido arquivo PNG com menos de 5Mb
+            Clique ou arraste e solte o arquivo aqui para fazer o carregamento. Só é permitido arquivo WEBP com menos de {size}
           </Text>
           <Text ta="center" fz="sm" mt="xs" c="dimmed">
             Obs: para manter um padrão envie imagens com dimensão de {w}x{h} pixels
