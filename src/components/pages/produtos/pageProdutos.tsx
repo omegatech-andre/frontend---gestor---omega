@@ -2,8 +2,9 @@ import ProviderTheme from "@/styles/providerTheme";
 import { LineGetDetails } from "@/types/lineDetails";
 import { Card, Group, Paper, SegmentedControl, Stack, Text } from "@mantine/core";
 import { useState } from "react";
+import LineList from "./lineList";
 
-interface PageProdutosProps {
+interface Props {
   lines: LineGetDetails[];
   // categories: CategoryDetails[];
   // products: productDetails[];
@@ -11,7 +12,7 @@ interface PageProdutosProps {
   products: string; // TODO
 }
 
-export default function PageProdutos({ lines, categories, products }: PageProdutosProps) {
+export default function PageProdutos({ lines, categories, products }: Props) {
   const { isDesktop } = ProviderTheme();
   const [tabContent, setTabContent] = useState<'products' | 'categories' | 'lines'>('products');
 
@@ -67,7 +68,7 @@ export default function PageProdutos({ lines, categories, products }: PageProdut
           />
           {tabContent === 'products' && <>lista de produto</>}
           {/* {tabContent === 'categories' && <CategoryList categories={categories} />} */}
-          {/* {tabContent === 'lines' && <LineList lines={lines} />} */}
+          {tabContent === 'lines' && <LineList lines={lines} />}
         </Paper>
       </Stack >
     </>

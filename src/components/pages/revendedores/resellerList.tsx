@@ -8,17 +8,17 @@ import { FormatePhone } from '@/utils/formatPhone';
 import ModalPatchStatus from '../revendedor/modals/modalPatchStatus';
 
 interface Props {
-  data: ResellerGetDetails[]
+  resellers: ResellerGetDetails[]
 }
 
-export default function ResellersList({ data }: Props) {
+export default function ResellersList({ resellers }: Props) {
   const { isDesktop } = ProviderTheme();
   const [opened, { open, close }] = useDisclosure(false);
   const [selectedReseller, setSelectedReseller] = useState<ResellerGetDetails>();
   const [searchName, setSearchName] = useState<string>("");
   const [selectedStates, setSelectedStates] = useState<string[]>([]);
 
-  const states = Array.from(new Set(data.map(reseller => reseller.RESELLER_STATE)));
+  const states = Array.from(new Set(resellers.map(reseller => reseller.RESELLER_STATE)));
 
   const handleOpen = (reseller: ResellerGetDetails) => {
     setSelectedReseller(reseller);
@@ -37,13 +37,13 @@ export default function ResellersList({ data }: Props) {
     );
   };
 
-  const filteredReseller = data?.filter((reseller: ResellerGetDetails) => {
+  const filteredResellers = resellers?.filter((reseller: ResellerGetDetails) => {
     const matchesSearchTerm = reseller.RESELLER_FANTASY_NAME.toLowerCase().includes(searchName.toLowerCase());
     const matchesState = selectedStates.length === 0 || selectedStates.includes(reseller.RESELLER_STATE);
     return matchesSearchTerm && matchesState;
   });
 
-  const rows = filteredReseller?.map((row, index) => (
+  const rows = filteredResellers?.map((row, index) => (
     <Table.Tr key={index}>
       <Table.Td>
         <Flex gap="sm" align='center'>
@@ -140,7 +140,7 @@ export default function ResellersList({ data }: Props) {
           </Flex>
         </Flex>
         <Stack align='center' justify='center'>
-          {filteredReseller.length <= 0 ? (
+          {filteredResellers.length <= 0 ? (
             <Card w='100%' h='20vh' ta='center'>
               <Text m='auto' c='dimmed'>Nada aqui ainda.</Text>
             </Card>

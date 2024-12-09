@@ -155,7 +155,7 @@ export default function PageRevendedores({
           </Card>
         </Paper>
         <Paper w={isDesktop ? '80%' : '100%'} h='100%'>
-          <ResellersList data={reseller} />
+          <ResellersList resellers={reseller} />
         </Paper>
       </Stack>
     </>
