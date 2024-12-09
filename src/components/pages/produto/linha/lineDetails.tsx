@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
-import { ActionIcon, Modal, Paper, SimpleGrid, Text, TextInput, Button, Group, Stack, Textarea } from "@mantine/core";
-import { IconCheck, IconCircleCheckFilled, IconEdit, IconX } from "@tabler/icons-react";
+import { useState } from "react";
+import { ActionIcon, Modal, Paper, SimpleGrid, TextInput } from "@mantine/core";
+import { IconEdit } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
-import { LineGetDetails } from "@/types/lineDetails";
+import { LineGetDetails, LinePostDetails } from "@/types/lineDetails";
 import ProviderTheme from "@/styles/providerTheme";
+import ModalPatchDetails from "./modals/modalPatchDetails";
 
 interface Props {
   line: LineGetDetails;
@@ -12,24 +13,24 @@ interface Props {
 export default function LineDetail({ line }: Props) {
   const { isDesktop } = ProviderTheme();
   const [opened, { open, close }] = useDisclosure(false);
-  const [currentField, setCurrentField] = useState<string | null>(null);
+  const [currentField, setCurrentField] = useState<keyof LinePostDetails>("LINE_NAME");
   const [inputValue, setInputValue] = useState<string>("");
   const [inputLabel, setInputLabel] = useState<string>("");
 
-  const handleOpenModal = (label: string, field: string, value: string) => {
-    setCurrentField(field);
-    setInputValue(value);
+  const handleOpenModal = (label: string, value: string, field: keyof LinePostDetails) => {
     setInputLabel(label);
+    setInputValue(value);
+    setCurrentField(field);
     open();
   };
 
-  const renderTextInput = (label: string, value: string, field: string) => (
+  const renderTextInput = (label: string, value: string, field: keyof LinePostDetails) => (
     <TextInput
       description={label}
       value={value}
       readOnly
       rightSection={
-        <ActionIcon onClick={() => handleOpenModal(label, field, value)} variant="transparent" c="dimmed" aria-label={label}>
+        <ActionIcon onClick={() => handleOpenModal(label, value, field)} variant="transparent" c="dimmed" aria-label={label}>
           <IconEdit size={20} />
         </ActionIcon>
       }
@@ -53,7 +54,7 @@ export default function LineDetail({ line }: Props) {
           blur: 3,
         }}
       >
-        <>modal de patch details</>
+        <ModalPatchDetails line={line} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />
       </Modal>
     </>
   );
