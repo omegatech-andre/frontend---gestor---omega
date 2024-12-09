@@ -15,7 +15,7 @@ export default function page({ params }: Props) {
 
   useEffect(() => {
     sendRequest();
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (!isGetting && error) {

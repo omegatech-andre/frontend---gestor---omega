@@ -77,7 +77,7 @@ export default function LineList({ lines }: Props) {
               </ActionIcon>
             </Menu.Target>
             <Menu.Dropdown>
-              <Menu.Item component='a' href={`/linha/${row._id}`} leftSection={<IconListDetails size={20} />}>Detalhes</Menu.Item>
+              <Menu.Item component='a' href={`/linha/${row.LINE_NAME}`} leftSection={<IconListDetails size={20} />}>Detalhes</Menu.Item>
               <Menu.Item onClick={() => handleOpen('edit', row)} leftSection={<IconSettings size={20} />}>Alterar Status</Menu.Item>
               <Menu.Item onClick={() => handleOpen('delete', row)} leftSection={<IconTrash size={20} />}>Deletar linha</Menu.Item>
             </Menu.Dropdown>
