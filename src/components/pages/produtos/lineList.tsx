@@ -89,56 +89,59 @@ export default function LineList({ lines }: Props) {
   ));
 
   return (
-    <Stack mb={isDesktop ? '0' : '80'}>
-      <Flex gap={15}>
-        <TextInput
-          w='auto'
-          type="search"
-          placeholder="Buscar pelo nome da linha"
-          style={{ flexGrow: 1 }}
-          value={searchName}
-          onChange={handleSearchChange}
-        />
-        <Button onClick={() => window.location.reload()}>
-          <IconRefresh size={20} />
-          <Center visibleFrom="md">Recarregar</Center>
-        </Button>
-      </Flex>
-      <Stack align='center' justify='center'>
-        {lines.length <= 0 ? (
-          <Card w='100%' h='20vh' ta='center'>
-            <Text m='auto' c='dimmed'>Nada aqui ainda.</Text>
-          </Card>
-        ) : (
-          <Paper w='100%' withBorder radius='md' style={{ overflow: 'hidden' }}>
-            <Table.ScrollContainer minWidth={300} h='auto' mah='50vh' type='native' >
-              <Table verticalSpacing="sm" striped highlightOnHover withRowBorders={false}>
-                <Table.Thead pos='sticky' style={{ backdropFilter: `blur(100px)` }} >
-                  <Table.Tr>
-                    <Table.Th>Nome da linha</Table.Th>
-                    <Table.Th visibleFrom="md">Descrição</Table.Th>
-                    <Table.Th visibleFrom="md">Status</Table.Th>
-                    <Table.Th ta='end' />
-                  </Table.Tr>
-                </Table.Thead>
-                <Table.Tbody>{rows}</Table.Tbody>
-              </Table>
-            </Table.ScrollContainer>
-          </Paper>
-        )}
-        <Modal
-          opened={opened}
-          onClose={close}
-          withCloseButton={false}
-          overlayProps={{
-            backgroundOpacity: 0.55,
-            blur: 3
-          }}
-        >
-          {modalContent === 'edit' && <ModalPatchStatus line={selectedLine} />}
-          {/* {modalContent === 'delete' && <ModalDeleteLine line={selectedLine} />} */}
-        </Modal>
+    <>
+      <Stack mb={isDesktop ? '0' : '80'}>
+        <Flex gap={15}>
+          <TextInput
+            w='auto'
+            type="search"
+            placeholder="Buscar pelo nome da linha"
+            style={{ flexGrow: 1 }}
+            value={searchName}
+            onChange={handleSearchChange}
+          />
+          <Button onClick={() => window.location.reload()}>
+            <IconRefresh size={20} />
+            <Center visibleFrom="md">Recarregar</Center>
+          </Button>
+        </Flex>
+        <Stack align='center' justify='center'>
+          {lines.length <= 0 ? (
+            <Card w='100%' h='20vh' ta='center'>
+              <Text m='auto' c='dimmed'>Nada aqui ainda.</Text>
+            </Card>
+          ) : (
+            <Paper w='100%' withBorder radius='md' style={{ overflow: 'hidden' }}>
+              <Table.ScrollContainer minWidth={300} h='auto' mah='50vh' type='native' >
+                <Table verticalSpacing="sm" striped highlightOnHover withRowBorders={false}>
+                  <Table.Thead pos='sticky' style={{ backdropFilter: `blur(100px)` }} >
+                    <Table.Tr>
+                      <Table.Th>Nome da linha</Table.Th>
+                      <Table.Th visibleFrom="md">Descrição</Table.Th>
+                      <Table.Th visibleFrom="md">Status</Table.Th>
+                      <Table.Th ta='end' />
+                    </Table.Tr>
+                  </Table.Thead>
+                  <Table.Tbody>{rows}</Table.Tbody>
+                </Table>
+              </Table.ScrollContainer>
+            </Paper>
+          )}
+        </Stack>
+        <Text ta='center' size="xs" c='dimmed' mt={10}>OBS: Uma linha desativada fica oculta no site oficial, por consequência os produtos dessa linha tambem não serão mostrados.</Text>
       </Stack>
-    </Stack>
+      <Modal
+        opened={opened}
+        onClose={close}
+        withCloseButton={false}
+        overlayProps={{
+          backgroundOpacity: 0.55,
+          blur: 3
+        }}
+      >
+        {modalContent === 'edit' && <ModalPatchStatus line={selectedLine} />}
+        {/* {modalContent === 'delete' && <ModalDeleteLine line={selectedLine} />} */}
+      </Modal>
+    </>
   );
 }

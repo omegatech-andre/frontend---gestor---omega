@@ -22,7 +22,7 @@ export default function ModalPostReseller() {
   });
 
   const watchData = watch();
-  const { isPosting, response, error, sendRequest } = usePost<ResellerPostDetails, ResellerGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/resellers/create`, { ...watchData, RESELLER_STATUS: 'PENDING' }, {
+  const { isPosting, response, error, sendRequest } = usePost<ResellerPostDetails, ResellerGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/resellers/create`, watchData, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`
     }
