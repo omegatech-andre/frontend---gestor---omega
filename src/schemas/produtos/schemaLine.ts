@@ -1,9 +1,6 @@
 import * as yup from 'yup';
 
 export const schemaLine = yup.object().shape({
-  // _id: yup
-  //   .string()
-  //   .optional(),
   LINE_NAME: yup
     .string()
     .optional(),
@@ -17,8 +14,4 @@ export const schemaLine = yup.object().shape({
     .string()
     .oneOf(['PENDING', 'APPROVED', 'DISABLED'])
     .optional(),
-  // LINE_CATEGORY: yup
-  //   .array()
-  //   .of(yup.string()) TODO
-  //   .optional(),
 })

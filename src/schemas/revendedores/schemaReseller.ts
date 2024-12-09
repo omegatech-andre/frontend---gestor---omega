@@ -1,9 +1,6 @@
 import * as yup from 'yup'
 
 export const schemaReseller = yup.object().shape({
-  _id: yup
-    .string()
-    .optional(),
   RESELLER_CNPJ: yup
     .string()
     .optional(),

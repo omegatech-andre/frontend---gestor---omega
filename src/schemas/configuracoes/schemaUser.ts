@@ -1,9 +1,6 @@
 import * as yup from 'yup'
 
 export const schemaUser = yup.object().shape({
-  _id: yup
-    .string()
-    .optional(),
   USER_NAME: yup
     .string()
     .optional(),
