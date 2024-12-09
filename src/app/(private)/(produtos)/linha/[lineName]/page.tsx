@@ -2,7 +2,7 @@
 import { use, useEffect } from "react";
 import { LineGetDetails } from "@/types/lineDetails";
 import useGet from "@/hooks/useGet";
-import PageLinha from "@/components/pages/produto/line/pageLinha";
+import PageLinha from "@/components/pages/produto/linha/pageLinha";
 
 interface Props {
   params: Promise<{ lineName: string }>
