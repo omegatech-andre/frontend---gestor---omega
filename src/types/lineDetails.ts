@@ -13,7 +13,7 @@ export interface LineGetDetails {
 export interface LinePostDetails {
   LINE_NAME?: string;
   LINE_DESCRIPTION?: string;
-  LINE_STATUS?: boolean;
+  LINE_STATUS?: 'PENDING' | 'APPROVED' | 'DISABLED';
 }
 
 export interface LinePostImage {

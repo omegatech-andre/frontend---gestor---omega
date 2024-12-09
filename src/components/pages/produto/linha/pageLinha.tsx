@@ -5,6 +5,7 @@ import { useState } from "react"
 import { LineGetDetails } from "@/types/lineDetails"
 import ProviderTheme from "@/styles/providerTheme"
 import MenuNavigation from "@/components/_ui/menuNavigation/menuNavigation"
+import ModalPatchStatus from "./modals/modalPatchStatus"
 
 interface Props {
   line: LineGetDetails;
@@ -72,7 +73,7 @@ export default function PageLinha({ line }: Props) {
         }}
       >
         {/* {modalContent === 'picture' && <ModalEditLineWallpaper line={line} />} */}
-        {/* {modalContent === 'status' && <ModalEditLineStatus line={line} />} */}
+        {modalContent === 'status' && <ModalPatchStatus line={line} />}
         {/* {modalContent === 'delete' && <ModalDeleteLine line={line} />} */}
       </Modal>
     </>
