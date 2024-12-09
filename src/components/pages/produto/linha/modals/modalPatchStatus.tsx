@@ -92,7 +92,7 @@ export default function ModalPatchStatus({ line }: Props) {
         >
           Salvar
         </Button>
-        <Text ta='center' size="xs" c='dimmed' mt={10}>OBS: Linhas desativadas não são mostrados na lista de linhas no site oficial</Text>
+        <Text ta='center' size="xs" c='dimmed' mt={10}>OBS: Uma linha desativada fica oculta no site oficial, por consequência os produtos dessa linha tambem não serão mostrados.</Text>
       </form>
     </>
   );
