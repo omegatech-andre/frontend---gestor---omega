@@ -1,12 +1,13 @@
 import { ActionIcon, Badge, Button, Card, Center, Flex, Group, Menu, Modal, Paper, Stack, Table, Text, TextInput } from "@mantine/core";
-import { IconDots, IconListDetails, IconRefresh, IconSettings, IconTrash } from "@tabler/icons-react";
+import { IconDots, IconListDetails, IconRefresh, IconSettings } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import { LineGetDetails } from "@/types/lineDetails";
 import ProviderTheme from "@/styles/providerTheme";
+import ModalPatchStatus from "../produto/linha/modals/modalPatchStatus";
 
 interface Props {
-  lines: LineGetDetails[]
+  lines: LineGetDetails[];
 }
 
 export default function LineList({ lines }: Props) {
@@ -79,7 +80,7 @@ export default function LineList({ lines }: Props) {
             <Menu.Dropdown>
               <Menu.Item component='a' href={`/linha/${row.LINE_NAME}`} leftSection={<IconListDetails size={20} />}>Detalhes</Menu.Item>
               <Menu.Item onClick={() => handleOpen('edit', row)} leftSection={<IconSettings size={20} />}>Alterar Status</Menu.Item>
-              <Menu.Item onClick={() => handleOpen('delete', row)} leftSection={<IconTrash size={20} />}>Deletar linha</Menu.Item>
+              {/* <Menu.Item onClick={() => handleOpen('delete', row)} leftSection={<IconTrash size={20} />}>Deletar linha</Menu.Item> */}
             </Menu.Dropdown>
           </Menu>
         </Group>
@@ -134,7 +135,7 @@ export default function LineList({ lines }: Props) {
             blur: 3
           }}
         >
-          {/* {modalContent === 'edit' && <ModalEditLineStatus line={selectedLine} />} */}
+          {modalContent === 'edit' && <ModalPatchStatus line={selectedLine} />}
           {/* {modalContent === 'delete' && <ModalDeleteLine line={selectedLine} />} */}
         </Modal>
       </Stack>

@@ -10,7 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaLine } from "@/schemas/produtos/schemaLine";
 
 interface Props {
-  line: LineGetDetails;
+  line?: LineGetDetails;
 }
 
 export default function ModalPatchStatus({ line }: Props) {
@@ -19,12 +19,12 @@ export default function ModalPatchStatus({ line }: Props) {
     mode: 'onChange',
     resolver: yupResolver(schemaLine),
     defaultValues: {
-      LINE_STATUS: line.LINE_STATUS === 'APPROVED' ? 'DISABLED' : 'APPROVED',
+      LINE_STATUS: line?.LINE_STATUS === 'APPROVED' ? 'DISABLED' : 'APPROVED',
     },
   });
 
   const watchData = watch();
-  const { isUpdating, response, error, sendRequest } = usePatch<LinePostDetails, LineGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/lines/update/${line.LINE_NAME}`, watchData, {
+  const { isUpdating, response, error, sendRequest } = usePatch<LinePostDetails, LineGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/lines/update/${line?.LINE_NAME}`, watchData, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`,
     }
@@ -65,7 +65,7 @@ export default function ModalPatchStatus({ line }: Props) {
             {
               line?.LINE_STATUS === 'APPROVED'
                 ? 'Essa linha está ativada, deseja desativa-la?'
-                : line.LINE_STATUS === 'PENDING'
+                : line?.LINE_STATUS === 'PENDING'
                   ? 'Essa linha ainda está pendente de aprovação, deseja alterar o status?'
                   : 'Esse linha não está ativada, deseja ativa-la?'
             }

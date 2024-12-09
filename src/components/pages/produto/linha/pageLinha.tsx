@@ -6,6 +6,7 @@ import { LineGetDetails } from "@/types/lineDetails"
 import ProviderTheme from "@/styles/providerTheme"
 import MenuNavigation from "@/components/_ui/menuNavigation/menuNavigation"
 import ModalPatchStatus from "./modals/modalPatchStatus"
+import LineDetail from "./lineDetails"
 
 interface Props {
   line: LineGetDetails;
@@ -50,17 +51,17 @@ export default function PageLinha({ line }: Props) {
                     <IconSettings size={20} />
                   </ActionIcon>
                 </Tooltip>
-                <Tooltip color="gray" label='Deletar linha' position="bottom">
+                {/* <Tooltip color="gray" label='Deletar linha' position="bottom">
                   <ActionIcon onClick={() => handleOpen('delete')} variant="filled" aria-label="Delete">
                     <IconTrash size={20} />
                   </ActionIcon>
-                </Tooltip>
+                </Tooltip> */}
               </Group>
             </Group>
           </Flex>
         </Card>
         <Paper w={isDesktop ? '80%' : '100%'} h='100%' >
-          {/* <LineDetail line={line} /> */}
+          <LineDetail line={line} />
         </Paper>
       </Stack>
       <Modal
