@@ -18,10 +18,5 @@ export default function Page() {
 
   if (!lines || !categories) return;
 
-  const categoriesWithLineNames = categories.data.map(category => ({
-    ...category,
-    FK_CATEGORY_LINE: lines.data.find(line => line.id === category.FK_CATEGORY_LINE)?.LINE_NAME || category.FK_CATEGORY_LINE,
-  }));
-
-  return <PageProdutos lines={lines.data} categories={categoriesWithLineNames} products={productsData} />
+  return <PageProdutos lines={lines.data} categories={categories.data} products={productsData} />
 }

@@ -51,7 +51,7 @@ export default function CategoryList({ categories }: Props) {
                   ? <Badge variant='default' c='yellow'>pendente</Badge>
                   : <Badge variant='default' c='dimmed'>desativ.</Badge>
             }
-            <Text fz='xs' c='dimmed'>{row.FK_CATEGORY_LINE}</Text>
+            <Text fz='xs' c='dimmed'>{row.CATEGORY_LINE.LINE_NAME}</Text>
           </Group>
         </Flex>
       </Table.Td>
@@ -59,7 +59,7 @@ export default function CategoryList({ categories }: Props) {
         <Text truncate='end' fz='sm' w={200}>{row.CATEGORY_DESCRIPTION}</Text>
       </Table.Td>
       <Table.Td visibleFrom="md">
-        <Text fz='sm'>{row.FK_CATEGORY_LINE}</Text>
+        <Text fz='sm'>{row.CATEGORY_LINE.LINE_NAME}</Text>
       </Table.Td>
       <Table.Td visibleFrom="md">
         <Group fz="sm">

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { CategoryGetDetails } from "@/types/categoryDetails";
 import ProviderTheme from "@/styles/providerTheme";
 import MenuNavigation from "@/components/_ui/menuNavigation/menuNavigation";
+import CategoryDetail from "./categoryDetails";
 
 interface PageCategoriaProps {
   category: CategoryGetDetails;
@@ -51,7 +52,7 @@ export default function PageCategoria({ category }: PageCategoriaProps) {
           </Flex>
         </Card>
         <Paper w={isDesktop ? '80%' : '100%'} h='100%' >
-          {/* <CategoryDetail category={category} /> */}
+          <CategoryDetail category={category} />
         </Paper>
       </Stack>
       <Modal

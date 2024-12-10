@@ -6,7 +6,10 @@ export interface LineGetDetails {
   LINE_DESCRIPTION: string;
   LINE_URL_IMAGE: String;
   LINE_STATUS: 'PENDING' | 'APPROVED' | 'DISABLED';
-  LINE_CATEGORIES: string[];
+  LINE_CATEGORIES: {
+    CATEGORY_NAME: string;
+    CATEGORY_PRODUCTS: string[];
+  };
   createdAt: string;
 }
 

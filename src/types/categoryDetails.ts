@@ -4,7 +4,9 @@ export interface CategoryGetDetails {
   CATEGORY_DESCRIPTION: string;
   CATEGORY_STATUS: 'PENDING' | 'APPROVED' | 'DISABLED';
   CATEGORY_PRODUCTS: [];
-  FK_CATEGORY_LINE: string;
+  CATEGORY_LINE: {
+    LINE_NAME: string;
+  };
   createdAt: string;
 }
 
