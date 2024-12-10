@@ -1,7 +1,7 @@
 import { FileWithPath } from "@mantine/dropzone"
 
 export interface LineGetDetails {
-  _id: string;
+  id: string;
   LINE_NAME: string;
   LINE_DESCRIPTION: string;
   LINE_URL_IMAGE: String;

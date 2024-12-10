@@ -1,7 +1,7 @@
 import { FileWithPath } from "@mantine/dropzone"
 
 export interface ResellerGetDetails {
-  _id: string;
+  id: string;
   RESELLER_CNPJ: string;
   RESELLER_SOCIAL_NAME: string;
   RESELLER_FANTASY_NAME: string;

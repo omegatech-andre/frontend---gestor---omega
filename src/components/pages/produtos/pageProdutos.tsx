@@ -3,22 +3,19 @@ import { LineGetDetails } from "@/types/lineDetails";
 import { Card, Group, Paper, SegmentedControl, Stack, Text } from "@mantine/core";
 import { useState } from "react";
 import LineList from "./lineList";
+import { CategoryGetDetails } from "@/types/categoryDetails";
+import CategoryList from "./categoryList";
 
 interface Props {
   lines: LineGetDetails[];
-  // categories: CategoryDetails[]; TODO
+  categories: CategoryGetDetails[];
   // products: productDetails[];
-  categories: string; // TODO
   products: string; // TODO
 }
 
 export default function PageProdutos({ lines, categories, products }: Props) {
   const { isDesktop } = ProviderTheme();
   const [tabContent, setTabContent] = useState<'products' | 'categories' | 'lines'>('products');
-
-  console.log(lines);
-  console.log(categories);
-  console.log(products);
 
   return (
     <>
@@ -67,7 +64,7 @@ export default function PageProdutos({ lines, categories, products }: Props) {
             ]}
           />
           {tabContent === 'products' && <>lista de produto</>}
-          {/* {tabContent === 'categories' && <CategoryList categories={categories} />} */}
+          {tabContent === 'categories' && <CategoryList categories={categories} />}
           {tabContent === 'lines' && <LineList lines={lines} />}
         </Paper>
       </Stack >
