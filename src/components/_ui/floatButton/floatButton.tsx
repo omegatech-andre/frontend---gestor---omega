@@ -6,6 +6,7 @@ import { useState } from "react";
 import ModalPostUser from "./modals/modalPostUser";
 import ModalPostReseller from "./modals/modalPostReseller";
 import ModalPostLine from "./modals/modalPostLine";
+import ModalPostCategory from "./modals/modalPostCategory";
 
 export default function FloatButton() {
   const { isDesktop } = ProviderTheme();
@@ -48,7 +49,7 @@ export default function FloatButton() {
           blur: 3
         }}>
         {modalContent === 'line' && <ModalPostLine />}
-        {/* {modalContent === 'category' && <ModalPostCategory />} */}
+        {modalContent === 'category' && <ModalPostCategory />}
         {/* {modalContent === 'product' && <ModalPostProduct />} */}
         {modalContent === 'reseller' && <ModalPostReseller />}
         {modalContent === 'user' && <ModalPostUser />}
