@@ -4,6 +4,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import { CategoryGetDetails } from "@/types/categoryDetails";
 import ProviderTheme from "@/styles/providerTheme";
+import ModalPatchStatus from "../produto/categoria/modals/modalPatchStatus";
 
 interface Props {
   categories: CategoryGetDetails[];
@@ -143,8 +144,7 @@ export default function CategoryList({ categories }: Props) {
           blur: 3
         }}
       >
-        {/* {modalContent === 'edit' && <ModalEditCategoryStatus category={selectedCategory} />} */}
-        {modalContent === 'edit' && <>modal de edit</>}
+        {modalContent === 'edit' && <ModalPatchStatus category={selectedCategory} />}
         {/* {modalContent === 'delete' && <ModalDeleteCategory category={selectedCategory} />} */}
       </Modal>
     </>
