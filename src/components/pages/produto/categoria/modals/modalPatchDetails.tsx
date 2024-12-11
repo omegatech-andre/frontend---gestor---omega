@@ -1,7 +1,10 @@
 import ProviderNotification from "@/components/_ui/notification/providerNotification";
 import useGet from "@/hooks/useGet";
 import usePatch from "@/hooks/usePatch";
+import { schemaCategory } from "@/schemas/produtos/schemaCategory";
 import { CategoryGetDetails, CategoryPostDetails } from "@/types/categoryDetails";
+import { LineGetDetails } from "@/types/lineDetails";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Group, Select, Stack, Text, Textarea, TextInput } from "@mantine/core";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
@@ -19,7 +22,7 @@ export default function ModalPatchDetails({ category, inputLabel, inputValue, in
   const { data: session } = useSession();
   const { control, handleSubmit, watch } = useForm<CategoryPostDetails>({
     mode: "onChange",
-    // resolver: yupResolver(schemaLine),
+    resolver: yupResolver(schemaCategory),
     defaultValues: {
       [inputField]: inputValue,
     },
@@ -32,18 +35,11 @@ export default function ModalPatchDetails({ category, inputLabel, inputValue, in
     },
   });
 
-  const { isGetting, response: lines, sendRequest: sendGetRequest } = useGet<CategoryGetDetails[]>(`${process.env.NEXT_PUBLIC_BASE_URL}/lines`);
-  console.log(lines)
+  const { response: lines, sendRequest: sendGetRequest } = useGet<LineGetDetails[]>(`${process.env.NEXT_PUBLIC_BASE_URL}/lines`);
 
   useEffect(() => {
     sendGetRequest();
-  }, [sendGetRequest]);
-
-  if (!lines) return;
-
-  if (isGetting) {
-    return <p>Carregando...</p>; // Retorna um estado de carregamento e interrompe a renderização
-  }
+  }, []);
 
   useEffect(() => {
     if (error) {
@@ -86,7 +82,7 @@ export default function ModalPatchDetails({ category, inputLabel, inputValue, in
               render={({ field }) => (
                 <Textarea
                   {...field}
-                  placeholder="Digite a descrição..."
+                  placeholder={inputValue}
                   minRows={5}
                   autosize
                   value={field.value || inputValue}
@@ -98,12 +94,22 @@ export default function ModalPatchDetails({ category, inputLabel, inputValue, in
               ? <Controller
                 name='FK_CATEGORY_LINE'
                 control={control}
-                render={({ field }) => <Select
-                  {...field}
-                  label='Status'
-                  allowDeselect={false}
-                  data={lines.data.map((line) => ({ value: line.id, label: line.CATEGORY_NAME })) || []}
-                />}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    label='Status'
+                    allowDeselect={false}
+                    value={field.value || inputValue}
+                    onChange={(value) => field.onChange(value || "")}
+                    data={
+                      lines?.data.map((line) => ({
+                        value: line.id,
+                        label: line.LINE_NAME,
+                        disabled: line.LINE_NAME === inputValue,
+                      })) || []
+                    }
+                  />
+                )}
               />
               : <Controller
                 name={inputField}
