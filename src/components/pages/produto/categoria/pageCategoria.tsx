@@ -6,12 +6,13 @@ import { CategoryGetDetails } from "@/types/categoryDetails";
 import ProviderTheme from "@/styles/providerTheme";
 import MenuNavigation from "@/components/_ui/menuNavigation/menuNavigation";
 import CategoryDetail from "./categoryDetails";
+import ModalPatchStatus from "./modals/modalPatchStatus";
 
-interface PageCategoriaProps {
+interface Props {
   category: CategoryGetDetails;
 }
 
-export default function PageCategoria({ category }: PageCategoriaProps) {
+export default function PageCategoria({ category }: Props) {
   const { isDesktop, isSmallDevice } = ProviderTheme();
   const [opened, { open, close }] = useDisclosure(false);
   const [modalContent, setModalContent] = useState<'status' | 'delete' | ''>('');
@@ -64,8 +65,7 @@ export default function PageCategoria({ category }: PageCategoriaProps) {
           blur: 3
         }}
       >
-        {/* {modalContent === 'status' && <ModalEditCategoryStatus category={category} />} */}
-        {modalContent === 'status' && <>modal de status</>}
+        {modalContent === 'status' && <ModalPatchStatus category={category} />}
         {/* {modalContent === 'delete' && <ModalDeleteCategory category={category} />} */}
       </Modal>
     </>
