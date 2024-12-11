@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import { FileWithPath } from "@mantine/dropzone";
 import ProviderNotification from "@/components/_ui/notification/providerNotification";
 import CustomDropZone from "@/components/_ui/dropzone/customDropzone";
+import { API_BASE_URL } from "@/utils/apiBaseUrl";
 
 interface Props {
   reseller: ResellerGetDetails;
@@ -16,7 +17,7 @@ export default function ModalPatchLogo({ reseller }: Props) {
   const { data: session } = useSession();
   const [files, setFiles] = useState<FileWithPath[]>([]);
 
-  const { isUpdating, response, error, sendRequest } = usePatch<ResellerPostLogo, ResellerGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/resellers/upload-logo/${reseller.RESELLER_FANTASY_NAME}`, { RESELLER_URL_LOGO: files[0] }, {
+  const { isUpdating, response, error, sendRequest } = usePatch<ResellerPostLogo, ResellerGetDetails>(`${API_BASE_URL}/resellers/upload-logo/${reseller.RESELLER_FANTASY_NAME}`, { RESELLER_URL_LOGO: files[0] }, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`,
       'Content-Type': 'multipart/form-data'

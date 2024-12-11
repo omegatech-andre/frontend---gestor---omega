@@ -8,6 +8,7 @@ import MenuNavigation from "@/components/_ui/menuNavigation/menuNavigation";
 import ModalPatchStatus from "./modals/modalPatchStatus";
 import ModalPatchLogo from "./modals/modalPatchLogo";
 import ResellerDetail from "./resellerDetails";
+import { API_BASE_URL } from "@/utils/apiBaseUrl";
 
 interface Props {
   reseller: ResellerGetDetails;
@@ -31,7 +32,7 @@ export default function PageRevendedor({ reseller }: Props) {
           backgroundPosition: 'right'
         }}>
           <Paper m='auto' w='max-content' radius={100} p={5} withBorder>
-            <Avatar size={120} src={`${process.env.NEXT_PUBLIC_BASE_URL}${reseller.RESELLER_URL_LOGO}`} />
+            <Avatar size={120} src={`${API_BASE_URL}${reseller.RESELLER_URL_LOGO}`} />
           </Paper>
           <Text my={5} size='lg'>
             {

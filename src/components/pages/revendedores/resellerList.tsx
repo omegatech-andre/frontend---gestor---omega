@@ -6,6 +6,7 @@ import { ResellerGetDetails } from '@/types/resellerDetails';
 import ProviderTheme from '@/styles/providerTheme';
 import { FormatePhone } from '@/utils/formatPhone';
 import ModalPatchStatus from '../revendedor/modals/modalPatchStatus';
+import { API_BASE_URL } from '@/utils/apiBaseUrl';
 
 interface Props {
   resellers: ResellerGetDetails[]
@@ -47,7 +48,7 @@ export default function ResellersList({ resellers }: Props) {
     <Table.Tr key={index}>
       <Table.Td>
         <Flex gap="sm" align='center'>
-          <Avatar size={35} src={`${process.env.NEXT_PUBLIC_BASE_URL}${row.RESELLER_URL_LOGO}`} />
+          <Avatar size={35} src={`${API_BASE_URL}${row.RESELLER_URL_LOGO}`} />
           <Flex gap='xs' direction='column'>
             <Text fz="sm" inline pl='3px'>
               {

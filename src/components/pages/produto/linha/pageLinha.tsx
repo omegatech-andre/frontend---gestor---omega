@@ -8,6 +8,7 @@ import MenuNavigation from "@/components/_ui/menuNavigation/menuNavigation"
 import ModalPatchStatus from "./modals/modalPatchStatus"
 import LineDetail from "./lineDetails"
 import ModalPatchImage from "./modals/modalPatchImage"
+import { API_BASE_URL } from "@/utils/apiBaseUrl"
 
 interface Props {
   line: LineGetDetails;
@@ -29,7 +30,7 @@ export default function PageLinha({ line }: Props) {
         <MenuNavigation />
         <Card w='100%' shadow="sm" padding="sm" radius="md" withBorder>
           <Card.Section>
-            <Image src={line.LINE_URL_IMAGE ? `${process.env.NEXT_PUBLIC_BASE_URL}${line.LINE_URL_IMAGE}` : '/tumblr_0.webp'} height={200} />
+            <Image src={line.LINE_URL_IMAGE ? `${API_BASE_URL}${line.LINE_URL_IMAGE}` : '/tumblr_0.webp'} height={200} />
           </Card.Section>
           <Flex direction={isSmallDevice ? 'row' : 'column'} mt='sm' gap='xs'>
             <Text fz='h1' inline>LINHA {line.LINE_NAME.toUpperCase()}</Text>

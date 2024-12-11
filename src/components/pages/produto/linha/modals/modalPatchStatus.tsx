@@ -8,6 +8,7 @@ import usePatch from "@/hooks/usePatch";
 import ProviderNotification from "@/components/_ui/notification/providerNotification";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaLine } from "@/schemas/produtos/schemaLine";
+import { API_BASE_URL } from "@/utils/apiBaseUrl";
 
 interface Props {
   line?: LineGetDetails;
@@ -24,7 +25,7 @@ export default function ModalPatchStatus({ line }: Props) {
   });
 
   const watchData = watch();
-  const { isUpdating, response, error, sendRequest } = usePatch<LinePostDetails, LineGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/lines/update/${line?.LINE_NAME}`, watchData, {
+  const { isUpdating, response, error, sendRequest } = usePatch<LinePostDetails, LineGetDetails>(`${API_BASE_URL}/lines/update/${line?.LINE_NAME}`, watchData, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`,
     }

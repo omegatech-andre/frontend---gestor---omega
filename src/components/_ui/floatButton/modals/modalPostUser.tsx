@@ -3,6 +3,7 @@ import usePost from "@/hooks/usePost";
 import { schemaUser } from "@/schemas/configuracoes/schemaUser";
 import ProviderTheme from "@/styles/providerTheme";
 import { UserGetDetails, UserPostDetails } from "@/types/userDetails";
+import { API_BASE_URL } from "@/utils/apiBaseUrl";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Group, PasswordInput, SimpleGrid, Stack, Switch, Text, TextInput } from "@mantine/core";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
@@ -23,7 +24,7 @@ export default function ModalPostUser() {
   });
 
   const watchData = watch();
-  const { isPosting, response, error, sendRequest } = usePost<UserPostDetails, UserGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/users/create`, watchData, {
+  const { isPosting, response, error, sendRequest } = usePost<UserPostDetails, UserGetDetails>(`${API_BASE_URL}/users/create`, watchData, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`
     }

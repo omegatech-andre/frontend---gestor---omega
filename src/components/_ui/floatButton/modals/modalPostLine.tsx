@@ -9,6 +9,7 @@ import usePost from "@/hooks/usePost";
 import ProviderTheme from "@/styles/providerTheme";
 import { useSession } from "next-auth/react";
 import ProviderNotification from "../../notification/providerNotification";
+import { API_BASE_URL } from "@/utils/apiBaseUrl";
 
 export default function ModalPostLine() {
   const { data: session } = useSession();
@@ -19,7 +20,7 @@ export default function ModalPostLine() {
   });
 
   const watchData = watch();
-  const { isPosting, response, error, sendRequest } = usePost<LinePostDetails, LineGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/lines/create`, watchData, {
+  const { isPosting, response, error, sendRequest } = usePost<LinePostDetails, LineGetDetails>(`${API_BASE_URL}/lines/create`, watchData, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`,
     },

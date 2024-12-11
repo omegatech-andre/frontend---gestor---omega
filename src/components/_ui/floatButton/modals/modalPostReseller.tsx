@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import ProviderNotification from "../../notification/providerNotification";
+import { API_BASE_URL } from "@/utils/apiBaseUrl";
 
 export default function ModalPostReseller() {
   const { data: session } = useSession();
@@ -22,7 +23,7 @@ export default function ModalPostReseller() {
   });
 
   const watchData = watch();
-  const { isPosting, response, error, sendRequest } = usePost<ResellerPostDetails, ResellerGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/resellers/create`, watchData, {
+  const { isPosting, response, error, sendRequest } = usePost<ResellerPostDetails, ResellerGetDetails>(`${API_BASE_URL}/resellers/create`, watchData, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`
     }

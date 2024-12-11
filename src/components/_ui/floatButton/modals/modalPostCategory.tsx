@@ -11,6 +11,7 @@ import ProviderNotification from "../../notification/providerNotification";
 import { schemaCategory } from "@/schemas/produtos/schemaCategory";
 import { CategoryGetDetails, CategoryPostDetails } from "@/types/categoryDetails";
 import useGet from "@/hooks/useGet";
+import { API_BASE_URL } from "@/utils/apiBaseUrl";
 
 export default function ModalPostCategory() {
   const { data: session } = useSession();
@@ -21,13 +22,13 @@ export default function ModalPostCategory() {
   });
 
   const watchData = watch();
-  const { isPosting, response, error, sendRequest } = usePost<CategoryPostDetails, CategoryGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/categories/create`, watchData, {
+  const { isPosting, response, error, sendRequest } = usePost<CategoryPostDetails, CategoryGetDetails>(`${API_BASE_URL}/categories/create`, watchData, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`,
     },
   });
 
-  const { response: lines, sendRequest: sendGetRequest } = useGet<LineGetDetails[]>(`${process.env.NEXT_PUBLIC_BASE_URL}/lines`);
+  const { response: lines, sendRequest: sendGetRequest } = useGet<LineGetDetails[]>(`${API_BASE_URL}/lines`);
 
   useEffect(() => {
     sendGetRequest();

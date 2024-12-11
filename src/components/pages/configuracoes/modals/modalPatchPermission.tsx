@@ -8,6 +8,7 @@ import usePatch from "@/hooks/usePatch";
 import ProviderNotification from "@/components/_ui/notification/providerNotification";
 import { useSession } from "next-auth/react";
 import { UserGetDetails, UserPostDetails } from "@/types/userDetails";
+import { API_BASE_URL } from "@/utils/apiBaseUrl";
 
 interface Props {
   user: UserGetDetails;
@@ -20,7 +21,7 @@ export default function ModalPatchPermission({ user }: Props) {
     resolver: yupResolver(schemaUser)
   });
 
-  const { isUpdating, response, error, sendRequest } = usePatch<UserPostDetails, UserGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/users/update/${user.USER_NAME}`, { USER_AUTHORIZED: !user.USER_AUTHORIZED }, {
+  const { isUpdating, response, error, sendRequest } = usePatch<UserPostDetails, UserGetDetails>(`${API_BASE_URL}/users/update/${user.USER_NAME}`, { USER_AUTHORIZED: !user.USER_AUTHORIZED }, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`
     }

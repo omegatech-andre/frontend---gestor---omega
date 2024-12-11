@@ -8,6 +8,7 @@ import { FileWithPath } from "@mantine/dropzone";
 import ProviderNotification from "@/components/_ui/notification/providerNotification";
 import CustomDropZone from "@/components/_ui/dropzone/customDropzone";
 import { LineGetDetails, LinePostImage } from "@/types/lineDetails";
+import { API_BASE_URL } from "@/utils/apiBaseUrl";
 
 interface Props {
   line: LineGetDetails;
@@ -17,7 +18,7 @@ export default function ModalPatchImage({ line }: Props) {
   const { data: session } = useSession();
   const [files, setFiles] = useState<FileWithPath[]>([]);
 
-  const { isUpdating, response, error, sendRequest } = usePatch<LinePostImage, LineGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/lines/upload-image/${line.LINE_NAME}`, { LINE_URL_IMAGE: files[0] }, {
+  const { isUpdating, response, error, sendRequest } = usePatch<LinePostImage, LineGetDetails>(`${API_BASE_URL}/lines/upload-image/${line.LINE_NAME}`, { LINE_URL_IMAGE: files[0] }, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`,
       'Content-Type': 'multipart/form-data'

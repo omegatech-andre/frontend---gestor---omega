@@ -8,6 +8,7 @@ import ProviderNotification from "@/components/_ui/notification/providerNotifica
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaCategory } from "@/schemas/produtos/schemaCategory";
 import { CategoryGetDetails, CategoryPostDetails } from "@/types/categoryDetails";
+import { API_BASE_URL } from "@/utils/apiBaseUrl";
 
 interface Props {
   category?: CategoryGetDetails;
@@ -24,7 +25,7 @@ export default function ModalPatchStatus({ category }: Props) {
   });
 
   const watchData = watch();
-  const { isUpdating, response, error, sendRequest } = usePatch<CategoryPostDetails, CategoryGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/categories/update/${category?.CATEGORY_NAME}`, watchData, {
+  const { isUpdating, response, error, sendRequest } = usePatch<CategoryPostDetails, CategoryGetDetails>(`${API_BASE_URL}/categories/update/${category?.CATEGORY_NAME}`, watchData, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`,
     }

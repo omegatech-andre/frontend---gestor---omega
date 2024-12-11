@@ -2,6 +2,7 @@ import ProviderNotification from "@/components/_ui/notification/providerNotifica
 import usePatch from "@/hooks/usePatch";
 import { schemaUser } from "@/schemas/configuracoes/schemaUser";
 import { UserGetDetails, UserPostDetails } from "@/types/userDetails";
+import { API_BASE_URL } from "@/utils/apiBaseUrl";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Group, PasswordInput, Stack, Text } from "@mantine/core";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
@@ -20,7 +21,7 @@ export default function ModalPatchPassword({ user }: Props) {
   });
 
   const watchData = watch();
-  const { isUpdating, response, error, sendRequest } = usePatch<UserPostDetails, UserGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/users/update/${user?.USER_NAME}`, watchData, {
+  const { isUpdating, response, error, sendRequest } = usePatch<UserPostDetails, UserGetDetails>(`${API_BASE_URL}/users/update/${user?.USER_NAME}`, watchData, {
     headers: {
       Authorization: `Bearer ${user?.access_token}`
     }

@@ -9,6 +9,7 @@ import FormatDate from "@/utils/formatDate";
 import ModalPatchPermission from "./modals/modalPatchPermission";
 import ModalPatchAdmin from "./modals/modalPatchAdmin";
 import { UserGetDetails } from "@/types/userDetails";
+import { API_BASE_URL } from "@/utils/apiBaseUrl";
 
 export default function UsersList() {
   const { data: session } = useSession();
@@ -18,7 +19,7 @@ export default function UsersList() {
   const [modalContent, setModalContent] = useState<'permission' | 'admin' | null>(null);
   const [searchName, setsearchName] = useState<string>("");
 
-  const { response, sendRequest } = useGet<UserGetDetails[]>(`${process.env.NEXT_PUBLIC_BASE_URL}/users`, {
+  const { response, sendRequest } = useGet<UserGetDetails[]>(`${API_BASE_URL}/users`, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`
     }

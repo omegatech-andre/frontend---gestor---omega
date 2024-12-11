@@ -3,9 +3,10 @@ import PageRevendedores from "@/components/pages/revendedores/pageRevendedores";
 import useGet from "../../../hooks/useGet";
 import { ResellerGetDetails } from "@/types/resellerDetails";
 import { useEffect } from "react";
+import { API_BASE_URL } from "@/utils/apiBaseUrl";
 
 export default function page() {
-  const { response, sendRequest } = useGet<ResellerGetDetails[]>(`${process.env.NEXT_PUBLIC_BASE_URL}/resellers`);
+  const { response, sendRequest } = useGet<ResellerGetDetails[]>(`${API_BASE_URL}/resellers`);
 
   useEffect(() => {
     sendRequest();

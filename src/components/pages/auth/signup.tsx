@@ -1,6 +1,7 @@
 import ProviderNotification from "@/components/_ui/notification/providerNotification";
 import usePost from "@/hooks/usePost";
 import { schemaAuth } from "@/schemas/auth/schemaAuth";
+import { API_BASE_URL } from "@/utils/apiBaseUrl";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Group, PasswordInput, TextInput } from "@mantine/core";
 import { signIn } from "next-auth/react";
@@ -24,7 +25,7 @@ export default function SignUp() {
   });
 
   const watchData = watch();
-  const { isPosting, response, error, sendRequest } = usePost<UsePostReq, UsePostRes>(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/register`, watchData);
+  const { isPosting, response, error, sendRequest } = usePost<UsePostReq, UsePostRes>(`${API_BASE_URL}/auth/register`, watchData);
 
   useEffect(() => {
     if (error) {

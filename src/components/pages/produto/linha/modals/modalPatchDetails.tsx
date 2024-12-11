@@ -2,6 +2,7 @@ import ProviderNotification from "@/components/_ui/notification/providerNotifica
 import usePatch from "@/hooks/usePatch";
 import { schemaLine } from "@/schemas/produtos/schemaLine";
 import { LineGetDetails, LinePostDetails } from "@/types/lineDetails";
+import { API_BASE_URL } from "@/utils/apiBaseUrl";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Group, Stack, Text, Textarea, TextInput } from "@mantine/core";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
@@ -27,7 +28,7 @@ export default function ModalPatchDetails({ line, inputLabel, inputValue, inputF
   });
 
   const watchData = watch();
-  const { isUpdating, response, error, sendRequest } = usePatch<LinePostDetails, LineGetDetails>(`${process.env.NEXT_PUBLIC_BASE_URL}/lines/update/${line.LINE_NAME}`, watchData, {
+  const { isUpdating, response, error, sendRequest } = usePatch<LinePostDetails, LineGetDetails>(`${API_BASE_URL}/lines/update/${line.LINE_NAME}`, watchData, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`,
     },
