@@ -5,6 +5,7 @@ import { useState } from "react";
 import ProviderTheme from "@/styles/providerTheme";
 import MenuNavigation from "@/components/_ui/menuNavigation/menuNavigation";
 import { ProductGetDetails } from "@/types/productDetails";
+import ProductDetail from "./productDetails";
 
 interface Props {
   product: ProductGetDetails;
@@ -51,7 +52,7 @@ export default function PageProduto({ product }: Props) {
           </Flex>
         </Card>
         <Paper w={isDesktop ? '80%' : '100%'} h='100%' >
-          {/* <CategoryDetail category={category} /> */}
+          <ProductDetail product={product} />
         </Paper>
       </Stack>
       <Modal
