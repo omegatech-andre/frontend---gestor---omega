@@ -3,17 +3,15 @@ import { Controller, useForm } from "react-hook-form";
 import { schemaLine } from "../../../../schemas/produtos/schemaLine";
 import { LineGetDetails, LinePostDetails } from "../../../../types/lineDetails";
 import { useEffect } from "react";
-import { Button, SimpleGrid, Stack, Text, TextInput } from "@mantine/core";
+import { Button, SimpleGrid, Stack, Text, Textarea, TextInput } from "@mantine/core";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
 import usePost from "@/hooks/usePost";
-import ProviderTheme from "@/styles/providerTheme";
 import { useSession } from "next-auth/react";
 import ProviderNotification from "../../notification/providerNotification";
 import { API_BASE_URL } from "@/utils/apiBaseUrl";
 
 export default function ModalPostLine() {
   const { data: session } = useSession();
-  const { isDesktop } = ProviderTheme();
   const { control, handleSubmit, watch } = useForm({
     mode: "onChange",
     resolver: yupResolver(schemaLine),
@@ -53,14 +51,10 @@ export default function ModalPostLine() {
   }
 
   return (
-    <Stack w='80vw' p={isDesktop ? '20' : 0}>
-      <Stack gap={0}>
-        <Text size="xl" ta='center'>Adicionar nova linha de produto</Text>
-        <Text size="sm" c='dimmed' ta='center'>Preencha os campos abaixo</Text>
-      </Stack>
+    <Stack w='80vw' p={0}>
       <form onSubmit={handleSubmit(sendRequest)}>
         <Stack gap='lg'>
-          <SimpleGrid cols={{ base: 1, sm: 2 }}>
+          <SimpleGrid cols={{ base: 1, sm: 1 }}>
             <Controller
               name='LINE_NAME'
               control={control}
@@ -78,12 +72,13 @@ export default function ModalPostLine() {
               name='LINE_DESCRIPTION'
               control={control}
               render={({ field }) => (
-                <TextInput
+                <Textarea
                   {...field}
                   label='Descrição'
-                  required
+                  minRows={5}
+                  autosize
                   value={field.value || ''}
-                  onChange={(value) => field.onChange(value || '')}
+                  onChange={(value) => field.onChange(value || "")}
                 />
               )}
             />

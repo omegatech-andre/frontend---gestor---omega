@@ -1,6 +1,5 @@
 import usePost from "@/hooks/usePost";
 import { schemaReseller } from "@/schemas/revendedores/schemaReseller";
-import ProviderTheme from "@/styles/providerTheme";
 import { ResellerGetDetails, ResellerPostDetails } from "@/types/resellerDetails";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Select, SimpleGrid, Stack, Text, TextInput } from "@mantine/core";
@@ -13,7 +12,6 @@ import { API_BASE_URL } from "@/utils/apiBaseUrl";
 
 export default function ModalPostReseller() {
   const { data: session } = useSession();
-  const { isDesktop } = ProviderTheme();
   const { control, handleSubmit, watch } = useForm({
     mode: "onChange",
     resolver: yupResolver(schemaReseller),
@@ -56,11 +54,7 @@ export default function ModalPostReseller() {
   }
 
   return (
-    <Stack w='80vw' p={isDesktop ? '20' : 0}>
-      <Stack gap={0}>
-        <Text size="xl" ta='center'>Adicionar novo revendedor</Text>
-        <Text size="sm" c='dimmed' ta='center'>Preencha os campos abaixo</Text>
-      </Stack>
+    <Stack w='80vw' p={0}>
       <form onSubmit={handleSubmit(sendRequest)}>
         <Stack gap={30}>
           <SimpleGrid cols={{ base: 1, sm: 3 }}>

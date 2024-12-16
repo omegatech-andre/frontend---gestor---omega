@@ -1,7 +1,6 @@
 import ProviderNotification from "@/components/_ui/notification/providerNotification";
 import usePost from "@/hooks/usePost";
 import { schemaUser } from "@/schemas/configuracoes/schemaUser";
-import ProviderTheme from "@/styles/providerTheme";
 import { UserGetDetails, UserPostDetails } from "@/types/userDetails";
 import { API_BASE_URL } from "@/utils/apiBaseUrl";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,7 +12,6 @@ import { Controller, useForm } from "react-hook-form";
 
 export default function ModalPostUser() {
   const { data: session } = useSession();
-  const { isDesktop } = ProviderTheme();
   const { control, handleSubmit, watch } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(schemaUser),
@@ -57,11 +55,7 @@ export default function ModalPostUser() {
 
   return (
     <>
-      <Stack w='80vw' p={isDesktop ? '20' : 0}>
-        <Stack gap={0}>
-          <Text size="xl" ta='center'>Adicionar novo usuário</Text>
-          <Text size="sm" c='dimmed' ta='center'>Preencha os campos abaixo</Text>
-        </Stack>
+      <Stack w='80vw' p={0}>
         <form onSubmit={handleSubmit(sendRequest)}>
           <Stack>
             <SimpleGrid cols={{ base: 1, sm: 2 }}>

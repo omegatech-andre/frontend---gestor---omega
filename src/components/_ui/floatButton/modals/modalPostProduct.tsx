@@ -3,7 +3,6 @@ import { Controller, useForm } from "react-hook-form"
 import { useEffect } from "react";
 import { Button, ColorSwatch, Group, MultiSelect, MultiSelectProps, Select, SimpleGrid, Stack, Text, Textarea, TextInput } from "@mantine/core";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
-import ProviderTheme from "@/styles/providerTheme";
 import { schemaProduct } from "@/schemas/produtos/schemaProduct";
 import { useSession } from "next-auth/react";
 import usePost from "@/hooks/usePost";
@@ -25,7 +24,6 @@ const renderMultiSelectOption: MultiSelectProps['renderOption'] = ({ option }) =
 
 export default function ModalPostProduct() {
   const { data: session } = useSession();
-  const { isDesktop } = ProviderTheme();
   const { control, handleSubmit, watch } = useForm({
     mode: "onChange",
     resolver: yupResolver(schemaProduct),
@@ -74,11 +72,7 @@ export default function ModalPostProduct() {
   }
 
   return (
-    <Stack w='80vw' p={isDesktop ? '20' : 0}>
-      <Stack gap={0}>
-        <Text size="xl" ta='center'>Adicionar novo produto</Text>
-        <Text size="sm" c='dimmed' ta='center'>Preencha os campos abaixo</Text>
-      </Stack>
+    <Stack w='80vw' p={0}>
       <form onSubmit={handleSubmit(sendPostRequest)}>
         <Stack gap={30}>
           <SimpleGrid cols={{ base: 1, sm: 1 }}>

@@ -2,10 +2,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
 import { LineGetDetails } from "../../../../types/lineDetails";
 import { useEffect } from "react";
-import { Button, Select, SimpleGrid, Stack, Text, TextInput } from "@mantine/core";
+import { Button, Select, SimpleGrid, Stack, Text, Textarea, TextInput } from "@mantine/core";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
 import usePost from "@/hooks/usePost";
-import ProviderTheme from "@/styles/providerTheme";
 import { useSession } from "next-auth/react";
 import ProviderNotification from "../../notification/providerNotification";
 import { schemaCategory } from "@/schemas/produtos/schemaCategory";
@@ -15,7 +14,6 @@ import { API_BASE_URL } from "@/utils/apiBaseUrl";
 
 export default function ModalPostCategory() {
   const { data: session } = useSession();
-  const { isDesktop } = ProviderTheme();
   const { control, handleSubmit, watch } = useForm({
     mode: "onChange",
     resolver: yupResolver(schemaCategory),
@@ -61,57 +59,56 @@ export default function ModalPostCategory() {
   }
 
   return (
-    <Stack w='80vw' p={isDesktop ? '20' : 0}>
-      <Stack gap={0}>
-        <Text size="xl" ta='center'>Adicionar nova categoria de produto</Text>
-        <Text size="sm" c='dimmed' ta='center'>Preencha os campos abaixo</Text>
-      </Stack>
+    <Stack w='80vw' p={0}>
       <form onSubmit={handleSubmit(sendPostRquest)}>
         <Stack gap='lg'>
-          <SimpleGrid cols={{ base: 1, sm: 3 }}>
-            <Controller
-              name='CATEGORY_NAME'
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  {...field}
-                  label='Nome'
-                  required
-                  value={field.value || ''}
-                  onChange={(value) => field.onChange(value || '')}
-                />
-              )}
-            />
+          <SimpleGrid cols={{ base: 1, sm: 1 }}>
+            <SimpleGrid cols={{ base: 1, sm: 2 }}>
+              <Controller
+                name='CATEGORY_NAME'
+                control={control}
+                render={({ field }) => (
+                  <TextInput
+                    {...field}
+                    label='Nome'
+                    required
+                    value={field.value || ''}
+                    onChange={(value) => field.onChange(value || '')}
+                  />
+                )}
+              />
+              <Controller
+                name='FK_CATEGORY_LINE'
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    label='Linha'
+                    allowDeselect={false}
+                    required
+                    value={field.value || ''}
+                    onChange={(value) => field.onChange(value || "")}
+                    data={
+                      lines?.data.map((line) => ({
+                        value: line.id,
+                        label: line.LINE_NAME,
+                      })) || []
+                    }
+                  />
+                )}
+              />
+            </SimpleGrid>
             <Controller
               name='CATEGORY_DESCRIPTION'
               control={control}
               render={({ field }) => (
-                <TextInput
+                <Textarea
                   {...field}
                   label='Descrição'
-                  required
-                  value={field.value || ''}
-                  onChange={(value) => field.onChange(value || '')}
-                />
-              )}
-            />
-            <Controller
-              name='FK_CATEGORY_LINE'
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  label='Linha'
-                  allowDeselect={false}
-                  required
+                  minRows={5}
+                  autosize
                   value={field.value || ''}
                   onChange={(value) => field.onChange(value || "")}
-                  data={
-                    lines?.data.map((line) => ({
-                      value: line.id,
-                      label: line.LINE_NAME,
-                    })) || []
-                  }
                 />
               )}
             />

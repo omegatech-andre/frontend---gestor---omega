@@ -43,6 +43,17 @@ export default function FloatButton() {
         opened={opened}
         onClose={close}
         withCloseButton
+        title={
+          modalContent === 'line'
+            ? 'Criar linha'
+            : modalContent === 'category'
+              ? 'Criar categoria'
+              : modalContent === 'product'
+                ? 'Criar produto'
+                : modalContent === 'reseller'
+                  ? 'Criar revendedor'
+                  : 'Criar usuário'
+        }
         closeOnClickOutside={false}
         overlayProps={{
           backgroundOpacity: 0.55,
