@@ -6,6 +6,7 @@ import ProviderTheme from "@/styles/providerTheme";
 import MenuNavigation from "@/components/_ui/menuNavigation/menuNavigation";
 import { ProductGetDetails } from "@/types/productDetails";
 import ProductDetail from "./productDetails";
+import ModalPatchStatus from "./modals/modalPatchStatus";
 
 interface Props {
   product: ProductGetDetails;
@@ -64,8 +65,7 @@ export default function PageProduto({ product }: Props) {
           blur: 3
         }}
       >
-        {/* {modalContent === 'status' && <ModalPatchStatus category={category} />} */}
-        {modalContent === 'status' && <>modal de editar status</>}
+        {modalContent === 'status' && <ModalPatchStatus product={product} />}
         {/* {modalContent === 'delete' && <ModalDeleteCategory category={category} />} */}
       </Modal>
     </>

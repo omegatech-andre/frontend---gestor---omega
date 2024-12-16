@@ -4,6 +4,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import ProviderTheme from "@/styles/providerTheme";
 import { ProductGetDetails } from "@/types/productDetails";
+import ModalPatchStatus from "../produto/produto/modals/modalPatchStatus";
 
 interface Props {
   products: ProductGetDetails[];
@@ -143,8 +144,7 @@ export default function ProductList({ products }: Props) {
           blur: 3
         }}
       >
-        {/* {modalContent === 'edit' && <ModalPatchStatus category={selectedProduct} />} */}
-        {modalContent === 'edit' && <>modal de editar status</>}
+        {modalContent === 'edit' && <ModalPatchStatus product={selectedProduct} />}
         {/* {modalContent === 'delete' && <ModalDeleteCategory category={selectedProduct} />} */}
       </Modal>
     </>
