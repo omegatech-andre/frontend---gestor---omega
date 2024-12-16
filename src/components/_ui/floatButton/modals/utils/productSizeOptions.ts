@@ -1,0 +1,19 @@
+export const productSizeOptions = [
+  '100ml',
+  '250ml',
+  '500ml',
+  '900ml',
+  '1l',
+  '5l',
+  '100mg',
+  '250mg',
+  '500mg',
+  '900mg',
+  '1kg',
+  '4Kg',
+  '5kg',
+  '20kg',
+  '25kg',
+  '50kg',
+  '100kg'
+]
