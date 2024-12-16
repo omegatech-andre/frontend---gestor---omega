@@ -5,12 +5,13 @@ import { useState } from "react";
 import LineList from "./lineList";
 import { CategoryGetDetails } from "@/types/categoryDetails";
 import CategoryList from "./categoryList";
+import { ProductGetDetails } from "@/types/productDetails";
+import ProductList from "./productList";
 
 interface Props {
   lines: LineGetDetails[];
   categories: CategoryGetDetails[];
-  // products: productDetails[];
-  products: string; // TODO
+  products: ProductGetDetails[];
 }
 
 export default function PageProdutos({ lines, categories, products }: Props) {
@@ -29,20 +30,16 @@ export default function PageProdutos({ lines, categories, products }: Props) {
                 </Text>
                 <Group>
                   <Stack gap={0}>
-                    <Text size="lg">{lines.length}</Text>
-                    <Text fz="xs" c="dimmed">Linhas</Text>
+                    <Text size="lg">{products.length}</Text>
+                    <Text fz="xs" c="dimmed">Produtos</Text>
                   </Stack>
                   <Stack gap={0}>
                     <Text size="lg">{categories.length}</Text>
                     <Text fz="xs" c="dimmed">Categorias</Text>
                   </Stack>
                   <Stack gap={0}>
-                    {/* <Text size="lg">{inactiveResellers}</Text> */}
-                    <Text fz="xs" c="dimmed">Produtos</Text>
-                  </Stack>
-                  <Stack gap={0}>
-                    {/* <Text size="lg">{inactiveResellers}</Text> */}
-                    <Text fz="xs" c="dimmed">Produtos inativos</Text>
+                    <Text size="lg">{lines.length}</Text>
+                    <Text fz="xs" c="dimmed">Linhas</Text>
                   </Stack>
                 </Group>
               </Stack>
@@ -63,7 +60,7 @@ export default function PageProdutos({ lines, categories, products }: Props) {
               { value: 'lines', label: 'Linhas' },
             ]}
           />
-          {tabContent === 'products' && <>lista de produto</>}
+          {tabContent === 'products' && <ProductList products={products} />}
           {tabContent === 'categories' && <CategoryList categories={categories} />}
           {tabContent === 'lines' && <LineList lines={lines} />}
         </Paper>
