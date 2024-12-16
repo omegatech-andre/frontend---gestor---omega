@@ -17,7 +17,7 @@ export const schemaProduct = yup.object().shape({
     .array().of(yup.string())
     .optional(),
   PRODUCT_TAGS: yup
-    .array().of(yup.string())
+    .array()
     .optional(),
   PRODUCT_COLORS: yup
     .array().of(
@@ -32,7 +32,7 @@ export const schemaProduct = yup.object().shape({
     )
     .optional(),
   PRODUCT_SIZES: yup
-    .array().of(yup.string())
+    .array()
     .optional(),
   PRODUCT_STATUS: yup
     .string()

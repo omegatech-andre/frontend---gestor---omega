@@ -30,8 +30,8 @@ export interface ProductPostDetails {
   PRODUCT_BOLETIM?: string;
   PRODUCT_TAGS?: string[];
   PRODUCT_COLORS?: {
-    COLOR_NAME: string;
-    COLOR_HEX: string;
+    COLOR_NAME?: string;
+    COLOR_HEX?: string;
   }[];
   PRODUCT_SIZES?: string[];
   PRODUCT_STATUS?: 'PENDING' | 'APPROVED' | 'DISABLED';
@@ -39,5 +39,5 @@ export interface ProductPostDetails {
 }
 
 export interface ProductPostImage {
-  PRODUCT_URL_IMAGES: FileWithPath;
+  PRODUCT_URL_IMAGES?: FileWithPath;
 }

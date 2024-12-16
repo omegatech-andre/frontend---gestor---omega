@@ -22,7 +22,7 @@ export default function ModalPostCategory() {
   });
 
   const watchData = watch();
-  const { isPosting, response, error, sendRequest } = usePost<CategoryPostDetails, CategoryGetDetails>(`${API_BASE_URL}/categories/create`, watchData, {
+  const { isPosting, response, error, sendRequest: sendPostRquest } = usePost<CategoryPostDetails, CategoryGetDetails>(`${API_BASE_URL}/categories/create`, watchData, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`,
     },
@@ -66,7 +66,7 @@ export default function ModalPostCategory() {
         <Text size="xl" ta='center'>Adicionar nova categoria de produto</Text>
         <Text size="sm" c='dimmed' ta='center'>Preencha os campos abaixo</Text>
       </Stack>
-      <form onSubmit={handleSubmit(sendRequest)}>
+      <form onSubmit={handleSubmit(sendPostRquest)}>
         <Stack gap='lg'>
           <SimpleGrid cols={{ base: 1, sm: 3 }}>
             <Controller
@@ -101,7 +101,7 @@ export default function ModalPostCategory() {
               render={({ field }) => (
                 <Select
                   {...field}
-                  label='Status'
+                  label='Linha'
                   allowDeselect={false}
                   required
                   value={field.value || ''}

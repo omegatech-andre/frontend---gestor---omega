@@ -1,4 +1,3 @@
-import ProviderTheme from "@/styles/providerTheme";
 import { ActionIcon, Affix, Menu, Modal, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconBox, IconBuildingStore, IconCubePlus, IconPackage, IconPlus, IconUser } from "@tabler/icons-react";
@@ -7,9 +6,9 @@ import ModalPostUser from "./modals/modalPostUser";
 import ModalPostReseller from "./modals/modalPostReseller";
 import ModalPostLine from "./modals/modalPostLine";
 import ModalPostCategory from "./modals/modalPostCategory";
+import ModalPostProduct from "./modals/modalPostProduct";
 
 export default function FloatButton() {
-  const { isDesktop } = ProviderTheme();
   const [opened, { open, close }] = useDisclosure(false);
   const [modalContent, setModalContent] = useState<'product' | 'line' | 'category' | 'reseller' | 'user' | ''>('');
 
@@ -43,14 +42,15 @@ export default function FloatButton() {
         size='auto'
         opened={opened}
         onClose={close}
-        withCloseButton={!isDesktop}
+        withCloseButton
+        closeOnClickOutside={false}
         overlayProps={{
           backgroundOpacity: 0.55,
           blur: 3
         }}>
         {modalContent === 'line' && <ModalPostLine />}
         {modalContent === 'category' && <ModalPostCategory />}
-        {/* {modalContent === 'product' && <ModalPostProduct />} */}
+        {modalContent === 'product' && <ModalPostProduct />}
         {modalContent === 'reseller' && <ModalPostReseller />}
         {modalContent === 'user' && <ModalPostUser />}
       </Modal>
