@@ -55,6 +55,10 @@ export default function ModalPostReseller() {
 
   return (
     <Stack w='80vw' p={0}>
+      <Stack gap={0}>
+        <Text size="xl" ta='center'>Adicionar novo revendedor</Text>
+        <Text size="sm" c='dimmed' ta='center'>Preencha os campos abaixo</Text>
+      </Stack>
       <form onSubmit={handleSubmit(sendRequest)}>
         <Stack gap={30}>
           <SimpleGrid cols={{ base: 1, sm: 3 }}>

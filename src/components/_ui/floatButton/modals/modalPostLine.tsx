@@ -52,6 +52,10 @@ export default function ModalPostLine() {
 
   return (
     <Stack w='80vw' p={0}>
+      <Stack gap={0}>
+        <Text size="xl" ta='center'>Adicionar nova linha</Text>
+        <Text size="sm" c='dimmed' ta='center'>Preencha os campos abaixo</Text>
+      </Stack>
       <form onSubmit={handleSubmit(sendRequest)}>
         <Stack gap='lg'>
           <SimpleGrid cols={{ base: 1, sm: 1 }}>

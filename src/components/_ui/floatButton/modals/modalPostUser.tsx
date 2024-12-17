@@ -54,61 +54,63 @@ export default function ModalPostUser() {
   }
 
   return (
-    <>
-      <Stack w='80vw' p={0}>
-        <form onSubmit={handleSubmit(sendRequest)}>
-          <Stack>
-            <SimpleGrid cols={{ base: 1, sm: 2 }}>
-              <Controller
-                name='USER_NAME'
-                control={control}
-                render={({ field }) => (
-                  <TextInput
-                    {...field}
-                    label='Nome'
-                    value={field.value || ''}
-                    onChange={(value) => field.onChange(value || '')}
-                  />
-                )}
-              />
-              <Controller
-                name='USER_PASSWORD'
-                control={control}
-                render={({ field }) => (
-                  <PasswordInput
-                    {...field}
-                    label='Senha'
-                    value={field.value || ''}
-                    onChange={(value) => field.onChange(value || '')}
-                  />
-                )}
-              />
-            </SimpleGrid>
-            <SimpleGrid cols={{ base: 1, sm: 2 }}>
-              <Controller
-                name='USER_ROLE'
-                control={control}
-                render={({ field }) => (
-                  <Switch
-                    label='Administrador'
-                    checked={field.value === 'ADMIN'}
-                    onChange={(event) => field.onChange(event.currentTarget.checked ? 'ADMIN' : 'USER')}
-                  />
-                )}
-              />
-            </SimpleGrid>
-          </Stack>
-          <Group justify="flex-end" mt="md">
-            <Button
-              fullWidth
-              type="submit"
-              loading={isPosting}
-            >
-              Criar usuário
-            </Button>
-          </Group>
-        </form>
+    <Stack w='80vw' p={0}>
+      <Stack gap={0}>
+        <Text size="xl" ta='center'>Adicionar novo usuário</Text>
+        <Text size="sm" c='dimmed' ta='center'>Preencha os campos abaixo</Text>
       </Stack>
-    </>
+      <form onSubmit={handleSubmit(sendRequest)}>
+        <Stack>
+          <SimpleGrid cols={{ base: 1, sm: 2 }}>
+            <Controller
+              name='USER_NAME'
+              control={control}
+              render={({ field }) => (
+                <TextInput
+                  {...field}
+                  label='Nome'
+                  value={field.value || ''}
+                  onChange={(value) => field.onChange(value || '')}
+                />
+              )}
+            />
+            <Controller
+              name='USER_PASSWORD'
+              control={control}
+              render={({ field }) => (
+                <PasswordInput
+                  {...field}
+                  label='Senha'
+                  value={field.value || ''}
+                  onChange={(value) => field.onChange(value || '')}
+                />
+              )}
+            />
+          </SimpleGrid>
+          <SimpleGrid cols={{ base: 1, sm: 2 }}>
+            <Controller
+              name='USER_ROLE'
+              control={control}
+              render={({ field }) => (
+                <Switch
+                  label='Administrador'
+                  checked={field.value === 'ADMIN'}
+                  onChange={(event) => field.onChange(event.currentTarget.checked ? 'ADMIN' : 'USER')}
+                />
+              )}
+            />
+          </SimpleGrid>
+        </Stack>
+        <Group justify="flex-end" mt="md">
+          <Button
+            fullWidth
+            type="submit"
+            loading={isPosting}
+          >
+            Criar usuário
+          </Button>
+        </Group>
+      </form>
+    </Stack>
   );
 }

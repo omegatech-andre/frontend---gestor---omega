@@ -73,6 +73,10 @@ export default function ModalPostProduct() {
 
   return (
     <Stack w='80vw' p={0}>
+      <Stack gap={0}>
+        <Text size="xl" ta='center'>Adicionar novo produto</Text>
+        <Text size="sm" c='dimmed' ta='center'>Preencha os campos abaixo</Text>
+      </Stack>
       <form onSubmit={handleSubmit(sendPostRequest)}>
         <Stack gap={30}>
           <SimpleGrid cols={{ base: 1, sm: 1 }}>

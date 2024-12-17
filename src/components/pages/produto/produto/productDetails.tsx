@@ -4,6 +4,7 @@ import { IconEdit } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import ProviderTheme from "@/styles/providerTheme";
 import { ProductGetDetails, ProductPostDetails } from "@/types/productDetails";
+import ModalPatchDetails from "./modals/modalPatchDetails";
 
 interface Props {
   product: ProductGetDetails;
@@ -54,8 +55,7 @@ export default function ProductDetail({ product }: Props) {
           blur: 3,
         }}
       >
-        <>modal de editar</>
-        {/* <ModalPatchDetails category={category} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} /> */}
+        <ModalPatchDetails product={product} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />
       </Modal>
     </>
   );
