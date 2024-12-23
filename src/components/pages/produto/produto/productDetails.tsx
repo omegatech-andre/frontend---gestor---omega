@@ -9,6 +9,7 @@ import ModalPatchColors from "./modals/modalPatchColors";
 import ModalPatchBoletim from "./modals/modalPatchBoletim";
 import { API_BASE_URL } from "@/utils/apiBaseUrl";
 import ModalPatchFispq from "./modals/modalPatchFispq";
+import CardProductImages from "./cards/cardProductImages";
 
 interface Props {
   product: ProductGetDetails;
@@ -23,12 +24,12 @@ export default function ProductDetail({ product }: Props) {
   const [inputLabel, setInputLabel] = useState<string>("");
 
   const handleOpenModal = (
-    contet: 'default' | 'colors' | 'boletim' | 'fispq',
+    content: 'default' | 'colors' | 'boletim' | 'fispq',
     label: string,
     value: string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[],
     field: keyof ProductPostDetails,
   ) => {
-    setModalContent(contet)
+    setModalContent(content)
     setInputLabel(label);
     setInputValue(value);
     setCurrentField(field);
@@ -117,6 +118,7 @@ export default function ProductDetail({ product }: Props) {
               </Card>
             </Flex>
           </SimpleGrid>
+          <CardProductImages product={product} />
         </SimpleGrid>
       </Paper>
       <Modal
