@@ -1,14 +1,13 @@
 import { Button, Paper, Stack, Text } from "@mantine/core";
 import { IconCircleCheckFilled, IconCloudUpload } from "@tabler/icons-react";
-import { ResellerGetDetails, ResellerPostLogo } from "@/types/resellerDetails";
 import { useEffect, useState } from "react";
 import usePatch from "@/hooks/usePatch";
 import { useSession } from "next-auth/react";
 import { FileWithPath } from "@mantine/dropzone";
 import ProviderNotification from "@/components/_ui/notification/providerNotification";
-import CustomDropZone from "@/components/_ui/dropzone/customDropzone";
 import { LineGetDetails, LinePostImage } from "@/types/lineDetails";
 import { API_BASE_URL } from "@/utils/apiBaseUrl";
+import DropzonePicture from "@/components/_ui/dropzone/dropzonePicture";
 
 interface Props {
   line: LineGetDetails;
@@ -54,7 +53,7 @@ export default function ModalPatchImage({ line }: Props) {
   return (
     <>
       <Paper withBorder bg="#8a8a8a20">
-        <CustomDropZone name="Imagem" w="1920" h="500" size='500Kb' files={files} setFiles={setFiles} />
+        <DropzonePicture fileType="image/webp" name="Imagem" width="1920" hight="500" size='500Kb' files={files} setFiles={setFiles} />
       </Paper>
       <Button
         onClick={sendRequest}

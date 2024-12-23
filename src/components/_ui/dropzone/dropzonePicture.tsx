@@ -4,15 +4,16 @@ import { IconDownload, IconPhotoUp, IconRefresh, IconTrash, IconX } from "@table
 import { useRef } from "react";
 
 interface Props {
+  fileType: "image/webp" | "application/pdf";
   name: string;
-  w: string;
-  h: string;
+  width: string;
+  hight: string;
   size: string;
   files: FileWithPath[];
   setFiles: (files: FileWithPath[]) => void;
 }
 
-export default function CustomDropZone({ name, w, h, size, files, setFiles }: Props) {
+export default function DropzonePicture({ fileType, name, width, hight, size, files, setFiles }: Props) {
   const openRef = useRef<() => void>(() => { });
 
   const handleRemove = () => {
@@ -60,7 +61,7 @@ export default function CustomDropZone({ name, w, h, size, files, setFiles }: Pr
           openRef={openRef}
           onDrop={setFiles}
           radius="md"
-          accept={['image/webp']}
+          accept={[fileType]}
           maxSize={5 * 1024 ** 2}
         >
           <Group justify="center">
@@ -83,7 +84,7 @@ export default function CustomDropZone({ name, w, h, size, files, setFiles }: Pr
             Clique ou arraste e solte o arquivo aqui para fazer o carregamento. Só é permitido arquivo WEBP com menos de {size}
           </Text>
           <Text ta="center" fz="sm" mt="xs" c="dimmed">
-            Obs: para manter um padrão envie imagens com dimensão de {w}x{h} pixels
+            Obs: para manter um padrão envie imagens com dimensão de {width}x{hight} pixels
           </Text>
         </Dropzone>
       )}
