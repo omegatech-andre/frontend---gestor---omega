@@ -1,3 +1,5 @@
+import { productSizeOptions } from "@/components/_ui/floatButton/modals/utils/productSizeOptions";
+import { productTagOptions } from "@/components/_ui/floatButton/modals/utils/productTagOptions";
 import ProviderNotification from "@/components/_ui/notification/providerNotification";
 import useGet from "@/hooks/useGet";
 import usePatch from "@/hooks/usePatch";
@@ -6,7 +8,7 @@ import { CategoryGetDetails } from "@/types/categoryDetails";
 import { ProductGetDetails, ProductPostDetails } from "@/types/productDetails";
 import { API_BASE_URL } from "@/utils/apiBaseUrl";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Group, Select, Stack, Text, Textarea, TextInput } from "@mantine/core";
+import { Button, Group, MultiSelect, Select, Stack, Text, Textarea, TextInput } from "@mantine/core";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
@@ -77,61 +79,92 @@ export default function ModalPatchDetails({ product, inputLabel, inputValue, inp
           <Text ta='center' size="sm" c='dimmed'>Digite no campo abaixo o novo valor</Text>
         </Stack>
         {
+          inputField === "PRODUCT_NAME"
+          && <Controller
+            name="PRODUCT_NAME"
+            control={control}
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                value={field.value || inputValue}
+                onChange={(value) => field.onChange(value || "")}
+              />
+            )}
+          />
+        }
+        {
           inputField === "PRODUCT_DESCRIPTION"
-            ? <Controller
-              name="PRODUCT_DESCRIPTION"
-              control={control}
-              render={({ field }) => (
-                <Textarea
-                  {...field}
-                  placeholder="Digite a descrição..."
-                  minRows={5}
-                  autosize
-                  value={field.value || inputValue}
-                  onChange={(value) => field.onChange(value || "")}
-                />
-              )}
-            />
-            : inputField === 'FK_PRODUCT_CATEGORY'
-              ? <Controller
-                name="FK_PRODUCT_CATEGORY"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    label="Categoria"
-                    allowDeselect={false}
-                    value={field.value || inputValue as string}
-                    onChange={(value) => field.onChange(value || "")}
-                    data={
-                      categories?.data.map((categoria) => ({
-                        value: categoria.id,
-                        label: categoria.CATEGORY_NAME,
-                        disabled: categoria.CATEGORY_NAME === inputValue,
-                      })) || []
-                    }
-                  />
-                )}
+          && <Controller
+            name="PRODUCT_DESCRIPTION"
+            control={control}
+            render={({ field }) => (
+              <Textarea
+                {...field}
+                placeholder="Digite a descrição..."
+                minRows={5}
+                autosize
+                value={field.value || inputValue}
+                onChange={(value) => field.onChange(value || "")}
               />
-              : <Controller
-                name={inputField}
-                control={control}
-                render={({ field }) => (
-                  <TextInput
-                    {...field}
-                    value={
-                      typeof field.value === "string"
-                        ? field.value
-                        : Array.isArray(field.value)
-                          ? field.value.map(item => typeof item === "string" ? item : JSON.stringify(item)).join(", ")
-                          : field.value
-                            ? JSON.stringify(field.value)
-                            : inputValue
-                    }
-                    onChange={(value) => field.onChange(value || "")}
-                  />
-                )}
+            )}
+          />
+        }
+        {
+          inputField === 'FK_PRODUCT_CATEGORY'
+          && <Controller
+            name="FK_PRODUCT_CATEGORY"
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                label="Categoria"
+                allowDeselect={false}
+                value={field.value || inputValue as string}
+                onChange={(value) => field.onChange(value || "")}
+                data={
+                  categories?.data.map((categoria) => ({
+                    value: categoria.id,
+                    label: categoria.CATEGORY_NAME,
+                    disabled: categoria.CATEGORY_NAME === inputValue,
+                  })) || []
+                }
               />
+            )}
+          />
+        }
+        {
+          inputField === "PRODUCT_SIZES"
+          && <Controller
+            name="PRODUCT_SIZES"
+            control={control}
+            render={({ field }) => (
+              <MultiSelect
+                {...field}
+                label="Tipo"
+                value={(field.value || []).filter((item): item is string => !!item)}
+                onChange={(value) => field.onChange(value)}
+                data={productSizeOptions}
+                hidePickedOptions
+              />
+            )}
+          />
+        }
+        {
+          inputField === "PRODUCT_TAGS"
+          && <Controller
+            name="PRODUCT_TAGS"
+            control={control}
+            render={({ field }) => (
+              <MultiSelect
+                {...field}
+                label="Tipo"
+                value={(field.value || []).filter((item): item is string => !!item)}
+                onChange={(value) => field.onChange(value)}
+                data={productTagOptions}
+                hidePickedOptions
+              />
+            )}
+          />
         }
         <Group justify="flex-end" mt="md">
           <Button

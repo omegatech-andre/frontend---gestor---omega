@@ -27,7 +27,7 @@ export default function ProductDetail({ product }: Props) {
   const renderTextInput = (label: string, value: string | string[], field: keyof ProductPostDetails) => (
     <TextInput
       description={label}
-      value={value}
+      value={Array.isArray(value) ? value.join(", ") : value.split(",").join(", ")}
       readOnly
       rightSection={
         <ActionIcon onClick={() => handleOpenModal(label, value, field)} variant="transparent" c="dimmed" aria-label={label}>
@@ -44,6 +44,8 @@ export default function ProductDetail({ product }: Props) {
           {renderTextInput("Nome", product.PRODUCT_NAME, "PRODUCT_NAME")}
           {renderTextInput("Descrição", product.PRODUCT_DESCRIPTION, "PRODUCT_DESCRIPTION")}
           {renderTextInput("Categoria", product.PRODUCT_CATEGORY.CATEGORY_NAME, "FK_PRODUCT_CATEGORY")}
+          {renderTextInput("Tamanhos", product.PRODUCT_SIZES, "PRODUCT_SIZES")}
+          {renderTextInput("Tags", product.PRODUCT_TAGS, "PRODUCT_TAGS")}
         </SimpleGrid>
       </Paper>
       <Modal
