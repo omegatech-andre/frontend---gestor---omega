@@ -17,7 +17,7 @@ import { Controller, useForm } from "react-hook-form";
 interface Props {
   product: ProductGetDetails;
   inputLabel: string;
-  inputValue: string | string[];
+  inputValue: string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[];
   inputField: keyof ProductPostDetails;
 }
 
@@ -76,7 +76,15 @@ export default function ModalPatchDetails({ product, inputLabel, inputValue, inp
       <form onSubmit={handleSubmit(sendRequest)}>
         <Stack align="center" gap={0} mb={10}>
           <Text ta='center'>Editar {inputLabel}</Text>
-          <Text ta='center' size="sm" c='dimmed'>Digite no campo abaixo o novo valor</Text>
+          <Text ta='center' size="sm" c='dimmed'>
+            {
+              inputField === 'PRODUCT_SIZES'
+                ? 'Selecione os tamanhos a baixo'
+                : inputField === 'PRODUCT_TAGS'
+                  ? 'Selecione as tags a baixo'
+                  : 'Digite no campo abaixo o novo valor'
+            }
+          </Text>
         </Stack>
         {
           inputField === "PRODUCT_NAME"
@@ -86,7 +94,7 @@ export default function ModalPatchDetails({ product, inputLabel, inputValue, inp
             render={({ field }) => (
               <TextInput
                 {...field}
-                value={field.value || inputValue}
+                value={field.value || inputValue as string}
                 onChange={(value) => field.onChange(value || "")}
               />
             )}
@@ -103,7 +111,7 @@ export default function ModalPatchDetails({ product, inputLabel, inputValue, inp
                 placeholder="Digite a descrição..."
                 minRows={5}
                 autosize
-                value={field.value || inputValue}
+                value={field.value || inputValue as string}
                 onChange={(value) => field.onChange(value || "")}
               />
             )}
@@ -117,7 +125,6 @@ export default function ModalPatchDetails({ product, inputLabel, inputValue, inp
             render={({ field }) => (
               <Select
                 {...field}
-                label="Categoria"
                 allowDeselect={false}
                 value={field.value || inputValue as string}
                 onChange={(value) => field.onChange(value || "")}
@@ -140,7 +147,6 @@ export default function ModalPatchDetails({ product, inputLabel, inputValue, inp
             render={({ field }) => (
               <MultiSelect
                 {...field}
-                label="Tipo"
                 value={(field.value || []).filter((item): item is string => !!item)}
                 onChange={(value) => field.onChange(value)}
                 data={productSizeOptions}
@@ -157,7 +163,6 @@ export default function ModalPatchDetails({ product, inputLabel, inputValue, inp
             render={({ field }) => (
               <MultiSelect
                 {...field}
-                label="Tipo"
                 value={(field.value || []).filter((item): item is string => !!item)}
                 onChange={(value) => field.onChange(value)}
                 data={productTagOptions}
