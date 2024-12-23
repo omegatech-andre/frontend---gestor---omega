@@ -71,7 +71,13 @@ export default function DropzonePicture({ fileType, name, width, hight, size, fi
             onDrop={setFiles}
             radius="md"
             accept={[fileType]}
-            maxSize={5 * 1024 ** 2}
+            maxSize={
+              fileType === 'application/pdf'
+                ? 5 * 1024 ** 2
+                : fileType === 'image/webp'
+                  ? 500 * 1024
+                  : 50 * 1024
+            }
           >
             <Group justify="center">
               <Dropzone.Accept>
@@ -86,7 +92,7 @@ export default function DropzonePicture({ fileType, name, width, hight, size, fi
             </Group>
             <Text ta="center" fw={700} fz="lg">
               <Dropzone.Accept>Soltar</Dropzone.Accept>
-              <Dropzone.Reject>O arquivo não um WEBP ou é maior que {size}</Dropzone.Reject>
+              <Dropzone.Reject>O arquivo não um {fileType === 'image/webp' ? "WEBP" : "PDF"} ou é maior que {size}</Dropzone.Reject>
               <Dropzone.Idle>Carregar {name}</Dropzone.Idle>
             </Text>
             <Text ta="center" fz="sm" mt="xs" c="dimmed">
