@@ -58,7 +58,6 @@ export default function ModalPatchColors({ product, inputLabel, inputValue, inpu
     }
   }, [response, error]);
 
-
   if (response) {
     return (
       <Stack align="center" gap={0}>
