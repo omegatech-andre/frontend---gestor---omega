@@ -38,6 +38,8 @@ export interface ProductPostDetails {
   FK_PRODUCT_CATEGORY?: string;
 }
 
-export interface ProductPostImage {
+export interface ProductPostFile {
+  PRODUCT_FISPQ?: FileWithPath;
+  PRODUCT_BOLETIM?: FileWithPath;
   PRODUCT_URL_IMAGES?: FileWithPath;
 }

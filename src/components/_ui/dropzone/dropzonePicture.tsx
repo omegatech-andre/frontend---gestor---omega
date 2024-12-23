@@ -6,8 +6,8 @@ import { useRef } from "react";
 interface Props {
   fileType: "image/webp" | "application/pdf";
   name: string;
-  width: string;
-  hight: string;
+  width?: string;
+  hight?: string;
   size: string;
   files: FileWithPath[];
   setFiles: (files: FileWithPath[]) => void;
@@ -22,72 +22,84 @@ export default function DropzonePicture({ fileType, name, width, hight, size, fi
 
   const previews = files.map((file, index) => {
     const imageUrl = URL.createObjectURL(file);
-    return <Image key={index} w={200} src={imageUrl} onLoad={() => URL.revokeObjectURL(imageUrl)} />;
+    return (
+      <Group key={index}>
+        {
+          fileType === 'image/webp'
+            ? <Image w={200} src={imageUrl} onLoad={() => URL.revokeObjectURL(imageUrl)} />
+            : <Text fz={"sm"} ta={"center"}>{file.name}</Text>
+        }
+      </Group>
+    );
   });
 
   return (
     <>
-      {previews.length > 0 ? (
-        <Stack align="center" p={20} pb={0}>
-          {previews}
-          {previews.length > 0 && (
-            <Group justify="center" gap={0}>
-              <Button
-                onClick={handleRemove}
-                type="button"
-                variant="transparent"
-                c='red'
-                leftSection={<IconTrash size={20} />}
-              >
-                Remover {name}
-              </Button>
-              <Button
-                onClick={() => openRef.current?.()}
-                type="button"
-                variant="transparent"
-                c='red'
-                leftSection={<IconRefresh size={20} />}
-              >
-                Trocar {name}
-              </Button>
+      {
+        previews.length > 0
+          ? <Stack align="center" p={20} pb={0}>
+            {previews}
+            {
+              previews.length > 0
+              && <Group justify="center" gap={0}>
+                <Button
+                  onClick={handleRemove}
+                  type="button"
+                  variant="transparent"
+                  c='red'
+                  leftSection={<IconTrash size={20} />}
+                >
+                  Remover {name}
+                </Button>
+                <Button
+                  onClick={() => openRef.current?.()}
+                  type="button"
+                  variant="transparent"
+                  c='red'
+                  leftSection={<IconRefresh size={20} />}
+                >
+                  Trocar {name}
+                </Button>
+              </Group>
+            }
+          </Stack>
+          : <Dropzone
+            px={15}
+            py={30}
+            style={{ cursor: 'pointer' }}
+            openRef={openRef}
+            onDrop={setFiles}
+            radius="md"
+            accept={[fileType]}
+            maxSize={5 * 1024 ** 2}
+          >
+            <Group justify="center">
+              <Dropzone.Accept>
+                <IconDownload size={20} />
+              </Dropzone.Accept>
+              <Dropzone.Reject>
+                <IconX size={20} />
+              </Dropzone.Reject>
+              <Dropzone.Idle>
+                <IconPhotoUp size={20} />
+              </Dropzone.Idle>
             </Group>
-          )}
-        </Stack>
-      ) : (
-        <Dropzone
-          px={15}
-          py={30}
-          style={{ cursor: 'pointer' }}
-          openRef={openRef}
-          onDrop={setFiles}
-          radius="md"
-          accept={[fileType]}
-          maxSize={5 * 1024 ** 2}
-        >
-          <Group justify="center">
-            <Dropzone.Accept>
-              <IconDownload size={20} />
-            </Dropzone.Accept>
-            <Dropzone.Reject>
-              <IconX size={20} />
-            </Dropzone.Reject>
-            <Dropzone.Idle>
-              <IconPhotoUp size={20} />
-            </Dropzone.Idle>
-          </Group>
-          <Text ta="center" fw={700} fz="lg">
-            <Dropzone.Accept>Soltar</Dropzone.Accept>
-            <Dropzone.Reject>O arquivo não um WEBP ou é maior que {size}</Dropzone.Reject>
-            <Dropzone.Idle>Carregar {name}</Dropzone.Idle>
-          </Text>
-          <Text ta="center" fz="sm" mt="xs" c="dimmed">
-            Clique ou arraste e solte o arquivo aqui para fazer o carregamento. Só é permitido arquivo WEBP com menos de {size}
-          </Text>
-          <Text ta="center" fz="sm" mt="xs" c="dimmed">
-            Obs: para manter um padrão envie imagens com dimensão de {width}x{hight} pixels
-          </Text>
-        </Dropzone>
-      )}
+            <Text ta="center" fw={700} fz="lg">
+              <Dropzone.Accept>Soltar</Dropzone.Accept>
+              <Dropzone.Reject>O arquivo não um WEBP ou é maior que {size}</Dropzone.Reject>
+              <Dropzone.Idle>Carregar {name}</Dropzone.Idle>
+            </Text>
+            <Text ta="center" fz="sm" mt="xs" c="dimmed">
+              Clique ou arraste e solte o arquivo aqui para fazer o carregamento. Só é permitido arquivo {fileType === 'image/webp' ? "WEBP" : "PDF"} com menos de {size}
+            </Text>
+            {
+              fileType === 'image/webp'
+              && <Text ta="center" fz="sm" mt="xs" c="dimmed">
+                Obs: para manter um padrão envie imagens com dimensão de {width}x{hight} pixels
+              </Text>
+            }
+          </Dropzone>
+      }
     </>
   );
 }

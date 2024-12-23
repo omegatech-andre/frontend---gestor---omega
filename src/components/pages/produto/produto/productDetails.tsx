@@ -6,6 +6,8 @@ import ProviderTheme from "@/styles/providerTheme";
 import { ProductGetDetails, ProductPostDetails } from "@/types/productDetails";
 import ModalPatchDetails from "./modals/modalPatchDetails";
 import ModalPatchColors from "./modals/modalPatchColors";
+import ModalPatchBoletim from "./modals/modalPatchBoletim";
+import { API_BASE_URL } from "@/utils/apiBaseUrl";
 
 interface Props {
   product: ProductGetDetails;
@@ -19,7 +21,12 @@ export default function ProductDetail({ product }: Props) {
   const [inputValue, setInputValue] = useState<string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[]>("");
   const [inputLabel, setInputLabel] = useState<string>("");
 
-  const handleOpenModal = (contet: 'default' | 'colors' | 'boletim', label: string, value: string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[], field: keyof ProductPostDetails) => {
+  const handleOpenModal = (
+    contet: 'default' | 'colors' | 'boletim',
+    label: string,
+    value: string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[],
+    field: keyof ProductPostDetails,
+  ) => {
     setModalContent(contet)
     setInputLabel(label);
     setInputValue(value);
@@ -68,14 +75,14 @@ export default function ProductDetail({ product }: Props) {
                 <Flex justify={"space-between"}>
                   <Flex align={"center"}>
                     {
-                      product.PRODUCT_BOLETIM.length >= 0
+                      product.PRODUCT_BOLETIM.length <= 0
                         ? <IconCircleX color="red" size={20} />
                         : <IconCircleCheck color="green" size={20} />
                     }
-                    <Text px={6} fz={"sm"}>{product.PRODUCT_BOLETIM.length >= 0 ? "Sem boletim" : "com"}</Text>
+                    <Text px={6} fz={"sm"}>{product.PRODUCT_BOLETIM.length <= 0 ? "Vazio" : 'Adicionado'}</Text>
                   </Flex>
                   <Flex>
-                    <ActionIcon disabled={product.PRODUCT_BOLETIM.length === 0} onClick={() => console.log("baixar pdf")} variant="transparent" c="dimmed" aria-label={"Cores"}>
+                    <ActionIcon disabled={product.PRODUCT_BOLETIM.length === 0} component="a" href={`${API_BASE_URL}${product.PRODUCT_BOLETIM}`} target="_blank" variant="transparent" c="dimmed" aria-label={"Cores"}>
                       <IconDownload size={20} />
                     </ActionIcon>
                     <ActionIcon onClick={() => handleOpenModal("boletim", "Boletim técnico", product.PRODUCT_BOLETIM, "PRODUCT_BOLETIM")} variant="transparent" c="dimmed" aria-label={"Boletim Técnico"}>
@@ -99,7 +106,7 @@ export default function ProductDetail({ product }: Props) {
       >
         {modalContent === 'default' && <ModalPatchDetails product={product} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />}
         {modalContent === 'colors' && <ModalPatchColors product={product} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />}
-        {modalContent === 'boletim' && <>edit boletim</>}
+        {modalContent === 'boletim' && <ModalPatchBoletim product={product} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />}
       </Modal>
     </>
   );
