@@ -8,6 +8,7 @@ import ModalPatchDetails from "./modals/modalPatchDetails";
 import ModalPatchColors from "./modals/modalPatchColors";
 import ModalPatchBoletim from "./modals/modalPatchBoletim";
 import { API_BASE_URL } from "@/utils/apiBaseUrl";
+import ModalPatchFispq from "./modals/modalPatchFispq";
 
 interface Props {
   product: ProductGetDetails;
@@ -16,13 +17,13 @@ interface Props {
 export default function ProductDetail({ product }: Props) {
   const { isDesktop } = ProviderTheme();
   const [opened, { open, close }] = useDisclosure(false);
-  const [modalContent, setModalContent] = useState<'default' | 'colors' | 'boletim' | ''>('');
+  const [modalContent, setModalContent] = useState<'default' | 'colors' | 'boletim' | 'fispq' | ''>('');
   const [currentField, setCurrentField] = useState<keyof ProductPostDetails>("PRODUCT_NAME");
   const [inputValue, setInputValue] = useState<string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[]>("");
   const [inputLabel, setInputLabel] = useState<string>("");
 
   const handleOpenModal = (
-    contet: 'default' | 'colors' | 'boletim',
+    contet: 'default' | 'colors' | 'boletim' | 'fispq',
     label: string,
     value: string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[],
     field: keyof ProductPostDetails,
@@ -82,10 +83,33 @@ export default function ProductDetail({ product }: Props) {
                     <Text px={6} fz={"sm"}>{product.PRODUCT_BOLETIM.length <= 0 ? "Vazio" : 'Adicionado'}</Text>
                   </Flex>
                   <Flex>
-                    <ActionIcon disabled={product.PRODUCT_BOLETIM.length === 0} component="a" href={`${API_BASE_URL}${product.PRODUCT_BOLETIM}`} target="_blank" variant="transparent" c="dimmed" aria-label={"Cores"}>
+                    <ActionIcon disabled={product.PRODUCT_BOLETIM.length === 0} component="a" href={`${API_BASE_URL}${product.PRODUCT_BOLETIM}`} target="_blank" variant="transparent" c="dimmed" aria-label={"Boletim técnico"}>
                       <IconDownload size={20} />
                     </ActionIcon>
                     <ActionIcon onClick={() => handleOpenModal("boletim", "Boletim técnico", product.PRODUCT_BOLETIM, "PRODUCT_BOLETIM")} variant="transparent" c="dimmed" aria-label={"Boletim Técnico"}>
+                      <IconEdit size={20} />
+                    </ActionIcon>
+                  </Flex>
+                </Flex>
+              </Card>
+            </Flex>
+            <Flex direction={"column"}>
+              <Text fz={"xs"} c={"dimmed"}>FISPQ</Text>
+              <Card withBorder p={4}>
+                <Flex justify={"space-between"}>
+                  <Flex align={"center"}>
+                    {
+                      product.PRODUCT_FISPQ.length <= 0
+                        ? <IconCircleX color="red" size={20} />
+                        : <IconCircleCheck color="green" size={20} />
+                    }
+                    <Text px={6} fz={"sm"}>{product.PRODUCT_FISPQ.length <= 0 ? "Vazio" : 'Adicionado'}</Text>
+                  </Flex>
+                  <Flex>
+                    <ActionIcon disabled={product.PRODUCT_FISPQ.length === 0} component="a" href={`${API_BASE_URL}${product.PRODUCT_FISPQ}`} target="_blank" variant="transparent" c="dimmed" aria-label={"FISPQ"}>
+                      <IconDownload size={20} />
+                    </ActionIcon>
+                    <ActionIcon onClick={() => handleOpenModal("fispq", "FISPQ", product.PRODUCT_FISPQ, "PRODUCT_FISPQ")} variant="transparent" c="dimmed" aria-label={"FISPQ"}>
                       <IconEdit size={20} />
                     </ActionIcon>
                   </Flex>
@@ -107,6 +131,7 @@ export default function ProductDetail({ product }: Props) {
         {modalContent === 'default' && <ModalPatchDetails product={product} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />}
         {modalContent === 'colors' && <ModalPatchColors product={product} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />}
         {modalContent === 'boletim' && <ModalPatchBoletim product={product} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />}
+        {modalContent === 'fispq' && <ModalPatchFispq product={product} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />}
       </Modal>
     </>
   );
