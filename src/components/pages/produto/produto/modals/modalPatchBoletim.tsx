@@ -56,7 +56,7 @@ export default function ModalPatchBoletim({ product }: Props) {
   return (
     <>
       <Paper withBorder bg="#8a8a8a20">
-        <DropzonePicture fileType="application/pdf" name="Boletim" size='5mb' files={files} setFiles={setFiles} />
+        <DropzonePicture fileType="application/pdf" name="boletim" size='5mb' files={files} setFiles={setFiles} />
       </Paper>
       <Button
         onClick={sendRequest}

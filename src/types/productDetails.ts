@@ -28,7 +28,6 @@ export interface ProductPostDetails {
   PRODUCT_DESCRIPTION?: string;
   PRODUCT_FISPQ?: string;
   PRODUCT_BOLETIM?: string;
-  PRODUCT_URL_IMAGES?: string[];
   PRODUCT_TAGS?: string[];
   PRODUCT_COLORS?: {
     COLOR_NAME?: string;

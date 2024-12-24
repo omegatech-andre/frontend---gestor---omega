@@ -5,7 +5,8 @@ import { useSession } from "next-auth/react";
 import usePatch from "@/hooks/usePatch";
 import ProviderNotification from "@/components/_ui/notification/providerNotification";
 import { API_BASE_URL } from "@/utils/apiBaseUrl";
-import { ProductGetDetails, ProductPostDetails } from "@/types/productDetails";
+import { ProductGetDetails, ProductPostFile } from "@/types/productDetails";
+import { FileWithPath } from "@mantine/dropzone";
 
 interface Props {
   product: ProductGetDetails;
@@ -16,7 +17,7 @@ export default function ModalPatchImage({ product, image }: Props) {
   const { data: session } = useSession();
 
   // TODO - verificar sem o []
-  const { isUpdating, response, error, sendRequest } = usePatch<ProductPostDetails, ProductGetDetails>(`${API_BASE_URL}/products/remove-image/${product.PRODUCT_NAME}`, { PRODUCT_URL_IMAGES: [image] }, {
+  const { isUpdating, response, error, sendRequest } = usePatch<ProductPostFile, ProductGetDetails>(`${API_BASE_URL}/products/remove-image/${product.PRODUCT_NAME}`, { PRODUCT_URL_IMAGES: [image] as unknown as FileWithPath }, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`
     }
@@ -33,7 +34,7 @@ export default function ModalPatchImage({ product, image }: Props) {
       ProviderNotification({
         title: 'Sucesso',
         message: 'Imagem dedletada com sucesso!',
-        reload: false,
+        reload: true,
       });
     }
   }, [response, error]);

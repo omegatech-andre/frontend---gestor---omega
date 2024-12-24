@@ -56,7 +56,7 @@ export default function ModalPatchFispq({ product }: Props) {
   return (
     <>
       <Paper withBorder bg="#8a8a8a20">
-        <DropzonePicture fileType="application/pdf" name="FISPQ" size='5mb' files={files} setFiles={setFiles} />
+        <DropzonePicture fileType="application/pdf" name="fispq" size='5mb' files={files} setFiles={setFiles} />
       </Paper>
       <Button
         onClick={sendRequest}

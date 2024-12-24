@@ -1,11 +1,11 @@
 import { Button, Group, Image, Stack, Text } from "@mantine/core";
 import { Dropzone, FileWithPath } from "@mantine/dropzone";
-import { IconDownload, IconPhotoUp, IconRefresh, IconTrash, IconX } from "@tabler/icons-react";
+import { IconDownload, IconFileTypePdf, IconPhotoUp, IconRefresh, IconTrash, IconX } from "@tabler/icons-react";
 import { useRef } from "react";
 
 interface Props {
   fileType: "image/webp" | "application/pdf";
-  name: string;
+  name: "imagem" | "logo" | 'boletim' | 'fispq';
   width?: string;
   hight?: string;
   size: string;
@@ -72,11 +72,11 @@ export default function DropzonePicture({ fileType, name, width, hight, size, fi
             radius="md"
             accept={[fileType]}
             maxSize={
-              fileType === 'application/pdf'
-                ? 5 * 1024 ** 2
-                : fileType === 'image/webp'
+              name === 'logo'
+                ? 50 * 1024
+                : name === 'imagem'
                   ? 500 * 1024
-                  : 50 * 1024
+                  : 5 * 1024 ** 2
             }
           >
             <Group justify="center">
@@ -87,7 +87,11 @@ export default function DropzonePicture({ fileType, name, width, hight, size, fi
                 <IconX size={20} />
               </Dropzone.Reject>
               <Dropzone.Idle>
-                <IconPhotoUp size={20} />
+                {
+                  fileType === 'application/pdf'
+                    ? <IconFileTypePdf size={20} />
+                    : <IconPhotoUp size={20} />
+                }
               </Dropzone.Idle>
             </Group>
             <Text ta="center" fw={700} fz="lg">

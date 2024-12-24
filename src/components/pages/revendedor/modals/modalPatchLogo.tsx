@@ -53,7 +53,7 @@ export default function ModalPatchLogo({ reseller }: Props) {
   return (
     <>
       <Paper withBorder bg="#8a8a8a20">
-        <DropzonePicture fileType="image/webp" name="Logo" width="200" hight="200" size='50Kb' files={files} setFiles={setFiles} />
+        <DropzonePicture fileType="image/webp" name="logo" width="200" hight="200" size='50Kb' files={files} setFiles={setFiles} />
       </Paper>
       <Button
         onClick={sendRequest}

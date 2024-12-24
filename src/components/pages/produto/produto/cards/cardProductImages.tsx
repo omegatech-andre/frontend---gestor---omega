@@ -6,6 +6,7 @@ import { IconEdit, IconEye, IconTrash } from "@tabler/icons-react";
 import { useState } from "react";
 import ModalViewImages from "../modals/modalViewImages";
 import ModalPatchImage from "../modals/modalPatchImage";
+import ModalPostImage from "../modals/modalPostImage";
 
 interface Props {
   product: ProductGetDetails;
@@ -14,10 +15,10 @@ interface Props {
 export default function CardProductImages({ product }: Props) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [opened, { open, close }] = useDisclosure(false);
-  const [modalContent, setModalContent] = useState<'view' | 'delete' | ''>('');
   const [selectedImage, setSelectedImage] = useState<string>('');
+  const [modalContent, setModalContent] = useState<'post' | 'view' | 'delete' | ''>('');
 
-  const handleOpenModal = (image: string, content: 'view' | 'delete') => {
+  const handleOpenModal = (image: string, content: 'post' | 'view' | 'delete') => {
     setSelectedImage(image)
     setModalContent(content)
     open();
@@ -53,7 +54,7 @@ export default function CardProductImages({ product }: Props) {
           </AspectRatio>
         ))}
         <Tooltip label="Adicionar imagem" position="bottom">
-          <ActionIcon bg={"red"} radius={50} size={50} onClick={() => console.log("Adicionar imagem")} variant="default" aria-label={"Adicionar imagem"}>
+          <ActionIcon bg={"red"} radius={50} size={50} onClick={() => handleOpenModal('', 'post')} variant="default" aria-label={"Adicionar imagem"}>
             <IconEdit size={20} />
           </ActionIcon>
         </Tooltip>
@@ -68,6 +69,7 @@ export default function CardProductImages({ product }: Props) {
           blur: 3
         }}
       >
+        {modalContent === 'post' && <ModalPostImage productName={product.PRODUCT_NAME} />}
         {modalContent === 'view' && <ModalViewImages image={selectedImage} />}
         {modalContent === 'delete' && <ModalPatchImage product={product} image={selectedImage} />}
       </Modal>

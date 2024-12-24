@@ -5,19 +5,19 @@ import usePatch from "@/hooks/usePatch";
 import { useSession } from "next-auth/react";
 import { FileWithPath } from "@mantine/dropzone";
 import ProviderNotification from "@/components/_ui/notification/providerNotification";
-import { LineGetDetails, LinePostImage } from "@/types/lineDetails";
 import { API_BASE_URL } from "@/utils/apiBaseUrl";
 import DropzonePicture from "@/components/_ui/dropzone/dropzonePicture";
+import { ProductGetDetails, ProductPostFile } from "@/types/productDetails";
 
 interface Props {
-  line: LineGetDetails;
+  productName: string;
 }
 
-export default function ModalPatchImage({ line }: Props) {
+export default function ModalPostImage({ productName }: Props) {
   const { data: session } = useSession();
   const [files, setFiles] = useState<FileWithPath[]>([]);
 
-  const { isUpdating, response, error, sendRequest } = usePatch<LinePostImage, LineGetDetails>(`${API_BASE_URL}/lines/upload-image/${line.LINE_NAME}`, { LINE_URL_IMAGE: files[0] }, {
+  const { isUpdating, response, error, sendRequest } = usePatch<ProductPostFile, ProductGetDetails>(`${API_BASE_URL}/products/upload-image/${productName}`, { PRODUCT_URL_IMAGES: files[0] }, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`,
       'Content-Type': 'multipart/form-data'
@@ -28,13 +28,13 @@ export default function ModalPatchImage({ line }: Props) {
     if (error) {
       ProviderNotification({
         title: 'Erro',
-        message: 'Não foi possível alterar a imagem dessa linha, tente novamente mais tarde.',
+        message: 'Não foi possível adicionar imagem a esse produto, tente novamente mais tarde.',
       });
     }
     if (response) {
       ProviderNotification({
         title: 'Sucesso',
-        message: 'Imagem atualizada com sucesso!',
+        message: 'Imagem adicionada com sucesso!',
         reload: true,
       });
     }
@@ -44,8 +44,8 @@ export default function ModalPatchImage({ line }: Props) {
     return (
       <Stack align="center" gap={0}>
         <IconCircleCheckFilled color="green" size={100} />
-        <Text ta='center'>Imagem atualizada</Text>
-        <Text ta='center' c='dimmed'>A imagem da linha foi atualizada com sucesso.</Text>
+        <Text ta='center'>Imagem adicionada</Text>
+        <Text ta='center' c='dimmed'>A imagem foi adicionada com sucesso.</Text>
       </Stack>
     );
   }
@@ -53,7 +53,7 @@ export default function ModalPatchImage({ line }: Props) {
   return (
     <>
       <Paper withBorder bg="#8a8a8a20">
-        <DropzonePicture fileType="image/webp" name="imagem" width="1920" hight="500" size='500Kb' files={files} setFiles={setFiles} />
+        <DropzonePicture fileType="image/webp" name="imagem" width="500" hight="500" size='500Kb' files={files} setFiles={setFiles} />
       </Paper>
       <Button
         onClick={sendRequest}
