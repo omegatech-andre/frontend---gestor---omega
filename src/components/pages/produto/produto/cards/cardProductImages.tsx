@@ -5,6 +5,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { IconEdit, IconEye, IconTrash } from "@tabler/icons-react";
 import { useState } from "react";
 import ModalViewImages from "../modals/modalViewImages";
+import ModalPatchImage from "../modals/modalPatchImage";
 
 interface Props {
   product: ProductGetDetails;
@@ -68,7 +69,7 @@ export default function CardProductImages({ product }: Props) {
         }}
       >
         {modalContent === 'view' && <ModalViewImages image={selectedImage} />}
-        {modalContent === 'delete' && <>modal de delete{selectedImage}</>}
+        {modalContent === 'delete' && <ModalPatchImage product={product} image={selectedImage} />}
       </Modal>
     </>
   );
