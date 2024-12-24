@@ -16,7 +16,6 @@ interface Props {
 export default function ModalPatchImage({ product, image }: Props) {
   const { data: session } = useSession();
 
-  // TODO - verificar sem o []
   const { isUpdating, response, error, sendRequest } = usePatch<ProductPostFile, ProductGetDetails>(`${API_BASE_URL}/products/remove-image/${product.PRODUCT_NAME}`, { PRODUCT_URL_IMAGES: [image] as unknown as FileWithPath }, {
     headers: {
       Authorization: `Bearer ${session?.user.access_token}`

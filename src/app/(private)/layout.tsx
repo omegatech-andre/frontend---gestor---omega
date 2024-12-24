@@ -131,7 +131,7 @@ export default function PagesLayout({
               </Button>
             </Group>
           </AppShell.Navbar>
-          <AppShell.Main w="100vw" h="max-content">
+          <AppShell.Main h="max-content">
             {children}
             {session.user.USER_ROLE === 'ADMIN' && <FloatButton />}
           </AppShell.Main>

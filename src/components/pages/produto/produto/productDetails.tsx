@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ActionIcon, Card, Flex, Modal, Paper, SimpleGrid, Text, TextInput } from "@mantine/core";
+import { ActionIcon, Card, Center, Flex, Modal, Paper, SimpleGrid, Text, TextInput } from "@mantine/core";
 import { IconCircleCheck, IconCircleX, IconDownload, IconEdit } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import ProviderTheme from "@/styles/providerTheme";
@@ -51,8 +51,8 @@ export default function ProductDetail({ product }: Props) {
 
   return (
     <>
-      <Paper px={isDesktop ? '20' : '0'}>
-        <SimpleGrid mt={10} mb={isDesktop ? '0' : '80'} cols={{ base: 1 }} spacing={20} verticalSpacing={15}>
+      <Paper px={isDesktop ? '20' : '0'} mb={isDesktop ? '0' : '80'}>
+        <SimpleGrid mt={10} cols={{ base: 1 }} spacing={20} verticalSpacing={15}>
           <SimpleGrid cols={{ base: 1, sm: 2 }}>
             {renderTextInput("Nome", product.PRODUCT_NAME, "PRODUCT_NAME")}
             {renderTextInput("Categoria", product.PRODUCT_CATEGORY.CATEGORY_NAME, "FK_PRODUCT_CATEGORY")}
@@ -118,8 +118,8 @@ export default function ProductDetail({ product }: Props) {
               </Card>
             </Flex>
           </SimpleGrid>
-          <CardProductImages product={product} />
         </SimpleGrid>
+        <CardProductImages product={product} />
       </Paper>
       <Modal
         opened={opened}

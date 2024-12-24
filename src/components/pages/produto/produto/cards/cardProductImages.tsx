@@ -1,8 +1,8 @@
 import { ProductGetDetails } from "@/types/productDetails";
 import { API_BASE_URL } from "@/utils/apiBaseUrl";
-import { ActionIcon, AspectRatio, Flex, Image, Modal, Overlay, Tooltip } from "@mantine/core";
+import { ActionIcon, Affix, AspectRatio, Flex, Image, Modal, Overlay, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconEdit, IconEye, IconTrash } from "@tabler/icons-react";
+import { IconEye, IconPhotoUp, IconTrash } from "@tabler/icons-react";
 import { useState } from "react";
 import ModalViewImages from "../modals/modalViewImages";
 import ModalPatchImage from "../modals/modalPatchImage";
@@ -26,7 +26,7 @@ export default function CardProductImages({ product }: Props) {
 
   return (
     <>
-      <Flex gap={"lg"} my={"lg"} align={"center"}>
+      <Flex gap={"md"} mt={"40"} align={"center"} wrap={"wrap"}>
         {product.PRODUCT_URL_IMAGES.map((image, index) => (
           <AspectRatio
             key={index}
@@ -53,11 +53,13 @@ export default function CardProductImages({ product }: Props) {
             )}
           </AspectRatio>
         ))}
-        <Tooltip label="Adicionar imagem" position="bottom">
-          <ActionIcon bg={"red"} radius={50} size={50} onClick={() => handleOpenModal('', 'post')} variant="default" aria-label={"Adicionar imagem"}>
-            <IconEdit size={20} />
-          </ActionIcon>
-        </Tooltip>
+        <Affix position={{ bottom: 80, right: 25 }} zIndex={100}>
+          <Tooltip label="Adicionar imagem" position="left">
+            <ActionIcon bg={"red"} radius={50} size={50} onClick={() => handleOpenModal('', 'post')} variant="default" aria-label={"Adicionar imagem"}>
+              <IconPhotoUp size={20} />
+            </ActionIcon>
+          </Tooltip>
+        </Affix >
       </Flex>
       <Modal
         opened={opened}
