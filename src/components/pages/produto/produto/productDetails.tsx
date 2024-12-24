@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ActionIcon, Card, Center, Flex, Modal, Paper, SimpleGrid, Text, TextInput } from "@mantine/core";
+import { ActionIcon, Card, Flex, Modal, Paper, SimpleGrid, Text, TextInput } from "@mantine/core";
 import { IconCircleCheck, IconCircleX, IconDownload, IconEdit } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import ProviderTheme from "@/styles/providerTheme";
