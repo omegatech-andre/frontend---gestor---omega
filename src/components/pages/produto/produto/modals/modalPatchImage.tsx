@@ -51,20 +51,19 @@ export default function ModalPatchImage({ product, image }: Props) {
 
   return (
     <>
-      <form onSubmit={sendRequest}>
-        <Stack align="center" gap={0}>
-          <Text ta='center'>Deletar image de {product.PRODUCT_NAME}</Text>
-          <Text ta='center' size="sm" c='dimmed'>Deseja realmente deletar essa imagem?</Text>
-        </Stack>
-        <Button
-          type='submit'
-          fullWidth
-          mt="md"
-          loading={isUpdating}
-        >
-          Deletar imagem
-        </Button>
-      </form>
+      <Stack align="center" gap={0}>
+        <Text ta='center'>Deletar image de {product.PRODUCT_NAME}</Text>
+        <Text ta='center' size="sm" c='dimmed'>Deseja realmente deletar essa imagem?</Text>
+      </Stack>
+      <Button
+        onClick={sendRequest}
+        type='submit'
+        fullWidth
+        mt="md"
+        loading={isUpdating}
+      >
+        Deletar imagem
+      </Button>
     </>
   );
 }
