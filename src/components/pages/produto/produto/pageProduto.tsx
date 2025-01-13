@@ -59,7 +59,8 @@ export default function PageProduto({ product }: Props) {
       <Modal
         opened={opened}
         onClose={close}
-        withCloseButton={false}
+        withCloseButton
+        closeOnClickOutside={false}
         overlayProps={{
           backgroundOpacity: 0.55,
           blur: 3

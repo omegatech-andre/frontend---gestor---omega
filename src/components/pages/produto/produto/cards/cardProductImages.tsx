@@ -65,7 +65,8 @@ export default function CardProductImages({ product }: Props) {
         opened={opened}
         size={'auto'}
         onClose={close}
-        withCloseButton={false}
+        withCloseButton
+        closeOnClickOutside={false}
         overlayProps={{
           backgroundOpacity: 0.55,
           blur: 3

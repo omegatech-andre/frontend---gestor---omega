@@ -33,7 +33,12 @@ export default function AuthPage() {
           </Group>
         </Stack>
       </BackgroundImage>
-      <Modal opened={opened} onClose={close} withCloseButton={false} overlayProps={{ backgroundOpacity: 0.55, blur: 3 }}>
+      <Modal
+        opened={opened}
+        onClose={close}
+        withCloseButton={false}
+        overlayProps={{ backgroundOpacity: 0.55, blur: 3 }}
+      >
         {modalContent === 'login' && (
           <>
             <SignIn />
