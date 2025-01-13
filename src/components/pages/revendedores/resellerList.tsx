@@ -7,12 +7,14 @@ import ProviderTheme from '@/styles/providerTheme';
 import { FormatePhone } from '@/utils/formatPhone';
 import ModalPatchStatus from '../revendedor/modals/modalPatchStatus';
 import { API_BASE_URL } from '@/utils/apiBaseUrl';
+import { useSession } from 'next-auth/react';
 
 interface Props {
   resellers: ResellerGetDetails[]
 }
 
 export default function ResellersList({ resellers }: Props) {
+  const { data: session } = useSession();
   const { isDesktop } = ProviderTheme();
   const [opened, { open, close }] = useDisclosure(false);
   const [selectedReseller, setSelectedReseller] = useState<ResellerGetDetails>();
@@ -93,7 +95,7 @@ export default function ResellersList({ resellers }: Props) {
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item component='a' href={`/revendedor/${row.RESELLER_FANTASY_NAME}`} leftSection={<IconListDetails size={20} />}>Detalhes</Menu.Item>
-              <Menu.Item onClick={() => handleOpen(row)} leftSection={<IconSettings size={20} />}>Alterar Status</Menu.Item>
+              <Menu.Item disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpen(row)} leftSection={<IconSettings size={20} />}>Alterar Status</Menu.Item>
             </Menu.Dropdown>
           </Menu>
         </Group>

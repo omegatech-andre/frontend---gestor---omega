@@ -10,12 +10,14 @@ import ModalPatchBoletim from "./modals/modalPatchBoletim";
 import { API_BASE_URL } from "@/utils/apiBaseUrl";
 import ModalPatchFispq from "./modals/modalPatchFispq";
 import CardProductImages from "./cards/cardProductImages";
+import { useSession } from "next-auth/react";
 
 interface Props {
   product: ProductGetDetails;
 }
 
 export default function ProductDetail({ product }: Props) {
+  const { data: session } = useSession();
   const { isDesktop } = ProviderTheme();
   const [opened, { open, close }] = useDisclosure(false);
   const [modalContent, setModalContent] = useState<'default' | 'colors' | 'boletim' | 'fispq' | ''>('');
@@ -42,7 +44,7 @@ export default function ProductDetail({ product }: Props) {
       value={Array.isArray(value) ? value.join(", ") : value.split(",").join(", ")}
       readOnly
       rightSection={
-        <ActionIcon onClick={() => handleOpenModal('default', label, value, field)} variant="transparent" c="dimmed" aria-label={label}>
+        <ActionIcon disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpenModal('default', label, value, field)} variant="transparent" c="dimmed" aria-label={label}>
           <IconEdit size={20} />
         </ActionIcon>
       }
@@ -65,7 +67,7 @@ export default function ProductDetail({ product }: Props) {
             value={product.PRODUCT_COLORS.map(cor => cor.COLOR_NAME).join(", ")}
             readOnly
             rightSection={
-              <ActionIcon onClick={() => handleOpenModal("colors", "Cores", product.PRODUCT_COLORS, "PRODUCT_COLORS")} variant="transparent" c="dimmed" aria-label={"Cores"}>
+              <ActionIcon disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpenModal("colors", "Cores", product.PRODUCT_COLORS, "PRODUCT_COLORS")} variant="transparent" c="dimmed" aria-label={"Cores"}>
                 <IconEdit size={20} />
               </ActionIcon>
             }
@@ -87,7 +89,7 @@ export default function ProductDetail({ product }: Props) {
                     <ActionIcon disabled={product.PRODUCT_BOLETIM.length === 0} component="a" href={`${API_BASE_URL}${product.PRODUCT_BOLETIM}`} target="_blank" variant="transparent" c="dimmed" aria-label={"Boletim técnico"}>
                       <IconDownload size={20} />
                     </ActionIcon>
-                    <ActionIcon onClick={() => handleOpenModal("boletim", "Boletim técnico", product.PRODUCT_BOLETIM, "PRODUCT_BOLETIM")} variant="transparent" c="dimmed" aria-label={"Boletim Técnico"}>
+                    <ActionIcon disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpenModal("boletim", "Boletim técnico", product.PRODUCT_BOLETIM, "PRODUCT_BOLETIM")} variant="transparent" c="dimmed" aria-label={"Boletim Técnico"}>
                       <IconEdit size={20} />
                     </ActionIcon>
                   </Flex>
@@ -110,7 +112,7 @@ export default function ProductDetail({ product }: Props) {
                     <ActionIcon disabled={product.PRODUCT_FISPQ.length === 0} component="a" href={`${API_BASE_URL}${product.PRODUCT_FISPQ}`} target="_blank" variant="transparent" c="dimmed" aria-label={"FISPQ"}>
                       <IconDownload size={20} />
                     </ActionIcon>
-                    <ActionIcon onClick={() => handleOpenModal("fispq", "FISPQ", product.PRODUCT_FISPQ, "PRODUCT_FISPQ")} variant="transparent" c="dimmed" aria-label={"FISPQ"}>
+                    <ActionIcon disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpenModal("fispq", "FISPQ", product.PRODUCT_FISPQ, "PRODUCT_FISPQ")} variant="transparent" c="dimmed" aria-label={"FISPQ"}>
                       <IconEdit size={20} />
                     </ActionIcon>
                   </Flex>
@@ -119,8 +121,8 @@ export default function ProductDetail({ product }: Props) {
             </Flex>
           </SimpleGrid>
         </SimpleGrid>
-        <CardProductImages product={product} />
       </Paper>
+      {session?.user.USER_ROLE === "ADMIN" && <CardProductImages product={product} />}
       <Modal
         opened={opened}
         onClose={close}

@@ -7,12 +7,14 @@ import MenuNavigation from "@/components/_ui/menuNavigation/menuNavigation";
 import { ProductGetDetails } from "@/types/productDetails";
 import ProductDetail from "./productDetails";
 import ModalPatchStatus from "./modals/modalPatchStatus";
+import { useSession } from "next-auth/react";
 
 interface Props {
   product: ProductGetDetails;
 }
 
 export default function PageProduto({ product }: Props) {
+  const { data: session } = useSession();
   const { isDesktop, isSmallDevice } = ProviderTheme();
   const [opened, { open, close }] = useDisclosure(false);
   const [modalContent, setModalContent] = useState<'status' | 'delete' | ''>('');
@@ -39,11 +41,11 @@ export default function PageProduto({ product }: Props) {
               }
               <Group gap={5}>
                 <Tooltip color="gray" label='Alterar status' position="bottom">
-                  <ActionIcon onClick={() => handleOpen('status')} variant="filled" aria-label="Status">
+                  <ActionIcon disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpen('status')} variant="filled" aria-label="Status">
                     <IconSettings size={20} />
                   </ActionIcon>
                 </Tooltip>
-                {/* <Tooltip color="gray" label='Deletar categoria' position="bottom">
+                {/* <Tooltip color="gray" label='Deletar produto' position="bottom">
                   <ActionIcon onClick={() => handleOpen('delete')} variant="filled" aria-label="Delete">
                     <IconTrash size={20} />
                   </ActionIcon>
@@ -67,7 +69,7 @@ export default function PageProduto({ product }: Props) {
         }}
       >
         {modalContent === 'status' && <ModalPatchStatus product={product} />}
-        {/* {modalContent === 'delete' && <ModalDeleteCategory category={category} />} */}
+        {/* {modalContent === 'delete' && <ModalDeleteProduct product={product} />} */}
       </Modal>
     </>
   );

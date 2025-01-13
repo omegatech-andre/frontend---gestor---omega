@@ -9,12 +9,14 @@ import ModalPatchStatus from "./modals/modalPatchStatus"
 import LineDetail from "./lineDetails"
 import ModalPatchImage from "./modals/modalPatchImage"
 import { API_BASE_URL } from "@/utils/apiBaseUrl"
+import { useSession } from "next-auth/react"
 
 interface Props {
   line: LineGetDetails;
 }
 
 export default function PageLinha({ line }: Props) {
+  const { data: session } = useSession();
   const { isDesktop, isSmallDevice } = ProviderTheme();
   const [opened, { open, close }] = useDisclosure(false);
   const [modalContent, setModalContent] = useState<'picture' | 'status' | 'delete' | ''>('');
@@ -44,12 +46,12 @@ export default function PageLinha({ line }: Props) {
               }
               <Group gap={5}>
                 <Tooltip color="gray" label='Aterar wallpaper' position="bottom">
-                  <ActionIcon onClick={() => handleOpen('picture')} variant="filled" aria-label="Picture">
+                  <ActionIcon disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpen('picture')} variant="filled" aria-label="Picture">
                     <IconPhoto size={20} />
                   </ActionIcon>
                 </Tooltip>
                 <Tooltip color="gray" label='Alterar status' position="bottom">
-                  <ActionIcon onClick={() => handleOpen('status')} variant="filled" aria-label="Status">
+                  <ActionIcon disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpen('status')} variant="filled" aria-label="Status">
                     <IconSettings size={20} />
                   </ActionIcon>
                 </Tooltip>

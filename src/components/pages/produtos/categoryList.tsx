@@ -1,16 +1,18 @@
 import { ActionIcon, Badge, Button, Card, Center, Flex, Group, Menu, Modal, Paper, Stack, Table, Text, TextInput } from "@mantine/core";
-import { IconDots, IconListDetails, IconRefresh, IconSettings, IconTrash } from "@tabler/icons-react";
+import { IconDots, IconListDetails, IconRefresh, IconSettings } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import { CategoryGetDetails } from "@/types/categoryDetails";
 import ProviderTheme from "@/styles/providerTheme";
 import ModalPatchStatus from "../produto/categoria/modals/modalPatchStatus";
+import { useSession } from "next-auth/react";
 
 interface Props {
   categories: CategoryGetDetails[];
 }
 
 export default function CategoryList({ categories }: Props) {
+  const { data: session } = useSession();
   const { isDesktop } = ProviderTheme();
   const [opened, { open, close }] = useDisclosure(false);
   const [searchName, setSearchName] = useState<string>("");
@@ -83,7 +85,7 @@ export default function CategoryList({ categories }: Props) {
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item component='a' href={`/categoria/${row.CATEGORY_NAME}`} leftSection={<IconListDetails size={20} />}>Detalhes</Menu.Item>
-              <Menu.Item onClick={() => handleOpen('edit', row)} leftSection={<IconSettings size={20} />}>Alterar Status</Menu.Item>
+              <Menu.Item disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpen('edit', row)} leftSection={<IconSettings size={20} />}>Alterar Status</Menu.Item>
               {/* <Menu.Item onClick={() => handleOpen('delete', row)} leftSection={<IconTrash size={20} />}>Deletar categoria</Menu.Item> */}
             </Menu.Dropdown>
           </Menu>

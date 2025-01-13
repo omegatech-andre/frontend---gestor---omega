@@ -7,12 +7,14 @@ import ProviderTheme from "@/styles/providerTheme";
 import MenuNavigation from "@/components/_ui/menuNavigation/menuNavigation";
 import CategoryDetail from "./categoryDetails";
 import ModalPatchStatus from "./modals/modalPatchStatus";
+import { useSession } from "next-auth/react";
 
 interface Props {
   category: CategoryGetDetails;
 }
 
 export default function PageCategoria({ category }: Props) {
+  const { data: session } = useSession();
   const { isDesktop, isSmallDevice } = ProviderTheme();
   const [opened, { open, close }] = useDisclosure(false);
   const [modalContent, setModalContent] = useState<'status' | 'delete' | ''>('');
@@ -39,7 +41,7 @@ export default function PageCategoria({ category }: Props) {
               }
               <Group gap={5}>
                 <Tooltip color="gray" label='Alterar status' position="bottom">
-                  <ActionIcon onClick={() => handleOpen('status')} variant="filled" aria-label="Status">
+                  <ActionIcon disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpen('status')} variant="filled" aria-label="Status">
                     <IconSettings size={20} />
                   </ActionIcon>
                 </Tooltip>

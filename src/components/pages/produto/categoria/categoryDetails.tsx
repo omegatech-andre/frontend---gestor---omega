@@ -5,12 +5,14 @@ import { useDisclosure } from "@mantine/hooks";
 import { CategoryGetDetails, CategoryPostDetails } from "@/types/categoryDetails";
 import ProviderTheme from "@/styles/providerTheme";
 import ModalPatchDetails from "./modals/modalPatchDetails";
+import { useSession } from "next-auth/react";
 
 interface Props {
   category: CategoryGetDetails;
 }
 
 export default function CategoryDetail({ category }: Props) {
+  const { data: session } = useSession();
   const { isDesktop } = ProviderTheme();
   const [opened, { open, close }] = useDisclosure(false);
   const [currentField, setCurrentField] = useState<keyof CategoryPostDetails>("CATEGORY_NAME");
@@ -30,7 +32,7 @@ export default function CategoryDetail({ category }: Props) {
       value={value}
       readOnly
       rightSection={
-        <ActionIcon onClick={() => handleOpenModal(label, value, field)} variant="transparent" c="dimmed" aria-label={label}>
+        <ActionIcon disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpenModal(label, value, field)} variant="transparent" c="dimmed" aria-label={label}>
           <IconEdit size={20} />
         </ActionIcon>
       }
