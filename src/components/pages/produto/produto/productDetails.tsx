@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ActionIcon, Card, Flex, Modal, Paper, SimpleGrid, Text, TextInput } from "@mantine/core";
-import { IconCircleCheck, IconCircleX, IconDownload, IconEdit } from "@tabler/icons-react";
+import { IconCircleCheck, IconCircleX, IconDownload, IconEdit, IconTrash } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import ProviderTheme from "@/styles/providerTheme";
 import { ProductGetDetails, ProductPostDetails } from "@/types/productDetails";
@@ -11,6 +11,9 @@ import { API_BASE_URL } from "@/utils/apiBaseUrl";
 import ModalPatchFispq from "./modals/modalPatchFispq";
 import CardProductImages from "./cards/cardProductImages";
 import { useSession } from "next-auth/react";
+import ProviderNotification from "@/components/_ui/notification/providerNotification";
+import ModalPatchRemoveBoletim from "./modals/modalPatchRemoveBoletim";
+import ModalPatchRemoveFispq from "./modals/modalPatchRemoveFispq";
 
 interface Props {
   product: ProductGetDetails;
@@ -20,13 +23,32 @@ export default function ProductDetail({ product }: Props) {
   const { data: session } = useSession();
   const { isDesktop } = ProviderTheme();
   const [opened, { open, close }] = useDisclosure(false);
-  const [modalContent, setModalContent] = useState<'default' | 'colors' | 'boletim' | 'fispq' | ''>('');
+  const [modalContent, setModalContent] = useState<'default' | 'colors' | 'boletim' | 'fispq' | 'deletar-boletim' | 'deletar-fispq' | ''>('');
   const [currentField, setCurrentField] = useState<keyof ProductPostDetails>("PRODUCT_NAME");
   const [inputValue, setInputValue] = useState<string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[]>("");
   const [inputLabel, setInputLabel] = useState<string>("");
 
+  const downloadPDF = async (filePath: string, type: "boletim" | "fispq") => {
+    try {
+      const response = await fetch(API_BASE_URL + filePath);
+      const blob = await response.blob();
+      const link = document.createElement('a');
+
+      link.href = URL.createObjectURL(blob);
+      link.download = `omega-${product.PRODUCT_NAME}-${type}.pdf`;
+      link.click();
+
+      URL.revokeObjectURL(link.href);
+    } catch (error) {
+      ProviderNotification({
+        title: "Erro",
+        message: "Erro ao baixar o PDF"
+      });
+    }
+  };
+
   const handleOpenModal = (
-    content: 'default' | 'colors' | 'boletim' | 'fispq',
+    content: 'default' | 'colors' | 'boletim' | 'fispq' | 'deletar-boletim' | 'deletar-fispq',
     label: string,
     value: string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[],
     field: keyof ProductPostDetails,
@@ -86,10 +108,15 @@ export default function ProductDetail({ product }: Props) {
                     <Text px={6} fz={"sm"}>{product.PRODUCT_BOLETIM.length <= 0 ? "Vazio" : 'Adicionado'}</Text>
                   </Flex>
                   <Flex>
-                    <ActionIcon disabled={product.PRODUCT_BOLETIM.length === 0} component="a" href={`${API_BASE_URL}${product.PRODUCT_BOLETIM}`} target="_blank" variant="transparent" c="dimmed" aria-label={"Boletim técnico"}>
+                    <ActionIcon disabled={product.PRODUCT_BOLETIM.length === 0} onClick={() => downloadPDF(product.PRODUCT_BOLETIM, "boletim")} variant="transparent" c="dimmed" aria-label={"Baixar boletim técnico"}>
                       <IconDownload size={20} />
                     </ActionIcon>
-                    <ActionIcon disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpenModal("boletim", "Boletim técnico", product.PRODUCT_BOLETIM, "PRODUCT_BOLETIM")} variant="transparent" c="dimmed" aria-label={"Boletim Técnico"}>
+                    {product.PRODUCT_BOLETIM.length > 0 && (
+                      <ActionIcon onClick={() => handleOpenModal("deletar-boletim", "Boletim técnico", product.PRODUCT_BOLETIM, "PRODUCT_BOLETIM")} variant="transparent" c="dimmed" aria-label={"Deletar boletim técnico"}>
+                        <IconTrash size={20} />
+                      </ActionIcon>
+                    )}
+                    <ActionIcon disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpenModal("boletim", "Boletim técnico", product.PRODUCT_BOLETIM, "PRODUCT_BOLETIM")} variant="transparent" c="dimmed" aria-label={"Editar boletim Técnico"}>
                       <IconEdit size={20} />
                     </ActionIcon>
                   </Flex>
@@ -109,10 +136,15 @@ export default function ProductDetail({ product }: Props) {
                     <Text px={6} fz={"sm"}>{product.PRODUCT_FISPQ.length <= 0 ? "Vazio" : 'Adicionado'}</Text>
                   </Flex>
                   <Flex>
-                    <ActionIcon disabled={product.PRODUCT_FISPQ.length === 0} component="a" href={`${API_BASE_URL}${product.PRODUCT_FISPQ}`} target="_blank" variant="transparent" c="dimmed" aria-label={"FISPQ"}>
+                    <ActionIcon disabled={product.PRODUCT_FISPQ.length === 0} onClick={() => downloadPDF(product.PRODUCT_FISPQ, "fispq")} variant="transparent" c="dimmed" aria-label={"Baixar FISPQ"}>
                       <IconDownload size={20} />
                     </ActionIcon>
-                    <ActionIcon disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpenModal("fispq", "FISPQ", product.PRODUCT_FISPQ, "PRODUCT_FISPQ")} variant="transparent" c="dimmed" aria-label={"FISPQ"}>
+                    {product.PRODUCT_FISPQ.length > 0 && (
+                      <ActionIcon onClick={() => handleOpenModal("deletar-fispq", "FISPQ", product.PRODUCT_FISPQ, "PRODUCT_FISPQ")} variant="transparent" c="dimmed" aria-label={"Deletar FISPQ"}>
+                        <IconTrash size={20} />
+                      </ActionIcon>
+                    )}
+                    <ActionIcon disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpenModal("fispq", "FISPQ", product.PRODUCT_FISPQ, "PRODUCT_FISPQ")} variant="transparent" c="dimmed" aria-label={"Editar FISPQ"}>
                       <IconEdit size={20} />
                     </ActionIcon>
                   </Flex>
@@ -137,6 +169,8 @@ export default function ProductDetail({ product }: Props) {
         {modalContent === 'colors' && <ModalPatchColors product={product} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />}
         {modalContent === 'boletim' && <ModalPatchBoletim product={product} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />}
         {modalContent === 'fispq' && <ModalPatchFispq product={product} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />}
+        {modalContent === 'deletar-boletim' && <ModalPatchRemoveBoletim product={product} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />}
+        {modalContent === 'deletar-fispq' && <ModalPatchRemoveFispq product={product} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />}
       </Modal>
     </>
   );
