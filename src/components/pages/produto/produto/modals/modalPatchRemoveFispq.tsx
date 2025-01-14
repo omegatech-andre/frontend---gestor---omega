@@ -9,9 +9,8 @@ import { useEffect } from "react";
 
 interface Props {
   product: ProductGetDetails;
-  inputLabel: string;
-  inputValue: string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[];
-  inputField: keyof ProductPostDetails;
+  inputLabel: string | undefined;
+  inputValue: string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[] | undefined;
 }
 
 export default function ModalPatchRemoveFispq({ product, inputLabel, inputValue }: Props) {

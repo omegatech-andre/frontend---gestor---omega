@@ -13,9 +13,9 @@ import { Controller, useForm } from "react-hook-form";
 
 interface Props {
   product: ProductGetDetails;
-  inputLabel: string;
-  inputValue: string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[];
-  inputField: keyof ProductPostDetails;
+  inputLabel: string | undefined;
+  inputValue: string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[] | undefined;
+  inputField: keyof ProductPostDetails | undefined;
 }
 
 const renderMultiSelectOption: MultiSelectProps['renderOption'] = ({ option }) => (
@@ -31,7 +31,7 @@ export default function ModalPatchColors({ product, inputLabel, inputValue, inpu
     mode: "onChange",
     resolver: yupResolver(schemaProduct),
     defaultValues: {
-      [inputField]: inputValue,
+      [inputField as keyof ProductPostDetails]: inputValue,
     },
   });
 

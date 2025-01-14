@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { ActionIcon, Card, Flex, Modal, Paper, SimpleGrid, Text, TextInput } from "@mantine/core";
-import { IconCircleCheck, IconCircleX, IconDownload, IconEdit, IconTrash } from "@tabler/icons-react";
+import { ActionIcon, Affix, Card, Flex, Modal, Paper, SimpleGrid, Text, TextInput, Tooltip } from "@mantine/core";
+import { IconCircleCheck, IconCircleX, IconDownload, IconEdit, IconPhotoUp, IconTrash } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import ProviderTheme from "@/styles/providerTheme";
 import { ProductGetDetails, ProductPostDetails } from "@/types/productDetails";
@@ -14,6 +14,7 @@ import { useSession } from "next-auth/react";
 import ProviderNotification from "@/components/_ui/notification/providerNotification";
 import ModalPatchRemoveBoletim from "./modals/modalPatchRemoveBoletim";
 import ModalPatchRemoveFispq from "./modals/modalPatchRemoveFispq";
+import ModalPostImage from "./modals/modalPostImage";
 
 interface Props {
   product: ProductGetDetails;
@@ -23,10 +24,10 @@ export default function ProductDetail({ product }: Props) {
   const { data: session } = useSession();
   const { isDesktop } = ProviderTheme();
   const [opened, { open, close }] = useDisclosure(false);
-  const [modalContent, setModalContent] = useState<'default' | 'colors' | 'boletim' | 'fispq' | 'deletar-boletim' | 'deletar-fispq' | ''>('');
-  const [currentField, setCurrentField] = useState<keyof ProductPostDetails>("PRODUCT_NAME");
-  const [inputValue, setInputValue] = useState<string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[]>("");
-  const [inputLabel, setInputLabel] = useState<string>("");
+  const [modalContent, setModalContent] = useState<'default' | 'colors' | 'boletim' | 'fispq' | 'deletar-boletim' | 'deletar-fispq' | 'post-image' | ''>('');
+  const [currentField, setCurrentField] = useState<keyof ProductPostDetails | undefined>("PRODUCT_NAME");
+  const [inputValue, setInputValue] = useState<string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[] | undefined>("");
+  const [inputLabel, setInputLabel] = useState<string | undefined>("");
 
   const downloadPDF = async (filePath: string, type: "boletim" | "fispq") => {
     try {
@@ -48,10 +49,10 @@ export default function ProductDetail({ product }: Props) {
   };
 
   const handleOpenModal = (
-    content: 'default' | 'colors' | 'boletim' | 'fispq' | 'deletar-boletim' | 'deletar-fispq',
-    label: string,
-    value: string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[],
-    field: keyof ProductPostDetails,
+    content: 'default' | 'colors' | 'boletim' | 'fispq' | 'deletar-boletim' | 'deletar-fispq' | 'post-image',
+    label?: string,
+    value?: string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[],
+    field?: keyof ProductPostDetails,
   ) => {
     setModalContent(content)
     setInputLabel(label);
@@ -112,11 +113,11 @@ export default function ProductDetail({ product }: Props) {
                       <IconDownload size={20} />
                     </ActionIcon>
                     {product.PRODUCT_BOLETIM.length > 0 && (
-                      <ActionIcon onClick={() => handleOpenModal("deletar-boletim", "Boletim técnico", product.PRODUCT_BOLETIM, "PRODUCT_BOLETIM")} variant="transparent" c="dimmed" aria-label={"Deletar boletim técnico"}>
+                      <ActionIcon onClick={() => handleOpenModal("deletar-boletim", "Boletim técnico", product.PRODUCT_BOLETIM)} variant="transparent" c="dimmed" aria-label={"Deletar boletim técnico"}>
                         <IconTrash size={20} />
                       </ActionIcon>
                     )}
-                    <ActionIcon disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpenModal("boletim", "Boletim técnico", product.PRODUCT_BOLETIM, "PRODUCT_BOLETIM")} variant="transparent" c="dimmed" aria-label={"Editar boletim Técnico"}>
+                    <ActionIcon disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpenModal("boletim")} variant="transparent" c="dimmed" aria-label={"Editar boletim Técnico"}>
                       <IconEdit size={20} />
                     </ActionIcon>
                   </Flex>
@@ -140,11 +141,11 @@ export default function ProductDetail({ product }: Props) {
                       <IconDownload size={20} />
                     </ActionIcon>
                     {product.PRODUCT_FISPQ.length > 0 && (
-                      <ActionIcon onClick={() => handleOpenModal("deletar-fispq", "FISPQ", product.PRODUCT_FISPQ, "PRODUCT_FISPQ")} variant="transparent" c="dimmed" aria-label={"Deletar FISPQ"}>
+                      <ActionIcon onClick={() => handleOpenModal("deletar-fispq", "FISPQ", product.PRODUCT_FISPQ)} variant="transparent" c="dimmed" aria-label={"Deletar FISPQ"}>
                         <IconTrash size={20} />
                       </ActionIcon>
                     )}
-                    <ActionIcon disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpenModal("fispq", "FISPQ", product.PRODUCT_FISPQ, "PRODUCT_FISPQ")} variant="transparent" c="dimmed" aria-label={"Editar FISPQ"}>
+                    <ActionIcon disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpenModal("fispq")} variant="transparent" c="dimmed" aria-label={"Editar FISPQ"}>
                       <IconEdit size={20} />
                     </ActionIcon>
                   </Flex>
@@ -154,7 +155,16 @@ export default function ProductDetail({ product }: Props) {
           </SimpleGrid>
         </SimpleGrid>
       </Paper>
-      {session?.user.USER_ROLE === "ADMIN" && <CardProductImages product={product} />}
+      <CardProductImages product={product} />
+      {session?.user.USER_ROLE === "ADMIN" && (
+        <Affix position={{ bottom: 80, right: 25 }} zIndex={100}>
+          <Tooltip label="Adicionar imagem" position="left">
+            <ActionIcon bg={"red"} radius={50} size={50} onClick={() => handleOpenModal("post-image")} variant="default" aria-label={"Adicionar imagem"}>
+              <IconPhotoUp size={20} />
+            </ActionIcon>
+          </Tooltip>
+        </Affix >
+      )}
       <Modal
         opened={opened}
         onClose={close}
@@ -167,10 +177,11 @@ export default function ProductDetail({ product }: Props) {
       >
         {modalContent === 'default' && <ModalPatchDetails product={product} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />}
         {modalContent === 'colors' && <ModalPatchColors product={product} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />}
-        {modalContent === 'boletim' && <ModalPatchBoletim product={product} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />}
-        {modalContent === 'fispq' && <ModalPatchFispq product={product} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />}
-        {modalContent === 'deletar-boletim' && <ModalPatchRemoveBoletim product={product} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />}
-        {modalContent === 'deletar-fispq' && <ModalPatchRemoveFispq product={product} inputLabel={inputLabel} inputValue={inputValue} inputField={currentField} />}
+        {modalContent === 'boletim' && <ModalPatchBoletim product={product} />}
+        {modalContent === 'fispq' && <ModalPatchFispq product={product} />}
+        {modalContent === 'deletar-boletim' && <ModalPatchRemoveBoletim product={product} inputLabel={inputLabel} inputValue={inputValue} />}
+        {modalContent === 'deletar-fispq' && <ModalPatchRemoveFispq product={product} inputLabel={inputLabel} inputValue={inputValue} />}
+        {modalContent === 'post-image' && <ModalPostImage productName={product.PRODUCT_NAME} />}
       </Modal>
     </>
   );

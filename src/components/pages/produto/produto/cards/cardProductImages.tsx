@@ -1,24 +1,25 @@
 import { ProductGetDetails } from "@/types/productDetails";
 import { API_BASE_URL } from "@/utils/apiBaseUrl";
-import { ActionIcon, Affix, AspectRatio, Flex, Image, Modal, Overlay, Tooltip } from "@mantine/core";
+import { ActionIcon, AspectRatio, Flex, Image, Modal, Overlay, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconEye, IconPhotoUp, IconTrash } from "@tabler/icons-react";
+import { IconEye, IconTrash } from "@tabler/icons-react";
 import { useState } from "react";
 import ModalViewImages from "../modals/modalViewImages";
 import ModalPatchImage from "../modals/modalPatchImage";
-import ModalPostImage from "../modals/modalPostImage";
+import { useSession } from "next-auth/react";
 
 interface Props {
   product: ProductGetDetails;
 }
 
 export default function CardProductImages({ product }: Props) {
+  const { data: session } = useSession();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [opened, { open, close }] = useDisclosure(false);
   const [selectedImage, setSelectedImage] = useState<string>('');
-  const [modalContent, setModalContent] = useState<'post' | 'view' | 'delete' | ''>('');
+  const [modalContent, setModalContent] = useState<| 'view' | 'delete' | ''>('');
 
-  const handleOpenModal = (image: string, content: 'post' | 'view' | 'delete') => {
+  const handleOpenModal = (image: string, content: 'view' | 'delete') => {
     setSelectedImage(image)
     setModalContent(content)
     open();
@@ -43,36 +44,30 @@ export default function CardProductImages({ product }: Props) {
                       <IconEye size={20} />
                     </ActionIcon>
                   </Tooltip>
-                  <Tooltip label="Apagar imagem" position="bottom">
-                    <ActionIcon onClick={() => handleOpenModal(image, "delete")} variant="filled" size="lg">
-                      <IconTrash size={20} />
-                    </ActionIcon>
-                  </Tooltip>
+                  {session?.user.USER_ROLE === "ADMIN" && (
+                    <Tooltip label="Apagar imagem" position="bottom">
+                      <ActionIcon onClick={() => handleOpenModal(image, "delete")} variant="filled" size="lg">
+                        <IconTrash size={20} />
+                      </ActionIcon>
+                    </Tooltip>
+                  )}
                 </Flex>
               </Overlay>
             )}
           </AspectRatio>
         ))}
-        <Affix position={{ bottom: 80, right: 25 }} zIndex={100}>
-          <Tooltip label="Adicionar imagem" position="left">
-            <ActionIcon bg={"red"} radius={50} size={50} onClick={() => handleOpenModal('', 'post')} variant="default" aria-label={"Adicionar imagem"}>
-              <IconPhotoUp size={20} />
-            </ActionIcon>
-          </Tooltip>
-        </Affix >
       </Flex>
       <Modal
         opened={opened}
         size={'auto'}
         onClose={close}
-        withCloseButton
-        closeOnClickOutside={false}
+        withCloseButton={modalContent === "delete"}
+        closeOnClickOutside={modalContent === "view"}
         overlayProps={{
           backgroundOpacity: 0.55,
           blur: 3
         }}
       >
-        {modalContent === 'post' && <ModalPostImage productName={product.PRODUCT_NAME} />}
         {modalContent === 'view' && <ModalViewImages image={selectedImage} />}
         {modalContent === 'delete' && <ModalPatchImage product={product} image={selectedImage} />}
       </Modal>

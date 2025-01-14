@@ -16,9 +16,9 @@ import { Controller, useForm } from "react-hook-form";
 
 interface Props {
   product: ProductGetDetails;
-  inputLabel: string;
-  inputValue: string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[];
-  inputField: keyof ProductPostDetails;
+  inputLabel: string | undefined;
+  inputValue: string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[] | undefined;
+  inputField: keyof ProductPostDetails | undefined;
 }
 
 export default function ModalPatchDetails({ product, inputLabel, inputValue, inputField }: Props) {
@@ -27,7 +27,7 @@ export default function ModalPatchDetails({ product, inputLabel, inputValue, inp
     mode: "onChange",
     resolver: yupResolver(schemaProduct),
     defaultValues: {
-      [inputField]: inputValue,
+      [inputField as keyof ProductGetDetails]: inputValue,
     },
   });
 

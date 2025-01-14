@@ -1,7 +1,7 @@
 import DropzonePicture from "@/components/_ui/dropzone/dropzonePicture";
 import ProviderNotification from "@/components/_ui/notification/providerNotification";
 import usePatch from "@/hooks/usePatch";
-import { ProductGetDetails, ProductPostDetails, ProductPostFile } from "@/types/productDetails";
+import { ProductGetDetails, ProductPostFile } from "@/types/productDetails";
 import { API_BASE_URL } from "@/utils/apiBaseUrl";
 import { Button, Paper, Stack, Text } from "@mantine/core";
 import { FileWithPath } from "@mantine/dropzone";
@@ -11,9 +11,6 @@ import { useEffect, useState } from "react";
 
 interface Props {
   product: ProductGetDetails;
-  inputLabel: string;
-  inputValue: string | string[] | { COLOR_NAME: string; COLOR_HEX: string }[];
-  inputField: keyof ProductPostDetails;
 }
 
 export default function ModalPatchBoletim({ product }: Props) {

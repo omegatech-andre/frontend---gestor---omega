@@ -19,7 +19,7 @@ export default function PageProduto({ product }: Props) {
   const [opened, { open, close }] = useDisclosure(false);
   const [modalContent, setModalContent] = useState<'status' | 'delete' | ''>('');
 
-  const handleOpen = (content: 'status' | 'delete') => {
+  const handleOpenModal = (content: 'status' | 'delete') => {
     setModalContent(content);
     open();
   };
@@ -41,12 +41,12 @@ export default function PageProduto({ product }: Props) {
               }
               <Group gap={5}>
                 <Tooltip color="gray" label='Alterar status' position="bottom">
-                  <ActionIcon disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpen('status')} variant="filled" aria-label="Status">
+                  <ActionIcon disabled={session?.user.USER_ROLE === "USER"} onClick={() => handleOpenModal('status')} variant="filled" aria-label="Status">
                     <IconSettings size={20} />
                   </ActionIcon>
                 </Tooltip>
                 {/* <Tooltip color="gray" label='Deletar produto' position="bottom">
-                  <ActionIcon onClick={() => handleOpen('delete')} variant="filled" aria-label="Delete">
+                  <ActionIcon onClick={() => handleOpenModal('delete')} variant="filled" aria-label="Delete">
                     <IconTrash size={20} />
                   </ActionIcon>
                 </Tooltip> */}
