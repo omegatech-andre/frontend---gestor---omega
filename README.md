@@ -1,52 +1,21 @@
 # frontend---gestor---omega
 
+## Sobre o Projeto
+
+Este sistema foi desenvolvido para gerenciar internamente a plataforma da Ômega Screen, com o objetivo de facilitar a manutenção e atualização de produtos e revendedores no site oficial da empresa. Como administrador, você pode:
+
+- **Cadastrar, editar e gerenciar produtos e revendedores**, incluindo a alteração de status.
+- **Adicionar imagens e PDFs** aos produtos e revendedores para uma melhor apresentação.
+- **Gerenciar usuários**, criando e ajustando permissões conforme necessário.
+
+Como usuário comum, é possível acessar e visualizar as informações detalhadas sobre os produtos e revendedores.
+
+### Atualizações Futuras
+
+- **Documentação das APIs**: Em breve, cada página de produto contará com uma documentação explicativa sobre como realizar requisições do tipo GET, facilitando a integração de revendedores e terceiros com a nossa API para utilizar os dados dos produtos em suas lojas online.
+
 ## Ambiente de Desenvolvimento
 
 - **node** v22.11.0
 - **npm** v10.9.0
 - **next** v15.0.3
-
-### Instalação
-
-- Criação do projeto
-
-```bash
- npx create-next-app@latest --typescript
-```
-
-- A biblioteca mantine até o momento nao possui compatibilidade total com react 19, é preciso rodar esse comando abaixo pra resolver problemas de compatibilidade do mantine com uma aplicação com next 15.
-
-```bash
- npm install react@18 react-dom@18
-```
-
-- Instalando dependedncias do Mantine
-
-```bash
- npm install @mantine/core @mantine/hooks
-```
-
-- Configurando PostCSS Setup
-
-```bash
- npm install --save-dev postcss postcss-preset-mantine postcss-simple-vars
-```
-
-- É preciso criar um arquivo 'postcss.config.cjs' na rais do projeto e colar o conteudo abaixo:
-
-```cjs
-module.exports = {
-  plugins: {
-    "postcss-preset-mantine": {},
-    "postcss-simple-vars": {
-      variables: {
-        "mantine-breakpoint-xs": "36em",
-        "mantine-breakpoint-sm": "48em",
-        "mantine-breakpoint-md": "62em",
-        "mantine-breakpoint-lg": "75em",
-        "mantine-breakpoint-xl": "88em",
-      },
-    },
-  },
-};
-```
