@@ -20,7 +20,7 @@ interface Props {
 
 const renderMultiSelectOption: MultiSelectProps['renderOption'] = ({ option }) => (
   <Group>
-    <ColorSwatch radius={0} size={16} color={option.value} />
+    <ColorSwatch radius={10} size={16} color={option.value} />
     {option.label}
   </Group>
 );
