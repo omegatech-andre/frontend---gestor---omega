@@ -40,22 +40,21 @@ export default function PageRevendedores({
       const value = (count / totalStateCounts) * 100;
       const colors = [
         '#FFD433', // Amarelo
+        '#FF3333', // Vermelho sangue
         '#338AFF', // Azul céu
         '#FF5733', // Laranja queimado
-        '#B833FF', // Roxo
         '#33FF66', // Verde primavera
-        '#FF33FF', // Rosa choque
+        '#B833FF', // Roxo
         '#33A8FF', // Azul celeste
         '#33FF99', // Verde limão
+        '#FF5733', // Terracota
         '#A833FF', // Lilás
         '#33FFF7', // Ciano
-        '#FF3333', // Vermelho sangue
+        '#FF8C33', // Laranja escuro
+        '#33FF33', // Verde vivo
         '#3357FF', // Azul royal
         '#FF33A8', // Rosa vivo
-        '#33FF33', // Verde vivo
-        '#FF8C33', // Laranja escuro
         '#3357FF', // Azul
-        '#FF5733', // Terracota
       ];
       return { value, color: colors[index % colors.length] };
     });
