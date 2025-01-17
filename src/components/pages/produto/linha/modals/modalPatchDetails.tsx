@@ -50,7 +50,6 @@ export default function ModalPatchDetails({ line, inputLabel, inputValue, inputF
     }
   }, [response, error]);
 
-
   if (response) {
     return (
       <Stack align="center" gap={0}>

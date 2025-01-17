@@ -10,9 +10,9 @@ import { API_BASE_URL } from "@/utils/apiBaseUrl";
 import ProviderNotification from "../../notification/providerNotification";
 import useGet from "@/hooks/useGet";
 import { CategoryGetDetails } from "@/types/categoryDetails";
-import { productTagOptions } from "./utils/productTagOptions";
-import { productColorOptions } from "./utils/productColorOptions";
-import { productSizeOptions } from "./utils/productSizeOptions";
+import { productTagOptions } from "../../../../utils/productTagOptions";
+import { productColorOptions } from "../../../../utils/productColorOptions";
+import { productSizeOptions } from "../../../../utils/productSizeOptions";
 import { ProductGetDetails, ProductPostDetails } from "@/types/productDetails";
 
 const renderMultiSelectOption: MultiSelectProps['renderOption'] = ({ option }) => (

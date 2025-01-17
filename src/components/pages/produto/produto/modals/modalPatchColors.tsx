@@ -1,4 +1,4 @@
-import { productColorOptions } from "@/components/_ui/floatButton/modals/utils/productColorOptions";
+import { productColorOptions } from "@/utils/productColorOptions";
 import ProviderNotification from "@/components/_ui/notification/providerNotification";
 import usePatch from "@/hooks/usePatch";
 import { schemaProduct } from "@/schemas/produtos/schemaProduct";

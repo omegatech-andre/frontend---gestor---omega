@@ -1,5 +1,5 @@
-import { productSizeOptions } from "@/components/_ui/floatButton/modals/utils/productSizeOptions";
-import { productTagOptions } from "@/components/_ui/floatButton/modals/utils/productTagOptions";
+import { productSizeOptions } from "@/utils/productSizeOptions";
+import { productTagOptions } from "@/utils/productTagOptions";
 import ProviderNotification from "@/components/_ui/notification/providerNotification";
 import useGet from "@/hooks/useGet";
 import usePatch from "@/hooks/usePatch";

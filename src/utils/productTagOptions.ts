@@ -3,4 +3,5 @@ export const productTagOptions = [
   'Relevo',
   'Cobertura',
   'Toque Zero'
+  // TODO - adicionar todas a tags
 ]

@@ -39,4 +39,5 @@ export const productColorOptions = [
   { label: 'violeta', value: '#7B2EDA' },
   { label: 'violeta fluor', value: '#84099C' },
   { label: 'ouro', value: '#FFBA38' },
+  { label: 'marrom', value: '#5D4037' },
 ];
