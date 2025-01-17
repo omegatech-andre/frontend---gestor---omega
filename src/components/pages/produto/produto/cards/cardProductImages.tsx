@@ -7,6 +7,7 @@ import { useState } from "react";
 import ModalViewImages from "../modals/modalViewImages";
 import ModalPatchImage from "../modals/modalPatchImage";
 import { useSession } from "next-auth/react";
+import ProviderTheme from "@/styles/providerTheme";
 
 interface Props {
   product: ProductGetDetails;
@@ -14,6 +15,7 @@ interface Props {
 
 export default function CardProductImages({ product }: Props) {
   const { data: session } = useSession();
+  const { isDesktop } = ProviderTheme();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [opened, { open, close }] = useDisclosure(false);
   const [selectedImage, setSelectedImage] = useState<string>('');
@@ -27,7 +29,7 @@ export default function CardProductImages({ product }: Props) {
 
   return (
     <>
-      <Flex gap={"md"} mt={"40"} align={"center"} wrap={"wrap"}>
+      <Flex gap={"sm"} px={isDesktop ? '20' : '0'} mt={"30"} align={"center"} wrap={"wrap"}>
         {product.PRODUCT_URL_IMAGES.map((image, index) => (
           <AspectRatio
             key={index}

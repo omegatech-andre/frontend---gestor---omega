@@ -18,6 +18,7 @@ export const productColorOptions = [
   { label: 'ciano', value: '#00BDE3' },
   { label: 'cinza', value: '#848484' },
   { label: 'extra brilho preto', value: '#000000' },
+  { label: 'hot pink', value: '#ff0084' },
   { label: 'laranja', value: '#F06418' },
   { label: 'laranja fluor', value: '#F94E10' },
   { label: 'lavanda', value: '#9380B4' },
